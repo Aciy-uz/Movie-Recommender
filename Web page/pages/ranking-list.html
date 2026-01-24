@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>芯影推荐 - 影视排行</title>
+  <!-- 引入Font Awesome图标库（与原页面一致） -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/ranking-list.css">
+</head>
+<body>
+
+  <!-- 导航栏（复用原页面，激活状态改为「热门」，对应排行榜单） -->
+  <header class="site-header">
+    <div class="container header-content">
+      <!-- Logo（复用原页面） -->
+      <a href="#" class="logo">
+        <i class="fa fa-film"></i>
+        <span>芯影</span>
+      </a>
+
+      <!-- 桌面端导航（「热门」设为active，对应排行页面） -->
+      <nav class="desktop-nav">
+        <ul class="nav-links">
+          <li><a href="../index.html" class="nav-item">首页</a></li>
+          <li><a href="./popular-charts.html" class="nav-item">热门</a></li>
+          <li><a href="./category-filter.html" class="nav-item">推荐</a></li>
+          <li><a href="#" class="nav-item active">排行榜</a></li>
+        </ul>
+      </nav>
+
+      <!-- 桌面端搜索（保留原功能，与站点联动） -->
+      <div class="search-box desktop-search">
+        <input type="text" placeholder="搜索电影/演员/导演..." class="search-input">
+        <i class="fa fa-search search-icon"></i>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fa fa-bars"></i>
+      </button>
+
+      <!-- 移动端菜单按钮（复用原页面） -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- 移动端导航菜单（「热门」设为active，修复HTML结构） -->
+    <div class="mobile-menu hidden" id="mobileMenu">
+      <div class="container">
+        <ul class="mobile-nav-list">
+          <li><a href="测试.html" class="mobile-nav-item">首页</a></li>
+          <li><a href="热门榜单.html" class="mobile-nav-item active">热门</a></li>
+          <li><a href="分类筛选.html" class="mobile-nav-item">推荐</a></li>
+        </ul>
+        <div class="mobile-search-container">
+          <div class="search-box">
+            <input type="text" id="mobileSearchInput" placeholder="搜索电影..." class="search-input">
+            <i class="fa fa-search search-icon" id="mobileSearchBtn"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 排行榜单核心区域（新增，年度/季度/月度切换） -->
+  <section class="ranking-page">
+    <div class="container">
+      <!-- 榜单头部标题 -->
+      <div class="ranking-header">
+        <h1 class="ranking-main-title"><i class="fa fa-trophy" style="color: var(--primary); margin-right: 0.5rem;"></i>芯影影视排行</h1>
+        <!-- <p class="ranking-sub-title">基于用户评分、热度综合排序，实时更新</p> -->
+      </div>
+
+      <!-- 榜单切换标签（年度/季度/月度） -->
+      <!-- <div class="ranking-tab-container">
+        <button class="ranking-tab active" data-type="annual">年度排行</button>
+        <button class="ranking-tab" data-type="quarterly">季度排行</button>
+        <button class="ranking-tab" data-type="monthly">月度排行</button>
+      </div> -->
+
+      <!-- 榜单内容区域（动态渲染不同榜单） -->
+      <div class="ranking-content">
+        <script>
+          // 获取元素
+          const introText = document.getElementById('introText');
+          const toggleBtn = document.getElementById('toggleBtn');
+
+          // 绑定点击事件
+          toggleBtn.addEventListener('click', function () {
+            // 切换展开/收起状态
+            introText.classList.toggle('expanded');
+
+            // 切换按钮文字
+            if (introText.classList.contains('expanded')) {
+              toggleBtn.textContent = '收起全文';
+            } else {
+              toggleBtn.textContent = '展开全文';
+            }
+          });
+        </script>
+        <!-- 榜单概览（动态更新） -->
+        <div class="ranking-overview">
+          <!-- <div class="overview-current">当前榜单：<span id="currentRankingTitle">2025年度影视榜</span></div> -->
+          <!-- <div class="overview-desc" id="currentRankingDesc">基于2025年全年用户评分与播放热度综合排序</div> -->
+          
+        </div>
+
+        <!-- 榜单列表（动态渲染） -->
+        <div class="ranking-list" id="rankingResultList">
+          <!-- 榜单卡片由JS动态渲染 -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚（完全复用原页面，保证站点风格统一） -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <a href="#" class="logo">
+          <i class="fa fa-film"></i>
+          <span>芯影推荐</span>
+        </a>
+        <div class="social-links">
+          <a href="#"><i class="fa fa-weibo"></i></a>
+          <a href="#"><i class="fa fa-wechat"></i></a>
+          <a href="#"><i class="fa fa-twitter"></i></a>
+          <a href="#"><i class="fa fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <!-- JavaScript 交互逻辑（复用移动端菜单，新增榜单切换+渲染功能） -->
+  <!-- <script src="../js/ranking-list.js"></script> -->
+  <script src="../js/Ajax.js"></script>
+  <script src="../js/Search.js"></script>
+</body>
+</html>

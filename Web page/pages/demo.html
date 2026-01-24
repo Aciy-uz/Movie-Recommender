@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>芯影推荐 - 分类筛选</title>
+  <!-- 引入Font Awesome图标库（与原页面一致） -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/category-filter.css">
+</head>
+<body>
+  <!-- 导航栏（复用原样式，修改「分类筛选」为激活状态） -->
+  <header class="site-header">
+    <div class="container header-content">
+      <!-- Logo -->
+      <a href="#" class="logo">
+        <i class="fa fa-film"></i>
+        <span>芯影推荐</span>
+      </a>
+
+      <!-- 桌面端导航 -->
+      <nav class="desktop-nav">
+        <ul class="nav-links">
+          <li><a href="../index.html" class="nav-item">首页</a></li>
+          <li><a href="./popular-charts.html" class="nav-item">热门</a></li>
+          <li><a href="./category-filter.html" class="nav-item active">推荐</a></li>
+          <li><a href="./ranking-list.html" class="nav-item">排行榜</a></li>
+          <li><a href="#" class="nav-item">登录</a></li>
+        </ul>
+      </nav>
+
+      <!-- 桌面端搜索 -->
+      <div class="search-box desktop-nav">
+        <input type="text" placeholder="搜索电影/演员/导演..." class="search-input">
+        <i class="fa fa-search search-icon"></i>
+      </div>
+
+      <!-- 移动端菜单按钮 -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- 移动端导航菜单（修改「分类筛选」为激活状态） -->
+    <div class="mobile-menu hidden" id="mobileMenu">
+      <div class="container">
+        <a href="#" class="mobile-nav-item">首页</a>
+        <a href="#" class="mobile-nav-item">热门榜单</a>
+        <a href="#" class="mobile-nav-item active">分类筛选</a>
+        <a href="#" class="mobile-nav-item">最新上映</a>
+        <a href="#" class="mobile-nav-item">关于我们</a>
+        <div class="mobile-search-container">
+          <div class="search-box">
+            <input type="text" placeholder="搜索电影..." class="search-input">
+            <i class="fa fa-search search-icon"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- 分类筛选核心区域（新增） -->
+  <section class="container section-padding">
+    <!-- 筛选标题 -->
+    <div class="section-header">
+      <h2 class="section-title"><i class="fa fa-th-list"></i>电影分类精准筛选</h2>
+      <a href="#" class="view-more"><span>高级筛选</span> <i class="fa fa-angle-right"></i></a>
+    </div>
+
+    <!-- 多维度筛选区域（类型、年份、评分） -->
+    <div class="filter-section">
+      <!-- 1. 电影类型筛选 -->
+    <div class="filter-tags" id="typeFilterTags">
+      <button class="filter-tag active" data-filter="all">全部类型</button>
+      <button class="filter-tag" data-filter="剧情">剧情</button>
+      <button class="filter-tag" data-filter="科幻">科幻</button>
+      <button class="filter-tag" data-filter="动作">动作</button>
+      <button class="filter-tag" data-filter="喜剧">喜剧</button>
+      <button class="filter-tag" data-filter="动画">动画</button>
+      <button class="filter-tag" data-filter="爱情">爱情</button>
+    </div>
+
+      <!-- 2. 上映年份筛选 -->
+      <div class="filter-group">
+        <label class="filter-label">上映年份</label>
+        <div class="filter-tags" id="yearFilterTags">
+          <button class="filter-tag active" data-year="all">全部年份</button>
+          <button class="filter-tag" data-year="2026">2026</button>
+          <button class="filter-tag" data-year="2025-2020">2020-2025</button>
+          <button class="filter-tag" data-year="2019-2010">2010-2019</button>
+          <button class="filter-tag" data-year="2009-2000">2000-2009</button>
+          <button class="filter-tag" data-year="1999-below">1999及以前</button>
+        </div>
+      </div>
+
+      <!-- 3. 评分区间筛选 -->
+      <div class="filter-group">
+        <label class="filter-label">评分区间</label>
+        <div class="filter-tags" id="scoreFilterTags">
+          <button class="filter-tag active" data-score="all">全部评分</button>
+          <button class="filter-tag" data-score="9-10">9.0及以上</button>
+          <button class="filter-tag" data-score="8-9">8.0-8.9</button>
+          <button class="filter-tag" data-score="7-8">7.0-7.9</button>
+          <button class="filter-tag" data-score="6-7">6.0-6.9</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 筛选结果展示区域（核心内容） -->
+    <!-- 全部类型（默认激活） -->
+    <div class="filter-content active" id="all">
+    </div>
+  </section>
+
+  <!-- 页脚（完全复用原页面样式） -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <a href="#" class="logo">
+          <i class="fa fa-film"></i>
+          <span>芯影推荐</span>
+        </a>
+      </div>
+      <div class="footer-divider">
+        <div class="footer-grid">
+    </div>
+  </footer>
+
+  <!-- JavaScript 交互逻辑（复用原移动端菜单，新增分类筛选切换） -->
+  <script src="../js/category-filter.js"></script>
+    <!-- 导航栏设计 -->
+  <script src="./js/Navigation bar.js"></script>
+  <!-- 渲染卡片 -->
+  <script src="../js/demo.js"></script>
+</body>
+</html>

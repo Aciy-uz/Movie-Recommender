@@ -1,0 +1,8669 @@
+        // API配置
+        const API_BASE = 'http://localhost:5000/api';
+        let currentRequest = null;
+        
+        // 电影信息数据库
+        const examples = [
+            {
+                "id": "1",
+                "title": "Toy Story (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "2",
+                "title": "GoldenEye (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "3",
+                "title": "Four Rooms (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "4",
+                "title": "Get Shorty (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "5",
+                "title": "Copycat (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "6",
+                "title": "Shanghai Triad (Yao a yao yao dao waipo qiao) (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "7",
+                "title": "Twelve Monkeys (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "8",
+                "title": "Babe (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "9",
+                "title": "Dead Man Walking (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "10",
+                "title": "Richard III (1995)",
+                "releaseDate": "22-Jan-1996"
+            },
+            {
+                "id": "11",
+                "title": "Seven (Se7en) (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "12",
+                "title": "Usual Suspects, The (1995)",
+                "releaseDate": "14-Aug-1995"
+            },
+            {
+                "id": "13",
+                "title": "Mighty Aphrodite (1995)",
+                "releaseDate": "30-Oct-1995"
+            },
+            {
+                "id": "14",
+                "title": "Postino, Il (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "15",
+                "title": "Mr. Holland's Opus (1995)",
+                "releaseDate": "29-Jan-1996"
+            },
+            {
+                "id": "16",
+                "title": "French Twist (Gazon maudit) (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "17",
+                "title": "From Dusk Till Dawn (1996)",
+                "releaseDate": "05-Feb-1996"
+            },
+            {
+                "id": "18",
+                "title": "White Balloon, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "19",
+                "title": "Antonia's Line (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "20",
+                "title": "Angels and Insects (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "21",
+                "title": "Muppet Treasure Island (1996)",
+                "releaseDate": "16-Feb-1996"
+            },
+            {
+                "id": "22",
+                "title": "Braveheart (1995)",
+                "releaseDate": "16-Feb-1996"
+            },
+            {
+                "id": "23",
+                "title": "Taxi Driver (1976)",
+                "releaseDate": "16-Feb-1996"
+            },
+            {
+                "id": "24",
+                "title": "Rumble in the Bronx (1995)",
+                "releaseDate": "23-Feb-1996"
+            },
+            {
+                "id": "25",
+                "title": "Birdcage, The (1996)",
+                "releaseDate": "08-Mar-1996"
+            },
+            {
+                "id": "26",
+                "title": "Brothers McMullen, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "27",
+                "title": "Bad Boys (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "28",
+                "title": "Apollo 13 (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "29",
+                "title": "Batman Forever (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "30",
+                "title": "Belle de jour (1967)",
+                "releaseDate": "01-Jan-1967"
+            },
+            {
+                "id": "31",
+                "title": "Crimson Tide (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "32",
+                "title": "Crumb (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "33",
+                "title": "Desperado (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "34",
+                "title": "Doom Generation, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "35",
+                "title": "Free Willy 2: The Adventure Home (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "36",
+                "title": "Mad Love (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "37",
+                "title": "Nadja (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "38",
+                "title": "Net, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "39",
+                "title": "Strange Days (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "40",
+                "title": "To Wong Foo, Thanks for Everything! Julie Newmar (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "41",
+                "title": "Billy Madison (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "42",
+                "title": "Clerks (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "43",
+                "title": "Disclosure (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "44",
+                "title": "Dolores Claiborne (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "45",
+                "title": "Eat Drink Man Woman (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "46",
+                "title": "Exotica (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "47",
+                "title": "Ed Wood (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "48",
+                "title": "Hoop Dreams (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "49",
+                "title": "I.Q. (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "50",
+                "title": "Star Wars (1977)",
+                "releaseDate": "01-Jan-1977"
+            },
+            {
+                "id": "51",
+                "title": "Legends of the Fall (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "52",
+                "title": "Madness of King George, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "53",
+                "title": "Natural Born Killers (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "54",
+                "title": "Outbreak (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "55",
+                "title": "Professional, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "56",
+                "title": "Pulp Fiction (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "57",
+                "title": "Priest (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "58",
+                "title": "Quiz Show (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "59",
+                "title": "Three Colors: Red (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "60",
+                "title": "Three Colors: Blue (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "61",
+                "title": "Three Colors: White (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "62",
+                "title": "Stargate (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "63",
+                "title": "Santa Clause, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "64",
+                "title": "Shawshank Redemption, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "65",
+                "title": "What's Eating Gilbert Grape (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "66",
+                "title": "While You Were Sleeping (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "67",
+                "title": "Ace Ventura: Pet Detective (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "68",
+                "title": "Crow, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "69",
+                "title": "Forrest Gump (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "70",
+                "title": "Four Weddings and a Funeral (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "71",
+                "title": "Lion King, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "72",
+                "title": "Mask, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "73",
+                "title": "Maverick (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "74",
+                "title": "Faster Pussycat! Kill! Kill! (1965)",
+                "releaseDate": "01-Jan-1965"
+            },
+            {
+                "id": "75",
+                "title": "Brother Minister: The Assassination of Malcolm X (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "76",
+                "title": "Carlito's Way (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "77",
+                "title": "Firm, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "78",
+                "title": "Free Willy (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "79",
+                "title": "Fugitive, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "80",
+                "title": "Hot Shots! Part Deux (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "81",
+                "title": "Hudsucker Proxy, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "82",
+                "title": "Jurassic Park (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "83",
+                "title": "Much Ado About Nothing (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "84",
+                "title": "Robert A. Heinlein's The Puppet Masters (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "85",
+                "title": "Ref, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "86",
+                "title": "Remains of the Day, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "87",
+                "title": "Searching for Bobby Fischer (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "88",
+                "title": "Sleepless in Seattle (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "89",
+                "title": "Blade Runner (1982)",
+                "releaseDate": "01-Jan-1982"
+            },
+            {
+                "id": "90",
+                "title": "So I Married an Axe Murderer (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "91",
+                "title": "Nightmare Before Christmas, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "92",
+                "title": "True Romance (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "93",
+                "title": "Welcome to the Dollhouse (1995)",
+                "releaseDate": "24-May-1996"
+            },
+            {
+                "id": "94",
+                "title": "Home Alone (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "95",
+                "title": "Aladdin (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "96",
+                "title": "Terminator 2: Judgment Day (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "97",
+                "title": "Dances with Wolves (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "98",
+                "title": "Silence of the Lambs, The (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "99",
+                "title": "Snow White and the Seven Dwarfs (1937)",
+                "releaseDate": "01-Jan-1937"
+            },
+            {
+                "id": "100",
+                "title": "Fargo (1996)",
+                "releaseDate": "14-Feb-1997"
+            },
+            {
+                "id": "101",
+                "title": "Heavy Metal (1981)",
+                "releaseDate": "08-Mar-1981"
+            },
+            {
+                "id": "102",
+                "title": "Aristocats, The (1970)",
+                "releaseDate": "01-Jan-1970"
+            },
+            {
+                "id": "103",
+                "title": "All Dogs Go to Heaven 2 (1996)",
+                "releaseDate": "29-Mar-1996"
+            },
+            {
+                "id": "104",
+                "title": "Theodore Rex (1995)",
+                "releaseDate": "29-Mar-1996"
+            },
+            {
+                "id": "105",
+                "title": "Sgt. Bilko (1996)",
+                "releaseDate": "29-Mar-1996"
+            },
+            {
+                "id": "106",
+                "title": "Diabolique (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "107",
+                "title": "Moll Flanders (1996)",
+                "releaseDate": "14-Jun-1996"
+            },
+            {
+                "id": "108",
+                "title": "Kids in the Hall: Brain Candy (1996)",
+                "releaseDate": "12-Apr-1996"
+            },
+            {
+                "id": "109",
+                "title": "Mystery Science Theater 3000: The Movie (1996)",
+                "releaseDate": "19-Apr-1996"
+            },
+            {
+                "id": "110",
+                "title": "Operation Dumbo Drop (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "111",
+                "title": "Truth About Cats & Dogs, The (1996)",
+                "releaseDate": "26-Apr-1996"
+            },
+            {
+                "id": "112",
+                "title": "Flipper (1996)",
+                "releaseDate": "10-May-1996"
+            },
+            {
+                "id": "113",
+                "title": "Horseman on the Roof, The (Hussard sur le toit, Le) (1995)",
+                "releaseDate": "19-Apr-1996"
+            },
+            {
+                "id": "114",
+                "title": "Wallace & Gromit: The Best of Aardman Animation (1996)",
+                "releaseDate": "05-Apr-1996"
+            },
+            {
+                "id": "115",
+                "title": "Haunted World of Edward D. Wood Jr., The (1995)",
+                "releaseDate": "26-Apr-1996"
+            },
+            {
+                "id": "116",
+                "title": "Cold Comfort Farm (1995)",
+                "releaseDate": "23-Apr-1996"
+            },
+            {
+                "id": "117",
+                "title": "Rock, The (1996)",
+                "releaseDate": "07-Jun-1996"
+            },
+            {
+                "id": "118",
+                "title": "Twister (1996)",
+                "releaseDate": "10-May-1996"
+            },
+            {
+                "id": "119",
+                "title": "Maya Lin: A Strong Clear Vision (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "120",
+                "title": "Striptease (1996)",
+                "releaseDate": "28-Jun-1996"
+            },
+            {
+                "id": "121",
+                "title": "Independence Day (ID4) (1996)",
+                "releaseDate": "03-Jul-1996"
+            },
+            {
+                "id": "122",
+                "title": "Cable Guy, The (1996)",
+                "releaseDate": "14-Jun-1996"
+            },
+            {
+                "id": "123",
+                "title": "Frighteners, The (1996)",
+                "releaseDate": "19-Jul-1996"
+            },
+            {
+                "id": "124",
+                "title": "Lone Star (1996)",
+                "releaseDate": "21-Jun-1996"
+            },
+            {
+                "id": "125",
+                "title": "Phenomenon (1996)",
+                "releaseDate": "29-Jun-1996"
+            },
+            {
+                "id": "126",
+                "title": "Spitfire Grill, The (1996)",
+                "releaseDate": "06-Sep-1996"
+            },
+            {
+                "id": "127",
+                "title": "Godfather, The (1972)",
+                "releaseDate": "01-Jan-1972"
+            },
+            {
+                "id": "128",
+                "title": "Supercop (1992)",
+                "releaseDate": "26-Jul-1996"
+            },
+            {
+                "id": "129",
+                "title": "Bound (1996)",
+                "releaseDate": "04-Oct-1996"
+            },
+            {
+                "id": "130",
+                "title": "Kansas City (1996)",
+                "releaseDate": "16-Aug-1996"
+            },
+            {
+                "id": "131",
+                "title": "Breakfast at Tiffany's (1961)",
+                "releaseDate": "01-Jan-1961"
+            },
+            {
+                "id": "132",
+                "title": "Wizard of Oz, The (1939)",
+                "releaseDate": "01-Jan-1939"
+            },
+            {
+                "id": "133",
+                "title": "Gone with the Wind (1939)",
+                "releaseDate": "01-Jan-1939"
+            },
+            {
+                "id": "134",
+                "title": "Citizen Kane (1941)",
+                "releaseDate": "01-Jan-1941"
+            },
+            {
+                "id": "135",
+                "title": "2001: A Space Odyssey (1968)",
+                "releaseDate": "01-Jan-1968"
+            },
+            {
+                "id": "136",
+                "title": "Mr. Smith Goes to Washington (1939)",
+                "releaseDate": "01-Jan-1939"
+            },
+            {
+                "id": "137",
+                "title": "Big Night (1996)",
+                "releaseDate": "20-Sep-1996"
+            },
+            {
+                "id": "138",
+                "title": "D3: The Mighty Ducks (1996)",
+                "releaseDate": "04-Oct-1996"
+            },
+            {
+                "id": "139",
+                "title": "Love Bug, The (1969)",
+                "releaseDate": "01-Jan-1969"
+            },
+            {
+                "id": "140",
+                "title": "Homeward Bound: The Incredible Journey (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "141",
+                "title": "20,000 Leagues Under the Sea (1954)",
+                "releaseDate": "01-Jan-1954"
+            },
+            {
+                "id": "142",
+                "title": "Bedknobs and Broomsticks (1971)",
+                "releaseDate": "01-Jan-1971"
+            },
+            {
+                "id": "143",
+                "title": "Sound of Music, The (1965)",
+                "releaseDate": "01-Jan-1965"
+            },
+            {
+                "id": "144",
+                "title": "Die Hard (1988)",
+                "releaseDate": "01-Jan-1988"
+            },
+            {
+                "id": "145",
+                "title": "Lawnmower Man, The (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "146",
+                "title": "Unhook the Stars (1996)",
+                "releaseDate": "30-Oct-1996"
+            },
+            {
+                "id": "147",
+                "title": "Long Kiss Goodnight, The (1996)",
+                "releaseDate": "05-Oct-1996"
+            },
+            {
+                "id": "148",
+                "title": "Ghost and the Darkness, The (1996)",
+                "releaseDate": "11-Oct-1996"
+            },
+            {
+                "id": "149",
+                "title": "Jude (1996)",
+                "releaseDate": "01-Nov-1996"
+            },
+            {
+                "id": "150",
+                "title": "Swingers (1996)",
+                "releaseDate": "18-Oct-1996"
+            },
+            {
+                "id": "151",
+                "title": "Willy Wonka and the Chocolate Factory (1971)",
+                "releaseDate": "01-Jan-1971"
+            },
+            {
+                "id": "152",
+                "title": "Sleeper (1973)",
+                "releaseDate": "01-Jan-1973"
+            },
+            {
+                "id": "153",
+                "title": "Fish Called Wanda, A (1988)",
+                "releaseDate": "01-Jan-1988"
+            },
+            {
+                "id": "154",
+                "title": "Monty Python's Life of Brian (1979)",
+                "releaseDate": "01-Jan-1979"
+            },
+            {
+                "id": "155",
+                "title": "Dirty Dancing (1987)",
+                "releaseDate": "01-Jan-1987"
+            },
+            {
+                "id": "156",
+                "title": "Reservoir Dogs (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "157",
+                "title": "Platoon (1986)",
+                "releaseDate": "01-Jan-1986"
+            },
+            {
+                "id": "158",
+                "title": "Weekend at Bernie's (1989)",
+                "releaseDate": "01-Jan-1989"
+            },
+            {
+                "id": "159",
+                "title": "Basic Instinct (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "160",
+                "title": "Glengarry Glen Ross (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "161",
+                "title": "Top Gun (1986)",
+                "releaseDate": "01-Jan-1986"
+            },
+            {
+                "id": "162",
+                "title": "On Golden Pond (1981)",
+                "releaseDate": "01-Jan-1981"
+            },
+            {
+                "id": "163",
+                "title": "Return of the Pink Panther, The (1974)",
+                "releaseDate": "01-Jan-1974"
+            },
+            {
+                "id": "164",
+                "title": "Abyss, The (1989)",
+                "releaseDate": "01-Jan-1989"
+            },
+            {
+                "id": "165",
+                "title": "Jean de Florette (1986)",
+                "releaseDate": "01-Jan-1986"
+            },
+            {
+                "id": "166",
+                "title": "Manon of the Spring (Manon des sources) (1986)",
+                "releaseDate": "01-Jan-1986"
+            },
+            {
+                "id": "167",
+                "title": "Private Benjamin (1980)",
+                "releaseDate": "01-Jan-1980"
+            },
+            {
+                "id": "168",
+                "title": "Monty Python and the Holy Grail (1974)",
+                "releaseDate": "01-Jan-1974"
+            },
+            {
+                "id": "169",
+                "title": "Wrong Trousers, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "170",
+                "title": "Cinema Paradiso (1988)",
+                "releaseDate": "01-Jan-1988"
+            },
+            {
+                "id": "171",
+                "title": "Delicatessen (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "172",
+                "title": "Empire Strikes Back, The (1980)",
+                "releaseDate": "01-Jan-1980"
+            },
+            {
+                "id": "173",
+                "title": "Princess Bride, The (1987)",
+                "releaseDate": "01-Jan-1987"
+            },
+            {
+                "id": "174",
+                "title": "Raiders of the Lost Ark (1981)",
+                "releaseDate": "01-Jan-1981"
+            },
+            {
+                "id": "175",
+                "title": "Brazil (1985)",
+                "releaseDate": "01-Jan-1985"
+            },
+            {
+                "id": "176",
+                "title": "Aliens (1986)",
+                "releaseDate": "01-Jan-1986"
+            },
+            {
+                "id": "177",
+                "title": "Good, The Bad and The Ugly, The (1966)",
+                "releaseDate": "01-Jan-1966"
+            },
+            {
+                "id": "178",
+                "title": "12 Angry Men (1957)",
+                "releaseDate": "01-Jan-1957"
+            },
+            {
+                "id": "179",
+                "title": "Clockwork Orange, A (1971)",
+                "releaseDate": "01-Jan-1971"
+            },
+            {
+                "id": "180",
+                "title": "Apocalypse Now (1979)",
+                "releaseDate": "01-Jan-1979"
+            },
+            {
+                "id": "181",
+                "title": "Return of the Jedi (1983)",
+                "releaseDate": "14-Mar-1997"
+            },
+            {
+                "id": "182",
+                "title": "GoodFellas (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "183",
+                "title": "Alien (1979)",
+                "releaseDate": "01-Jan-1979"
+            },
+            {
+                "id": "184",
+                "title": "Army of Darkness (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "185",
+                "title": "Psycho (1960)",
+                "releaseDate": "01-Jan-1960"
+            },
+            {
+                "id": "186",
+                "title": "Blues Brothers, The (1980)",
+                "releaseDate": "01-Jan-1980"
+            },
+            {
+                "id": "187",
+                "title": "Godfather: Part II, The (1974)",
+                "releaseDate": "01-Jan-1974"
+            },
+            {
+                "id": "188",
+                "title": "Full Metal Jacket (1987)",
+                "releaseDate": "01-Jan-1987"
+            },
+            {
+                "id": "189",
+                "title": "Grand Day Out, A (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "190",
+                "title": "Henry V (1989)",
+                "releaseDate": "01-Jan-1989"
+            },
+            {
+                "id": "191",
+                "title": "Amadeus (1984)",
+                "releaseDate": "01-Jan-1984"
+            },
+            {
+                "id": "192",
+                "title": "Raging Bull (1980)",
+                "releaseDate": "01-Jan-1980"
+            },
+            {
+                "id": "193",
+                "title": "Right Stuff, The (1983)",
+                "releaseDate": "01-Jan-1983"
+            },
+            {
+                "id": "194",
+                "title": "Sting, The (1973)",
+                "releaseDate": "01-Jan-1973"
+            },
+            {
+                "id": "195",
+                "title": "Terminator, The (1984)",
+                "releaseDate": "01-Jan-1984"
+            },
+            {
+                "id": "196",
+                "title": "Dead Poets Society (1989)",
+                "releaseDate": "01-Jan-1989"
+            },
+            {
+                "id": "197",
+                "title": "Graduate, The (1967)",
+                "releaseDate": "01-Jan-1967"
+            },
+            {
+                "id": "198",
+                "title": "Nikita (La Femme Nikita) (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "199",
+                "title": "Bridge on the River Kwai, The (1957)",
+                "releaseDate": "01-Jan-1957"
+            },
+            {
+                "id": "200",
+                "title": "Shining, The (1980)",
+                "releaseDate": "01-Jan-1980"
+            },
+            {
+                "id": "201",
+                "title": "Evil Dead II (1987)",
+                "releaseDate": "01-Jan-1987"
+            },
+            {
+                "id": "202",
+                "title": "Groundhog Day (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "203",
+                "title": "Unforgiven (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "204",
+                "title": "Back to the Future (1985)",
+                "releaseDate": "01-Jan-1985"
+            },
+            {
+                "id": "205",
+                "title": "Patton (1970)",
+                "releaseDate": "01-Jan-1970"
+            },
+            {
+                "id": "206",
+                "title": "Akira (1988)",
+                "releaseDate": "01-Jan-1988"
+            },
+            {
+                "id": "207",
+                "title": "Cyrano de Bergerac (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "208",
+                "title": "Young Frankenstein (1974)",
+                "releaseDate": "01-Jan-1974"
+            },
+            {
+                "id": "209",
+                "title": "This Is Spinal Tap (1984)",
+                "releaseDate": "01-Jan-1984"
+            },
+            {
+                "id": "210",
+                "title": "Indiana Jones and the Last Crusade (1989)",
+                "releaseDate": "01-Jan-1989"
+            },
+            {
+                "id": "211",
+                "title": "M*A*S*H (1970)",
+                "releaseDate": "01-Jan-1970"
+            },
+            {
+                "id": "212",
+                "title": "Unbearable Lightness of Being, The (1988)",
+                "releaseDate": "01-Jan-1988"
+            },
+            {
+                "id": "213",
+                "title": "Room with a View, A (1986)",
+                "releaseDate": "01-Jan-1986"
+            },
+            {
+                "id": "214",
+                "title": "Pink Floyd - The Wall (1982)",
+                "releaseDate": "01-Jan-1982"
+            },
+            {
+                "id": "215",
+                "title": "Field of Dreams (1989)",
+                "releaseDate": "01-Jan-1989"
+            },
+            {
+                "id": "216",
+                "title": "When Harry Met Sally... (1989)",
+                "releaseDate": "01-Jan-1989"
+            },
+            {
+                "id": "217",
+                "title": "Bram Stoker's Dracula (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "218",
+                "title": "Cape Fear (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "219",
+                "title": "Nightmare on Elm Street, A (1984)",
+                "releaseDate": "01-Jan-1984"
+            },
+            {
+                "id": "220",
+                "title": "Mirror Has Two Faces, The (1996)",
+                "releaseDate": "15-Nov-1996"
+            },
+            {
+                "id": "221",
+                "title": "Breaking the Waves (1996)",
+                "releaseDate": "15-Nov-1996"
+            },
+            {
+                "id": "222",
+                "title": "Star Trek: First Contact (1996)",
+                "releaseDate": "22-Nov-1996"
+            },
+            {
+                "id": "223",
+                "title": "Sling Blade (1996)",
+                "releaseDate": "22-Nov-1996"
+            },
+            {
+                "id": "224",
+                "title": "Ridicule (1996)",
+                "releaseDate": "27-Nov-1996"
+            },
+            {
+                "id": "225",
+                "title": "101 Dalmatians (1996)",
+                "releaseDate": "27-Nov-1996"
+            },
+            {
+                "id": "226",
+                "title": "Die Hard 2 (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "227",
+                "title": "Star Trek VI: The Undiscovered Country (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "228",
+                "title": "Star Trek: The Wrath of Khan (1982)",
+                "releaseDate": "01-Jan-1982"
+            },
+            {
+                "id": "229",
+                "title": "Star Trek III: The Search for Spock (1984)",
+                "releaseDate": "01-Jan-1984"
+            },
+            {
+                "id": "230",
+                "title": "Star Trek IV: The Voyage Home (1986)",
+                "releaseDate": "01-Jan-1986"
+            },
+            {
+                "id": "231",
+                "title": "Batman Returns (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "232",
+                "title": "Young Guns (1988)",
+                "releaseDate": "01-Jan-1988"
+            },
+            {
+                "id": "233",
+                "title": "Under Siege (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "234",
+                "title": "Jaws (1975)",
+                "releaseDate": "01-Jan-1975"
+            },
+            {
+                "id": "235",
+                "title": "Mars Attacks! (1996)",
+                "releaseDate": "13-Dec-1996"
+            },
+            {
+                "id": "236",
+                "title": "Citizen Ruth (1996)",
+                "releaseDate": "13-Dec-1996"
+            },
+            {
+                "id": "237",
+                "title": "Jerry Maguire (1996)",
+                "releaseDate": "13-Dec-1996"
+            },
+            {
+                "id": "238",
+                "title": "Raising Arizona (1987)",
+                "releaseDate": "01-Jan-1987"
+            },
+            {
+                "id": "239",
+                "title": "Sneakers (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "240",
+                "title": "Beavis and Butt-head Do America (1996)",
+                "releaseDate": "20-Dec-1996"
+            },
+            {
+                "id": "241",
+                "title": "Last of the Mohicans, The (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "242",
+                "title": "Kolya (1996)",
+                "releaseDate": "24-Jan-1997"
+            },
+            {
+                "id": "243",
+                "title": "Jungle2Jungle (1997)",
+                "releaseDate": "07-Mar-1997"
+            },
+            {
+                "id": "244",
+                "title": "Smilla's Sense of Snow (1997)",
+                "releaseDate": "14-Mar-1997"
+            },
+            {
+                "id": "245",
+                "title": "Devil's Own, The (1997)",
+                "releaseDate": "26-Mar-1997"
+            },
+            {
+                "id": "246",
+                "title": "Chasing Amy (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "247",
+                "title": "Turbo: A Power Rangers Movie (1997)",
+                "releaseDate": "28-Mar-1997"
+            },
+            {
+                "id": "248",
+                "title": "Grosse Pointe Blank (1997)",
+                "releaseDate": "11-Apr-1997"
+            },
+            {
+                "id": "249",
+                "title": "Austin Powers: International Man of Mystery (1997)",
+                "releaseDate": "02-May-1997"
+            },
+            {
+                "id": "250",
+                "title": "Fifth Element, The (1997)",
+                "releaseDate": "09-May-1997"
+            },
+            {
+                "id": "251",
+                "title": "Shall We Dance? (1996)",
+                "releaseDate": "11-Jul-1997"
+            },
+            {
+                "id": "252",
+                "title": "Lost World: Jurassic Park, The (1997)",
+                "releaseDate": "23-May-1997"
+            },
+            {
+                "id": "253",
+                "title": "Pillow Book, The (1995)",
+                "releaseDate": "13-Jun-1997"
+            },
+            {
+                "id": "254",
+                "title": "Batman & Robin (1997)",
+                "releaseDate": "20-Jun-1997"
+            },
+            {
+                "id": "255",
+                "title": "My Best Friend's Wedding (1997)",
+                "releaseDate": "20-Jun-1997"
+            },
+            {
+                "id": "256",
+                "title": "When the Cats Away (Chacun cherche son chat) (1996)",
+                "releaseDate": "20-Jun-1997"
+            },
+            {
+                "id": "257",
+                "title": "Men in Black (1997)",
+                "releaseDate": "04-Jul-1997"
+            },
+            {
+                "id": "258",
+                "title": "Contact (1997)",
+                "releaseDate": "11-Jul-1997"
+            },
+            {
+                "id": "259",
+                "title": "George of the Jungle (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "260",
+                "title": "Event Horizon (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "261",
+                "title": "Air Bud (1997)",
+                "releaseDate": "01-Aug-1997"
+            },
+            {
+                "id": "262",
+                "title": "In the Company of Men (1997)",
+                "releaseDate": "01-Aug-1997"
+            },
+            {
+                "id": "263",
+                "title": "Steel (1997)",
+                "releaseDate": "15-Aug-1997"
+            },
+            {
+                "id": "264",
+                "title": "Mimic (1997)",
+                "releaseDate": "22-Aug-1997"
+            },
+            {
+                "id": "265",
+                "title": "Hunt for Red October, The (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "266",
+                "title": "Kull the Conqueror (1997)",
+                "releaseDate": "29-Aug-1997"
+            },
+            {
+                "id": "267",
+                "title": "unknown",
+                "releaseDate": ""
+            },
+            {
+                "id": "268",
+                "title": "Chasing Amy (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "269",
+                "title": "Full Monty, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "270",
+                "title": "Gattaca (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "271",
+                "title": "Starship Troopers (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "272",
+                "title": "Good Will Hunting (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "273",
+                "title": "Heat (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "274",
+                "title": "Sabrina (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "275",
+                "title": "Sense and Sensibility (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "276",
+                "title": "Leaving Las Vegas (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "277",
+                "title": "Restoration (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "278",
+                "title": "Bed of Roses (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "279",
+                "title": "Once Upon a Time... When We Were Colored (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "280",
+                "title": "Up Close and Personal (1996)",
+                "releaseDate": "01-Mar-1996"
+            },
+            {
+                "id": "281",
+                "title": "River Wild, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "282",
+                "title": "Time to Kill, A (1996)",
+                "releaseDate": "13-Jul-1996"
+            },
+            {
+                "id": "283",
+                "title": "Emma (1996)",
+                "releaseDate": "02-Aug-1996"
+            },
+            {
+                "id": "284",
+                "title": "Tin Cup (1996)",
+                "releaseDate": "16-Aug-1996"
+            },
+            {
+                "id": "285",
+                "title": "Secrets & Lies (1996)",
+                "releaseDate": "04-Oct-1996"
+            },
+            {
+                "id": "286",
+                "title": "English Patient, The (1996)",
+                "releaseDate": "15-Nov-1996"
+            },
+            {
+                "id": "287",
+                "title": "Marvin's Room (1996)",
+                "releaseDate": "18-Dec-1996"
+            },
+            {
+                "id": "288",
+                "title": "Scream (1996)",
+                "releaseDate": "20-Dec-1996"
+            },
+            {
+                "id": "289",
+                "title": "Evita (1996)",
+                "releaseDate": "25-Dec-1996"
+            },
+            {
+                "id": "290",
+                "title": "Fierce Creatures (1997)",
+                "releaseDate": "10-Jan-1997"
+            },
+            {
+                "id": "291",
+                "title": "Absolute Power (1997)",
+                "releaseDate": "14-Feb-1997"
+            },
+            {
+                "id": "292",
+                "title": "Rosewood (1997)",
+                "releaseDate": "21-Feb-1997"
+            },
+            {
+                "id": "293",
+                "title": "Donnie Brasco (1997)",
+                "releaseDate": "28-Feb-1997"
+            },
+            {
+                "id": "294",
+                "title": "Liar Liar (1997)",
+                "releaseDate": "21-Mar-1997"
+            },
+            {
+                "id": "295",
+                "title": "Breakdown (1997)",
+                "releaseDate": "02-May-1997"
+            },
+            {
+                "id": "296",
+                "title": "Promesse, La (1996)",
+                "releaseDate": "16-May-1997"
+            },
+            {
+                "id": "297",
+                "title": "Ulee's Gold (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "298",
+                "title": "Face/Off (1997)",
+                "releaseDate": "27-Jun-1997"
+            },
+            {
+                "id": "299",
+                "title": "Hoodlum (1997)",
+                "releaseDate": "22-Aug-1997"
+            },
+            {
+                "id": "300",
+                "title": "Air Force One (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "301",
+                "title": "In & Out (1997)",
+                "releaseDate": "19-Sep-1997"
+            },
+            {
+                "id": "302",
+                "title": "L.A. Confidential (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "303",
+                "title": "Ulee's Gold (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "304",
+                "title": "Fly Away Home (1996)",
+                "releaseDate": "13-Sep-1996"
+            },
+            {
+                "id": "305",
+                "title": "Ice Storm, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "306",
+                "title": "Mrs. Brown (Her Majesty, Mrs. Brown) (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "307",
+                "title": "Devil's Advocate, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "308",
+                "title": "FairyTale: A True Story (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "309",
+                "title": "Deceiver (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "310",
+                "title": "Rainmaker, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "311",
+                "title": "Wings of the Dove, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "312",
+                "title": "Midnight in the Garden of Good and Evil (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "313",
+                "title": "Titanic (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "314",
+                "title": "3 Ninjas: High Noon At Mega Mountain (1998)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "315",
+                "title": "Apt Pupil (1998)",
+                "releaseDate": "23-Oct-1998"
+            },
+            {
+                "id": "316",
+                "title": "As Good As It Gets (1997)",
+                "releaseDate": "23-Dec-1997"
+            },
+            {
+                "id": "317",
+                "title": "In the Name of the Father (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "318",
+                "title": "Schindler's List (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "319",
+                "title": "Everyone Says I Love You (1996)",
+                "releaseDate": "06-Dec-1996"
+            },
+            {
+                "id": "320",
+                "title": "Paradise Lost: The Child Murders at Robin Hood Hills (1996)",
+                "releaseDate": "06-Dec-1996"
+            },
+            {
+                "id": "321",
+                "title": "Mother (1996)",
+                "releaseDate": "25-Dec-1996"
+            },
+            {
+                "id": "322",
+                "title": "Murder at 1600 (1997)",
+                "releaseDate": "18-Apr-1997"
+            },
+            {
+                "id": "323",
+                "title": "Dante's Peak (1997)",
+                "releaseDate": "07-Feb-1997"
+            },
+            {
+                "id": "324",
+                "title": "Lost Highway (1997)",
+                "releaseDate": "21-Feb-1997"
+            },
+            {
+                "id": "325",
+                "title": "Crash (1996)",
+                "releaseDate": "21-Mar-1997"
+            },
+            {
+                "id": "326",
+                "title": "G.I. Jane (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "327",
+                "title": "Cop Land (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "328",
+                "title": "Conspiracy Theory (1997)",
+                "releaseDate": "08-Aug-1997"
+            },
+            {
+                "id": "329",
+                "title": "Desperate Measures (1998)",
+                "releaseDate": "30-Jan-1998"
+            },
+            {
+                "id": "330",
+                "title": "187 (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "331",
+                "title": "Edge, The (1997)",
+                "releaseDate": "26-Sep-1997"
+            },
+            {
+                "id": "332",
+                "title": "Kiss the Girls (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "333",
+                "title": "Game, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "334",
+                "title": "U Turn (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "335",
+                "title": "How to Be a Player (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "336",
+                "title": "Playing God (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "337",
+                "title": "House of Yes, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "338",
+                "title": "Bean (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "339",
+                "title": "Mad City (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "340",
+                "title": "Boogie Nights (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "341",
+                "title": "Critical Care (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "342",
+                "title": "Man Who Knew Too Little, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "343",
+                "title": "Alien: Resurrection (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "344",
+                "title": "Apostle, The (1997)",
+                "releaseDate": "18-Dec-1997"
+            },
+            {
+                "id": "345",
+                "title": "Deconstructing Harry (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "346",
+                "title": "Jackie Brown (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "347",
+                "title": "Wag the Dog (1997)",
+                "releaseDate": "09-Jan-1998"
+            },
+            {
+                "id": "348",
+                "title": "Desperate Measures (1998)",
+                "releaseDate": "30-Jan-1998"
+            },
+            {
+                "id": "349",
+                "title": "Hard Rain (1998)",
+                "releaseDate": "16-Jan-1998"
+            },
+            {
+                "id": "350",
+                "title": "Fallen (1998)",
+                "releaseDate": "16-Jan-1998"
+            },
+            {
+                "id": "351",
+                "title": "Prophecy II, The (1998)",
+                "releaseDate": "16-Jan-1998"
+            },
+            {
+                "id": "352",
+                "title": "Spice World (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "353",
+                "title": "Deep Rising (1998)",
+                "releaseDate": "30-Jan-1998"
+            },
+            {
+                "id": "354",
+                "title": "Wedding Singer, The (1998)",
+                "releaseDate": "13-Feb-1998"
+            },
+            {
+                "id": "355",
+                "title": "Sphere (1998)",
+                "releaseDate": "13-Feb-1998"
+            },
+            {
+                "id": "356",
+                "title": "Client, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "357",
+                "title": "One Flew Over the Cuckoo's Nest (1975)",
+                "releaseDate": "01-Jan-1975"
+            },
+            {
+                "id": "358",
+                "title": "Spawn (1997)",
+                "releaseDate": "01-Aug-1997"
+            },
+            {
+                "id": "359",
+                "title": "Assignment, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "360",
+                "title": "Wonderland (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "361",
+                "title": "Incognito (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "362",
+                "title": "Blues Brothers 2000 (1998)",
+                "releaseDate": "06-Feb-1998"
+            },
+            {
+                "id": "363",
+                "title": "Sudden Death (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "364",
+                "title": "Ace Ventura: When Nature Calls (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "365",
+                "title": "Powder (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "366",
+                "title": "Dangerous Minds (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "367",
+                "title": "Clueless (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "368",
+                "title": "Bio-Dome (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "369",
+                "title": "Black Sheep (1996)",
+                "releaseDate": "02-Feb-1996"
+            },
+            {
+                "id": "370",
+                "title": "Mary Reilly (1996)",
+                "releaseDate": "23-Feb-1996"
+            },
+            {
+                "id": "371",
+                "title": "Bridges of Madison County, The (1995)",
+                "releaseDate": "09-Feb-1996"
+            },
+            {
+                "id": "372",
+                "title": "Jeffrey (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "373",
+                "title": "Judge Dredd (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "374",
+                "title": "Mighty Morphin Power Rangers: The Movie (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "375",
+                "title": "Showgirls (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "376",
+                "title": "Houseguest (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "377",
+                "title": "Heavyweights (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "378",
+                "title": "Miracle on 34th Street (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "379",
+                "title": "Tales From the Crypt Presents: Demon Knight (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "380",
+                "title": "Star Trek: Generations (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "381",
+                "title": "Muriel's Wedding (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "382",
+                "title": "Adventures of Priscilla, Queen of the Desert, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "383",
+                "title": "Flintstones, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "384",
+                "title": "Naked Gun 33 1/3: The Final Insult (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "385",
+                "title": "True Lies (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "386",
+                "title": "Addams Family Values (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "387",
+                "title": "Age of Innocence, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "388",
+                "title": "Beverly Hills Cop III (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "389",
+                "title": "Black Beauty (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "390",
+                "title": "Fear of a Black Hat (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "391",
+                "title": "Last Action Hero (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "392",
+                "title": "Man Without a Face, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "393",
+                "title": "Mrs. Doubtfire (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "394",
+                "title": "Radioland Murders (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "395",
+                "title": "Robin Hood: Men in Tights (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "396",
+                "title": "Serial Mom (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "397",
+                "title": "Striking Distance (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "398",
+                "title": "Super Mario Bros. (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "399",
+                "title": "Three Musketeers, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "400",
+                "title": "Little Rascals, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "401",
+                "title": "Brady Bunch Movie, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "402",
+                "title": "Ghost (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "403",
+                "title": "Batman (1989)",
+                "releaseDate": "01-Jan-1989"
+            },
+            {
+                "id": "404",
+                "title": "Pinocchio (1940)",
+                "releaseDate": "01-Jan-1940"
+            },
+            {
+                "id": "405",
+                "title": "Mission: Impossible (1996)",
+                "releaseDate": "22-May-1996"
+            },
+            {
+                "id": "406",
+                "title": "Thinner (1996)",
+                "releaseDate": "25-Oct-1996"
+            },
+            {
+                "id": "407",
+                "title": "Spy Hard (1996)",
+                "releaseDate": "24-May-1996"
+            },
+            {
+                "id": "408",
+                "title": "Close Shave, A (1995)",
+                "releaseDate": "28-Apr-1996"
+            },
+            {
+                "id": "409",
+                "title": "Jack (1996)",
+                "releaseDate": "07-Aug-1996"
+            },
+            {
+                "id": "410",
+                "title": "Kingpin (1996)",
+                "releaseDate": "12-Jul-1996"
+            },
+            {
+                "id": "411",
+                "title": "Nutty Professor, The (1996)",
+                "releaseDate": "28-Jun-1996"
+            },
+            {
+                "id": "412",
+                "title": "Very Brady Sequel, A (1996)",
+                "releaseDate": "23-Aug-1996"
+            },
+            {
+                "id": "413",
+                "title": "Tales from the Crypt Presents: Bordello of Blood (1996)",
+                "releaseDate": "19-Jul-1996"
+            },
+            {
+                "id": "414",
+                "title": "My Favorite Year (1982)",
+                "releaseDate": "01-Jan-1982"
+            },
+            {
+                "id": "415",
+                "title": "Apple Dumpling Gang, The (1975)",
+                "releaseDate": "01-Jan-1975"
+            },
+            {
+                "id": "416",
+                "title": "Old Yeller (1957)",
+                "releaseDate": "01-Jan-1957"
+            },
+            {
+                "id": "417",
+                "title": "Parent Trap, The (1961)",
+                "releaseDate": "01-Jan-1961"
+            },
+            {
+                "id": "418",
+                "title": "Cinderella (1950)",
+                "releaseDate": "01-Jan-1950"
+            },
+            {
+                "id": "419",
+                "title": "Mary Poppins (1964)",
+                "releaseDate": "01-Jan-1964"
+            },
+            {
+                "id": "420",
+                "title": "Alice in Wonderland (1951)",
+                "releaseDate": "01-Jan-1951"
+            },
+            {
+                "id": "421",
+                "title": "William Shakespeare's Romeo and Juliet (1996)",
+                "releaseDate": "25-Oct-1996"
+            },
+            {
+                "id": "422",
+                "title": "Aladdin and the King of Thieves (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "423",
+                "title": "E.T. the Extra-Terrestrial (1982)",
+                "releaseDate": "01-Jan-1982"
+            },
+            {
+                "id": "424",
+                "title": "Children of the Corn: The Gathering (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "425",
+                "title": "Bob Roberts (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "426",
+                "title": "Transformers: The Movie, The (1986)",
+                "releaseDate": "01-Jan-1986"
+            },
+            {
+                "id": "427",
+                "title": "To Kill a Mockingbird (1962)",
+                "releaseDate": "01-Jan-1962"
+            },
+            {
+                "id": "428",
+                "title": "Harold and Maude (1971)",
+                "releaseDate": "01-Jan-1971"
+            },
+            {
+                "id": "429",
+                "title": "Day the Earth Stood Still, The (1951)",
+                "releaseDate": "01-Jan-1951"
+            },
+            {
+                "id": "430",
+                "title": "Duck Soup (1933)",
+                "releaseDate": "01-Jan-1933"
+            },
+            {
+                "id": "431",
+                "title": "Highlander (1986)",
+                "releaseDate": "01-Jan-1986"
+            },
+            {
+                "id": "432",
+                "title": "Fantasia (1940)",
+                "releaseDate": "01-Jan-1940"
+            },
+            {
+                "id": "433",
+                "title": "Heathers (1989)",
+                "releaseDate": "01-Jan-1989"
+            },
+            {
+                "id": "434",
+                "title": "Forbidden Planet (1956)",
+                "releaseDate": "01-Jan-1956"
+            },
+            {
+                "id": "435",
+                "title": "Butch Cassidy and the Sundance Kid (1969)",
+                "releaseDate": "01-Jan-1969"
+            },
+            {
+                "id": "436",
+                "title": "American Werewolf in London, An (1981)",
+                "releaseDate": "01-Jan-1981"
+            },
+            {
+                "id": "437",
+                "title": "Amityville 1992: It's About Time (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "438",
+                "title": "Amityville 3-D (1983)",
+                "releaseDate": "01-Jan-1983"
+            },
+            {
+                "id": "439",
+                "title": "Amityville: A New Generation (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "440",
+                "title": "Amityville II: The Possession (1982)",
+                "releaseDate": "01-Jan-1982"
+            },
+            {
+                "id": "441",
+                "title": "Amityville Horror, The (1979)",
+                "releaseDate": "01-Jan-1979"
+            },
+            {
+                "id": "442",
+                "title": "Amityville Curse, The (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "443",
+                "title": "Birds, The (1963)",
+                "releaseDate": "01-Jan-1963"
+            },
+            {
+                "id": "444",
+                "title": "Blob, The (1958)",
+                "releaseDate": "01-Jan-1958"
+            },
+            {
+                "id": "445",
+                "title": "Body Snatcher, The (1945)",
+                "releaseDate": "01-Jan-1945"
+            },
+            {
+                "id": "446",
+                "title": "Burnt Offerings (1976)",
+                "releaseDate": "01-Jan-1976"
+            },
+            {
+                "id": "447",
+                "title": "Carrie (1976)",
+                "releaseDate": "01-Jan-1976"
+            },
+            {
+                "id": "448",
+                "title": "Omen, The (1976)",
+                "releaseDate": "01-Jan-1976"
+            },
+            {
+                "id": "449",
+                "title": "Star Trek: The Motion Picture (1979)",
+                "releaseDate": "01-Jan-1979"
+            },
+            {
+                "id": "450",
+                "title": "Star Trek V: The Final Frontier (1989)",
+                "releaseDate": "01-Jan-1989"
+            },
+            {
+                "id": "451",
+                "title": "Grease (1978)",
+                "releaseDate": "01-Jan-1978"
+            },
+            {
+                "id": "452",
+                "title": "Jaws 2 (1978)",
+                "releaseDate": "01-Jan-1978"
+            },
+            {
+                "id": "453",
+                "title": "Jaws 3-D (1983)",
+                "releaseDate": "01-Jan-1983"
+            },
+            {
+                "id": "454",
+                "title": "Bastard Out of Carolina (1996)",
+                "releaseDate": "15-Dec-1996"
+            },
+            {
+                "id": "455",
+                "title": "Jackie Chan's First Strike (1996)",
+                "releaseDate": "10-Jan-1997"
+            },
+            {
+                "id": "456",
+                "title": "Beverly Hills Ninja (1997)",
+                "releaseDate": "17-Jan-1997"
+            },
+            {
+                "id": "457",
+                "title": "Free Willy 3: The Rescue (1997)",
+                "releaseDate": "08-Aug-1997"
+            },
+            {
+                "id": "458",
+                "title": "Nixon (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "459",
+                "title": "Cry, the Beloved Country (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "460",
+                "title": "Crossing Guard, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "461",
+                "title": "Smoke (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "462",
+                "title": "Like Water For Chocolate (Como agua para chocolate) (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "463",
+                "title": "Secret of Roan Inish, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "464",
+                "title": "Vanya on 42nd Street (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "465",
+                "title": "Jungle Book, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "466",
+                "title": "Red Rock West (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "467",
+                "title": "Bronx Tale, A (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "468",
+                "title": "Rudy (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "469",
+                "title": "Short Cuts (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "470",
+                "title": "Tombstone (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "471",
+                "title": "Courage Under Fire (1996)",
+                "releaseDate": "08-Mar-1996"
+            },
+            {
+                "id": "472",
+                "title": "Dragonheart (1996)",
+                "releaseDate": "31-May-1996"
+            },
+            {
+                "id": "473",
+                "title": "James and the Giant Peach (1996)",
+                "releaseDate": "12-Apr-1996"
+            },
+            {
+                "id": "474",
+                "title": "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb (1963)",
+                "releaseDate": "01-Jan-1963"
+            },
+            {
+                "id": "475",
+                "title": "Trainspotting (1996)",
+                "releaseDate": "19-Jul-1996"
+            },
+            {
+                "id": "476",
+                "title": "First Wives Club, The (1996)",
+                "releaseDate": "14-Sep-1996"
+            },
+            {
+                "id": "477",
+                "title": "Matilda (1996)",
+                "releaseDate": "02-Aug-1996"
+            },
+            {
+                "id": "478",
+                "title": "Philadelphia Story, The (1940)",
+                "releaseDate": "01-Jan-1940"
+            },
+            {
+                "id": "479",
+                "title": "Vertigo (1958)",
+                "releaseDate": "01-Jan-1958"
+            },
+            {
+                "id": "480",
+                "title": "North by Northwest (1959)",
+                "releaseDate": "01-Jan-1959"
+            },
+            {
+                "id": "481",
+                "title": "Apartment, The (1960)",
+                "releaseDate": "01-Jan-1960"
+            },
+            {
+                "id": "482",
+                "title": "Some Like It Hot (1959)",
+                "releaseDate": "01-Jan-1959"
+            },
+            {
+                "id": "483",
+                "title": "Casablanca (1942)",
+                "releaseDate": "01-Jan-1942"
+            },
+            {
+                "id": "484",
+                "title": "Maltese Falcon, The (1941)",
+                "releaseDate": "01-Jan-1941"
+            },
+            {
+                "id": "485",
+                "title": "My Fair Lady (1964)",
+                "releaseDate": "01-Jan-1964"
+            },
+            {
+                "id": "486",
+                "title": "Sabrina (1954)",
+                "releaseDate": "01-Jan-1954"
+            },
+            {
+                "id": "487",
+                "title": "Roman Holiday (1953)",
+                "releaseDate": "01-Jan-1953"
+            },
+            {
+                "id": "488",
+                "title": "Sunset Blvd. (1950)",
+                "releaseDate": "01-Jan-1950"
+            },
+            {
+                "id": "489",
+                "title": "Notorious (1946)",
+                "releaseDate": "01-Jan-1946"
+            },
+            {
+                "id": "490",
+                "title": "To Catch a Thief (1955)",
+                "releaseDate": "01-Jan-1955"
+            },
+            {
+                "id": "491",
+                "title": "Adventures of Robin Hood, The (1938)",
+                "releaseDate": "01-Jan-1938"
+            },
+            {
+                "id": "492",
+                "title": "East of Eden (1955)",
+                "releaseDate": "01-Jan-1955"
+            },
+            {
+                "id": "493",
+                "title": "Thin Man, The (1934)",
+                "releaseDate": "01-Jan-1934"
+            },
+            {
+                "id": "494",
+                "title": "His Girl Friday (1940)",
+                "releaseDate": "01-Jan-1940"
+            },
+            {
+                "id": "495",
+                "title": "Around the World in 80 Days (1956)",
+                "releaseDate": "01-Jan-1956"
+            },
+            {
+                "id": "496",
+                "title": "It's a Wonderful Life (1946)",
+                "releaseDate": "01-Jan-1946"
+            },
+            {
+                "id": "497",
+                "title": "Bringing Up Baby (1938)",
+                "releaseDate": "01-Jan-1938"
+            },
+            {
+                "id": "498",
+                "title": "African Queen, The (1951)",
+                "releaseDate": "01-Jan-1951"
+            },
+            {
+                "id": "499",
+                "title": "Cat on a Hot Tin Roof (1958)",
+                "releaseDate": "01-Jan-1958"
+            },
+            {
+                "id": "500",
+                "title": "Fly Away Home (1996)",
+                "releaseDate": "13-Sep-1996"
+            },
+            {
+                "id": "501",
+                "title": "Dumbo (1941)",
+                "releaseDate": "01-Jan-1941"
+            },
+            {
+                "id": "502",
+                "title": "Bananas (1971)",
+                "releaseDate": "01-Jan-1971"
+            },
+            {
+                "id": "503",
+                "title": "Candidate, The (1972)",
+                "releaseDate": "01-Jan-1972"
+            },
+            {
+                "id": "504",
+                "title": "Bonnie and Clyde (1967)",
+                "releaseDate": "01-Jan-1967"
+            },
+            {
+                "id": "505",
+                "title": "Dial M for Murder (1954)",
+                "releaseDate": "01-Jan-1954"
+            },
+            {
+                "id": "506",
+                "title": "Rebel Without a Cause (1955)",
+                "releaseDate": "01-Jan-1955"
+            },
+            {
+                "id": "507",
+                "title": "Streetcar Named Desire, A (1951)",
+                "releaseDate": "01-Jan-1951"
+            },
+            {
+                "id": "508",
+                "title": "People vs. Larry Flynt, The (1996)",
+                "releaseDate": "27-Dec-1996"
+            },
+            {
+                "id": "509",
+                "title": "My Left Foot (1989)",
+                "releaseDate": "01-Jan-1989"
+            },
+            {
+                "id": "510",
+                "title": "Magnificent Seven, The (1954)",
+                "releaseDate": "01-Jan-1954"
+            },
+            {
+                "id": "511",
+                "title": "Lawrence of Arabia (1962)",
+                "releaseDate": "01-Jan-1962"
+            },
+            {
+                "id": "512",
+                "title": "Wings of Desire (1987)",
+                "releaseDate": "01-Jan-1987"
+            },
+            {
+                "id": "513",
+                "title": "Third Man, The (1949)",
+                "releaseDate": "01-Jan-1949"
+            },
+            {
+                "id": "514",
+                "title": "Annie Hall (1977)",
+                "releaseDate": "01-Jan-1977"
+            },
+            {
+                "id": "515",
+                "title": "Boot, Das (1981)",
+                "releaseDate": "04-Apr-1997"
+            },
+            {
+                "id": "516",
+                "title": "Local Hero (1983)",
+                "releaseDate": "01-Jan-1983"
+            },
+            {
+                "id": "517",
+                "title": "Manhattan (1979)",
+                "releaseDate": "01-Jan-1979"
+            },
+            {
+                "id": "518",
+                "title": "Miller's Crossing (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "519",
+                "title": "Treasure of the Sierra Madre, The (1948)",
+                "releaseDate": "01-Jan-1948"
+            },
+            {
+                "id": "520",
+                "title": "Great Escape, The (1963)",
+                "releaseDate": "01-Jan-1963"
+            },
+            {
+                "id": "521",
+                "title": "Deer Hunter, The (1978)",
+                "releaseDate": "01-Jan-1978"
+            },
+            {
+                "id": "522",
+                "title": "Down by Law (1986)",
+                "releaseDate": "01-Jan-1986"
+            },
+            {
+                "id": "523",
+                "title": "Cool Hand Luke (1967)",
+                "releaseDate": "01-Jan-1967"
+            },
+            {
+                "id": "524",
+                "title": "Great Dictator, The (1940)",
+                "releaseDate": "01-Jan-1940"
+            },
+            {
+                "id": "525",
+                "title": "Big Sleep, The (1946)",
+                "releaseDate": "01-Jan-1946"
+            },
+            {
+                "id": "526",
+                "title": "Ben-Hur (1959)",
+                "releaseDate": "01-Jan-1959"
+            },
+            {
+                "id": "527",
+                "title": "Gandhi (1982)",
+                "releaseDate": "01-Jan-1982"
+            },
+            {
+                "id": "528",
+                "title": "Killing Fields, The (1984)",
+                "releaseDate": "01-Jan-1984"
+            },
+            {
+                "id": "529",
+                "title": "My Life as a Dog (Mitt liv som hund) (1985)",
+                "releaseDate": "01-Jan-1985"
+            },
+            {
+                "id": "530",
+                "title": "Man Who Would Be King, The (1975)",
+                "releaseDate": "01-Jan-1975"
+            },
+            {
+                "id": "531",
+                "title": "Shine (1996)",
+                "releaseDate": "22-Nov-1996"
+            },
+            {
+                "id": "532",
+                "title": "Kama Sutra: A Tale of Love (1996)",
+                "releaseDate": "07-Mar-1997"
+            },
+            {
+                "id": "533",
+                "title": "Daytrippers, The (1996)",
+                "releaseDate": "21-Mar-1997"
+            },
+            {
+                "id": "534",
+                "title": "Traveller (1997)",
+                "releaseDate": "18-Apr-1997"
+            },
+            {
+                "id": "535",
+                "title": "Addicted to Love (1997)",
+                "releaseDate": "23-May-1997"
+            },
+            {
+                "id": "536",
+                "title": "Ponette (1996)",
+                "releaseDate": "23-May-1997"
+            },
+            {
+                "id": "537",
+                "title": "My Own Private Idaho (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "538",
+                "title": "Anastasia (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "539",
+                "title": "Mouse Hunt (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "540",
+                "title": "Money Train (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "541",
+                "title": "Mortal Kombat (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "542",
+                "title": "Pocahontas (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "543",
+                "title": "Mis�rables, Les (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "544",
+                "title": "Things to Do in Denver when You're Dead (1995)",
+                "releaseDate": "02-Feb-1996"
+            },
+            {
+                "id": "545",
+                "title": "Vampire in Brooklyn (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "546",
+                "title": "Broken Arrow (1996)",
+                "releaseDate": "09-Feb-1996"
+            },
+            {
+                "id": "547",
+                "title": "Young Poisoner's Handbook, The (1995)",
+                "releaseDate": "23-Feb-1996"
+            },
+            {
+                "id": "548",
+                "title": "NeverEnding Story III, The (1994)",
+                "releaseDate": "02-Feb-1996"
+            },
+            {
+                "id": "549",
+                "title": "Rob Roy (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "550",
+                "title": "Die Hard: With a Vengeance (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "551",
+                "title": "Lord of Illusions (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "552",
+                "title": "Species (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "553",
+                "title": "Walk in the Clouds, A (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "554",
+                "title": "Waterworld (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "555",
+                "title": "White Man's Burden (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "556",
+                "title": "Wild Bill (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "557",
+                "title": "Farinelli: il castrato (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "558",
+                "title": "Heavenly Creatures (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "559",
+                "title": "Interview with the Vampire (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "560",
+                "title": "Kid in King Arthur's Court, A (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "561",
+                "title": "Mary Shelley's Frankenstein (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "562",
+                "title": "Quick and the Dead, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "563",
+                "title": "Stephen King's The Langoliers (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "564",
+                "title": "Tales from the Hood (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "565",
+                "title": "Village of the Damned (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "566",
+                "title": "Clear and Present Danger (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "567",
+                "title": "Wes Craven's New Nightmare (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "568",
+                "title": "Speed (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "569",
+                "title": "Wolf (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "570",
+                "title": "Wyatt Earp (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "571",
+                "title": "Another Stakeout (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "572",
+                "title": "Blown Away (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "573",
+                "title": "Body Snatchers (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "574",
+                "title": "Boxing Helena (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "575",
+                "title": "City Slickers II: The Legend of Curly's Gold (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "576",
+                "title": "Cliffhanger (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "577",
+                "title": "Coneheads (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "578",
+                "title": "Demolition Man (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "579",
+                "title": "Fatal Instinct (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "580",
+                "title": "Englishman Who Went Up a Hill, But Came Down a Mountain, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "581",
+                "title": "Kalifornia (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "582",
+                "title": "Piano, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "583",
+                "title": "Romeo Is Bleeding (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "584",
+                "title": "Secret Garden, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "585",
+                "title": "Son in Law (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "586",
+                "title": "Terminal Velocity (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "587",
+                "title": "Hour of the Pig, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "588",
+                "title": "Beauty and the Beast (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "589",
+                "title": "Wild Bunch, The (1969)",
+                "releaseDate": "01-Jan-1969"
+            },
+            {
+                "id": "590",
+                "title": "Hellraiser: Bloodline (1996)",
+                "releaseDate": "08-Mar-1996"
+            },
+            {
+                "id": "591",
+                "title": "Primal Fear (1996)",
+                "releaseDate": "30-Mar-1996"
+            },
+            {
+                "id": "592",
+                "title": "True Crime (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "593",
+                "title": "Stalingrad (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "594",
+                "title": "Heavy (1995)",
+                "releaseDate": "05-Jun-1996"
+            },
+            {
+                "id": "595",
+                "title": "Fan, The (1996)",
+                "releaseDate": "16-Aug-1996"
+            },
+            {
+                "id": "596",
+                "title": "Hunchback of Notre Dame, The (1996)",
+                "releaseDate": "21-Jun-1996"
+            },
+            {
+                "id": "597",
+                "title": "Eraser (1996)",
+                "releaseDate": "21-Jun-1996"
+            },
+            {
+                "id": "598",
+                "title": "Big Squeeze, The (1996)",
+                "releaseDate": "06-Sep-1996"
+            },
+            {
+                "id": "599",
+                "title": "Police Story 4: Project S (Chao ji ji hua) (1993)",
+                "releaseDate": "16-Aug-1996"
+            },
+            {
+                "id": "600",
+                "title": "Daniel Defoe's Robinson Crusoe (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "601",
+                "title": "For Whom the Bell Tolls (1943)",
+                "releaseDate": "01-Jan-1943"
+            },
+            {
+                "id": "602",
+                "title": "American in Paris, An (1951)",
+                "releaseDate": "01-Jan-1951"
+            },
+            {
+                "id": "603",
+                "title": "Rear Window (1954)",
+                "releaseDate": "01-Jan-1954"
+            },
+            {
+                "id": "604",
+                "title": "It Happened One Night (1934)",
+                "releaseDate": "01-Jan-1934"
+            },
+            {
+                "id": "605",
+                "title": "Meet Me in St. Louis (1944)",
+                "releaseDate": "01-Jan-1944"
+            },
+            {
+                "id": "606",
+                "title": "All About Eve (1950)",
+                "releaseDate": "01-Jan-1950"
+            },
+            {
+                "id": "607",
+                "title": "Rebecca (1940)",
+                "releaseDate": "01-Jan-1940"
+            },
+            {
+                "id": "608",
+                "title": "Spellbound (1945)",
+                "releaseDate": "01-Jan-1945"
+            },
+            {
+                "id": "609",
+                "title": "Father of the Bride (1950)",
+                "releaseDate": "01-Jan-1950"
+            },
+            {
+                "id": "610",
+                "title": "Gigi (1958)",
+                "releaseDate": "01-Jan-1958"
+            },
+            {
+                "id": "611",
+                "title": "Laura (1944)",
+                "releaseDate": "01-Jan-1944"
+            },
+            {
+                "id": "612",
+                "title": "Lost Horizon (1937)",
+                "releaseDate": "01-Jan-1937"
+            },
+            {
+                "id": "613",
+                "title": "My Man Godfrey (1936)",
+                "releaseDate": "01-Jan-1936"
+            },
+            {
+                "id": "614",
+                "title": "Giant (1956)",
+                "releaseDate": "01-Jan-1956"
+            },
+            {
+                "id": "615",
+                "title": "39 Steps, The (1935)",
+                "releaseDate": "01-Jan-1935"
+            },
+            {
+                "id": "616",
+                "title": "Night of the Living Dead (1968)",
+                "releaseDate": "01-Jan-1968"
+            },
+            {
+                "id": "617",
+                "title": "Blue Angel, The (Blaue Engel, Der) (1930)",
+                "releaseDate": "01-Jan-1930"
+            },
+            {
+                "id": "618",
+                "title": "Picnic (1955)",
+                "releaseDate": "01-Jan-1955"
+            },
+            {
+                "id": "619",
+                "title": "Extreme Measures (1996)",
+                "releaseDate": "27-Sep-1996"
+            },
+            {
+                "id": "620",
+                "title": "Chamber, The (1996)",
+                "releaseDate": "11-Oct-1996"
+            },
+            {
+                "id": "621",
+                "title": "Davy Crockett, King of the Wild Frontier (1955)",
+                "releaseDate": "01-Jan-1955"
+            },
+            {
+                "id": "622",
+                "title": "Swiss Family Robinson (1960)",
+                "releaseDate": "01-Jan-1960"
+            },
+            {
+                "id": "623",
+                "title": "Angels in the Outfield (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "624",
+                "title": "Three Caballeros, The (1945)",
+                "releaseDate": "01-Jan-1945"
+            },
+            {
+                "id": "625",
+                "title": "Sword in the Stone, The (1963)",
+                "releaseDate": "01-Jan-1963"
+            },
+            {
+                "id": "626",
+                "title": "So Dear to My Heart (1949)",
+                "releaseDate": "01-Jan-1949"
+            },
+            {
+                "id": "627",
+                "title": "Robin Hood: Prince of Thieves (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "628",
+                "title": "Sleepers (1996)",
+                "releaseDate": "18-Oct-1996"
+            },
+            {
+                "id": "629",
+                "title": "Victor/Victoria (1982)",
+                "releaseDate": "01-Jan-1982"
+            },
+            {
+                "id": "630",
+                "title": "Great Race, The (1965)",
+                "releaseDate": "01-Jan-1965"
+            },
+            {
+                "id": "631",
+                "title": "Crying Game, The (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "632",
+                "title": "Sophie's Choice (1982)",
+                "releaseDate": "01-Jan-1982"
+            },
+            {
+                "id": "633",
+                "title": "Christmas Carol, A (1938)",
+                "releaseDate": "01-Jan-1938"
+            },
+            {
+                "id": "634",
+                "title": "Microcosmos: Le peuple de l'herbe (1996)",
+                "releaseDate": "11-Oct-1996"
+            },
+            {
+                "id": "635",
+                "title": "Fog, The (1980)",
+                "releaseDate": "01-Jan-1980"
+            },
+            {
+                "id": "636",
+                "title": "Escape from New York (1981)",
+                "releaseDate": "01-Jan-1981"
+            },
+            {
+                "id": "637",
+                "title": "Howling, The (1981)",
+                "releaseDate": "01-Jan-1981"
+            },
+            {
+                "id": "638",
+                "title": "Return of Martin Guerre, The (Retour de Martin Guerre, Le) (1982)",
+                "releaseDate": "01-Jan-1982"
+            },
+            {
+                "id": "639",
+                "title": "Tin Drum, The (Blechtrommel, Die) (1979)",
+                "releaseDate": "01-Jan-1979"
+            },
+            {
+                "id": "640",
+                "title": "Cook the Thief His Wife & Her Lover, The (1989)",
+                "releaseDate": "01-Jan-1989"
+            },
+            {
+                "id": "641",
+                "title": "Paths of Glory (1957)",
+                "releaseDate": "01-Jan-1957"
+            },
+            {
+                "id": "642",
+                "title": "Grifters, The (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "643",
+                "title": "The Innocent (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "644",
+                "title": "Thin Blue Line, The (1988)",
+                "releaseDate": "01-Jan-1988"
+            },
+            {
+                "id": "645",
+                "title": "Paris Is Burning (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "646",
+                "title": "Once Upon a Time in the West (1969)",
+                "releaseDate": "01-Jan-1969"
+            },
+            {
+                "id": "647",
+                "title": "Ran (1985)",
+                "releaseDate": "01-Jan-1985"
+            },
+            {
+                "id": "648",
+                "title": "Quiet Man, The (1952)",
+                "releaseDate": "01-Jan-1952"
+            },
+            {
+                "id": "649",
+                "title": "Once Upon a Time in America (1984)",
+                "releaseDate": "01-Jan-1984"
+            },
+            {
+                "id": "650",
+                "title": "Seventh Seal, The (Sjunde inseglet, Det) (1957)",
+                "releaseDate": "01-Jan-1957"
+            },
+            {
+                "id": "651",
+                "title": "Glory (1989)",
+                "releaseDate": "01-Jan-1989"
+            },
+            {
+                "id": "652",
+                "title": "Rosencrantz and Guildenstern Are Dead (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "653",
+                "title": "Touch of Evil (1958)",
+                "releaseDate": "01-Jan-1958"
+            },
+            {
+                "id": "654",
+                "title": "Chinatown (1974)",
+                "releaseDate": "01-Jan-1974"
+            },
+            {
+                "id": "655",
+                "title": "Stand by Me (1986)",
+                "releaseDate": "01-Jan-1986"
+            },
+            {
+                "id": "656",
+                "title": "M (1931)",
+                "releaseDate": "01-Jan-1931"
+            },
+            {
+                "id": "657",
+                "title": "Manchurian Candidate, The (1962)",
+                "releaseDate": "01-Jan-1962"
+            },
+            {
+                "id": "658",
+                "title": "Pump Up the Volume (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "659",
+                "title": "Arsenic and Old Lace (1944)",
+                "releaseDate": "01-Jan-1944"
+            },
+            {
+                "id": "660",
+                "title": "Fried Green Tomatoes (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "661",
+                "title": "High Noon (1952)",
+                "releaseDate": "01-Jan-1952"
+            },
+            {
+                "id": "662",
+                "title": "Somewhere in Time (1980)",
+                "releaseDate": "01-Jan-1980"
+            },
+            {
+                "id": "663",
+                "title": "Being There (1979)",
+                "releaseDate": "01-Jan-1979"
+            },
+            {
+                "id": "664",
+                "title": "Paris, Texas (1984)",
+                "releaseDate": "01-Jan-1984"
+            },
+            {
+                "id": "665",
+                "title": "Alien 3 (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "666",
+                "title": "Blood For Dracula (Andy Warhol's Dracula) (1974)",
+                "releaseDate": "01-Jan-1974"
+            },
+            {
+                "id": "667",
+                "title": "Audrey Rose (1977)",
+                "releaseDate": "01-Jan-1977"
+            },
+            {
+                "id": "668",
+                "title": "Blood Beach (1981)",
+                "releaseDate": "01-Jan-1981"
+            },
+            {
+                "id": "669",
+                "title": "Body Parts (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "670",
+                "title": "Body Snatchers (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "671",
+                "title": "Bride of Frankenstein (1935)",
+                "releaseDate": "01-Jan-1935"
+            },
+            {
+                "id": "672",
+                "title": "Candyman (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "673",
+                "title": "Cape Fear (1962)",
+                "releaseDate": "01-Jan-1962"
+            },
+            {
+                "id": "674",
+                "title": "Cat People (1982)",
+                "releaseDate": "01-Jan-1982"
+            },
+            {
+                "id": "675",
+                "title": "Nosferatu (Nosferatu, eine Symphonie des Grauens) (1922)",
+                "releaseDate": "01-Jan-1922"
+            },
+            {
+                "id": "676",
+                "title": "Crucible, The (1996)",
+                "releaseDate": "27-Nov-1996"
+            },
+            {
+                "id": "677",
+                "title": "Fire on the Mountain (1996)",
+                "releaseDate": "24-Jan-1997"
+            },
+            {
+                "id": "678",
+                "title": "Volcano (1997)",
+                "releaseDate": "25-Apr-1997"
+            },
+            {
+                "id": "679",
+                "title": "Conan the Barbarian (1981)",
+                "releaseDate": "01-Jan-1981"
+            },
+            {
+                "id": "680",
+                "title": "Kull the Conqueror (1997)",
+                "releaseDate": "29-Aug-1997"
+            },
+            {
+                "id": "681",
+                "title": "Wishmaster (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "682",
+                "title": "I Know What You Did Last Summer (1997)",
+                "releaseDate": "17-Oct-1997"
+            },
+            {
+                "id": "683",
+                "title": "Rocket Man (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "684",
+                "title": "In the Line of Fire (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "685",
+                "title": "Executive Decision (1996)",
+                "releaseDate": "09-Mar-1996"
+            },
+            {
+                "id": "686",
+                "title": "Perfect World, A (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "687",
+                "title": "McHale's Navy (1997)",
+                "releaseDate": "18-Apr-1997"
+            },
+            {
+                "id": "688",
+                "title": "Leave It to Beaver (1997)",
+                "releaseDate": "22-Aug-1997"
+            },
+            {
+                "id": "689",
+                "title": "Jackal, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "690",
+                "title": "Seven Years in Tibet (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "691",
+                "title": "Dark City (1998)",
+                "releaseDate": "09-Jan-1998"
+            },
+            {
+                "id": "692",
+                "title": "American President, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "693",
+                "title": "Casino (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "694",
+                "title": "Persuasion (1995)",
+                "releaseDate": "25-Sep-1995"
+            },
+            {
+                "id": "695",
+                "title": "Kicking and Screaming (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "696",
+                "title": "City Hall (1996)",
+                "releaseDate": "16-Feb-1996"
+            },
+            {
+                "id": "697",
+                "title": "Basketball Diaries, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "698",
+                "title": "Browning Version, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "699",
+                "title": "Little Women (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "700",
+                "title": "Miami Rhapsody (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "701",
+                "title": "Wonderful, Horrible Life of Leni Riefenstahl, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "702",
+                "title": "Barcelona (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "703",
+                "title": "Widows' Peak (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "704",
+                "title": "House of the Spirits, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "705",
+                "title": "Singin' in the Rain (1952)",
+                "releaseDate": "01-Jan-1952"
+            },
+            {
+                "id": "706",
+                "title": "Bad Moon (1996)",
+                "releaseDate": "01-Nov-1996"
+            },
+            {
+                "id": "707",
+                "title": "Enchanted April (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "708",
+                "title": "Sex, Lies, and Videotape (1989)",
+                "releaseDate": "01-Jan-1989"
+            },
+            {
+                "id": "709",
+                "title": "Strictly Ballroom (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "710",
+                "title": "Better Off Dead... (1985)",
+                "releaseDate": "01-Jan-1985"
+            },
+            {
+                "id": "711",
+                "title": "Substance of Fire, The (1996)",
+                "releaseDate": "06-Dec-1996"
+            },
+            {
+                "id": "712",
+                "title": "Tin Men (1987)",
+                "releaseDate": "01-Jan-1987"
+            },
+            {
+                "id": "713",
+                "title": "Othello (1995)",
+                "releaseDate": "18-Dec-1995"
+            },
+            {
+                "id": "714",
+                "title": "Carrington (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "715",
+                "title": "To Die For (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "716",
+                "title": "Home for the Holidays (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "717",
+                "title": "Juror, The (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "718",
+                "title": "In the Bleak Midwinter (1995)",
+                "releaseDate": "23-Feb-1996"
+            },
+            {
+                "id": "719",
+                "title": "Canadian Bacon (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "720",
+                "title": "First Knight (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "721",
+                "title": "Mallrats (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "722",
+                "title": "Nine Months (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "723",
+                "title": "Boys on the Side (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "724",
+                "title": "Circle of Friends (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "725",
+                "title": "Exit to Eden (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "726",
+                "title": "Fluke (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "727",
+                "title": "Immortal Beloved (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "728",
+                "title": "Junior (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "729",
+                "title": "Nell (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "730",
+                "title": "Queen Margot (Reine Margot, La) (1994)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "731",
+                "title": "Corrina, Corrina (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "732",
+                "title": "Dave (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "733",
+                "title": "Go Fish (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "734",
+                "title": "Made in America (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "735",
+                "title": "Philadelphia (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "736",
+                "title": "Shadowlands (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "737",
+                "title": "Sirens (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "738",
+                "title": "Threesome (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "739",
+                "title": "Pretty Woman (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "740",
+                "title": "Jane Eyre (1996)",
+                "releaseDate": "05-Apr-1996"
+            },
+            {
+                "id": "741",
+                "title": "Last Supper, The (1995)",
+                "releaseDate": "05-Apr-1996"
+            },
+            {
+                "id": "742",
+                "title": "Ransom (1996)",
+                "releaseDate": "08-Nov-1996"
+            },
+            {
+                "id": "743",
+                "title": "Crow: City of Angels, The (1996)",
+                "releaseDate": "30-Aug-1996"
+            },
+            {
+                "id": "744",
+                "title": "Michael Collins (1996)",
+                "releaseDate": "11-Oct-1996"
+            },
+            {
+                "id": "745",
+                "title": "Ruling Class, The (1972)",
+                "releaseDate": "01-Jan-1972"
+            },
+            {
+                "id": "746",
+                "title": "Real Genius (1985)",
+                "releaseDate": "01-Jan-1985"
+            },
+            {
+                "id": "747",
+                "title": "Benny & Joon (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "748",
+                "title": "Saint, The (1997)",
+                "releaseDate": "14-Mar-1997"
+            },
+            {
+                "id": "749",
+                "title": "MatchMaker, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "750",
+                "title": "Amistad (1997)",
+                "releaseDate": "18-Dec-1997"
+            },
+            {
+                "id": "751",
+                "title": "Tomorrow Never Dies (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "752",
+                "title": "Replacement Killers, The (1998)",
+                "releaseDate": "06-Feb-1998"
+            },
+            {
+                "id": "753",
+                "title": "Burnt By the Sun (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "754",
+                "title": "Red Corner (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "755",
+                "title": "Jumanji (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "756",
+                "title": "Father of the Bride Part II (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "757",
+                "title": "Across the Sea of Time (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "758",
+                "title": "Lawnmower Man 2: Beyond Cyberspace (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "759",
+                "title": "Fair Game (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "760",
+                "title": "Screamers (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "761",
+                "title": "Nick of Time (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "762",
+                "title": "Beautiful Girls (1996)",
+                "releaseDate": "09-Feb-1996"
+            },
+            {
+                "id": "763",
+                "title": "Happy Gilmore (1996)",
+                "releaseDate": "16-Feb-1996"
+            },
+            {
+                "id": "764",
+                "title": "If Lucy Fell (1996)",
+                "releaseDate": "08-Mar-1996"
+            },
+            {
+                "id": "765",
+                "title": "Boomerang (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "766",
+                "title": "Man of the Year (1995)",
+                "releaseDate": "01-Mar-1996"
+            },
+            {
+                "id": "767",
+                "title": "Addiction, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "768",
+                "title": "Casper (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "769",
+                "title": "Congo (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "770",
+                "title": "Devil in a Blue Dress (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "771",
+                "title": "Johnny Mnemonic (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "772",
+                "title": "Kids (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "773",
+                "title": "Mute Witness (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "774",
+                "title": "Prophecy, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "775",
+                "title": "Something to Talk About (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "776",
+                "title": "Three Wishes (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "777",
+                "title": "Castle Freak (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "778",
+                "title": "Don Juan DeMarco (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "779",
+                "title": "Drop Zone (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "780",
+                "title": "Dumb & Dumber (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "781",
+                "title": "French Kiss (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "782",
+                "title": "Little Odessa (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "783",
+                "title": "Milk Money (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "784",
+                "title": "Beyond Bedlam (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "785",
+                "title": "Only You (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "786",
+                "title": "Perez Family, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "787",
+                "title": "Roommates (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "788",
+                "title": "Relative Fear (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "789",
+                "title": "Swimming with Sharks (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "790",
+                "title": "Tommy Boy (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "791",
+                "title": "Baby-Sitters Club, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "792",
+                "title": "Bullets Over Broadway (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "793",
+                "title": "Crooklyn (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "794",
+                "title": "It Could Happen to You (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "795",
+                "title": "Richie Rich (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "796",
+                "title": "Speechless (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "797",
+                "title": "Timecop (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "798",
+                "title": "Bad Company (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "799",
+                "title": "Boys Life (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "800",
+                "title": "In the Mouth of Madness (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "801",
+                "title": "Air Up There, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "802",
+                "title": "Hard Target (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "803",
+                "title": "Heaven & Earth (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "804",
+                "title": "Jimmy Hollywood (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "805",
+                "title": "Manhattan Murder Mystery (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "806",
+                "title": "Menace II Society (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "807",
+                "title": "Poetic Justice (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "808",
+                "title": "Program, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "809",
+                "title": "Rising Sun (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "810",
+                "title": "Shadow, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "811",
+                "title": "Thirty-Two Short Films About Glenn Gould (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "812",
+                "title": "Andre (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "813",
+                "title": "Celluloid Closet, The (1995)",
+                "releaseDate": "15-Mar-1996"
+            },
+            {
+                "id": "814",
+                "title": "Great Day in Harlem, A (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "815",
+                "title": "One Fine Day (1996)",
+                "releaseDate": "30-Nov-1996"
+            },
+            {
+                "id": "816",
+                "title": "Candyman: Farewell to the Flesh (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "817",
+                "title": "Frisk (1995)",
+                "releaseDate": "29-Mar-1996"
+            },
+            {
+                "id": "818",
+                "title": "Girl 6 (1996)",
+                "releaseDate": "22-Mar-1996"
+            },
+            {
+                "id": "819",
+                "title": "Eddie (1996)",
+                "releaseDate": "31-May-1996"
+            },
+            {
+                "id": "820",
+                "title": "Space Jam (1996)",
+                "releaseDate": "15-Nov-1996"
+            },
+            {
+                "id": "821",
+                "title": "Mrs. Winterbourne (1996)",
+                "releaseDate": "19-Apr-1996"
+            },
+            {
+                "id": "822",
+                "title": "Faces (1968)",
+                "releaseDate": "01-Jan-1968"
+            },
+            {
+                "id": "823",
+                "title": "Mulholland Falls (1996)",
+                "releaseDate": "26-Apr-1996"
+            },
+            {
+                "id": "824",
+                "title": "Great White Hype, The (1996)",
+                "releaseDate": "03-May-1996"
+            },
+            {
+                "id": "825",
+                "title": "Arrival, The (1996)",
+                "releaseDate": "31-May-1996"
+            },
+            {
+                "id": "826",
+                "title": "Phantom, The (1996)",
+                "releaseDate": "07-Jun-1996"
+            },
+            {
+                "id": "827",
+                "title": "Daylight (1996)",
+                "releaseDate": "06-Dec-1996"
+            },
+            {
+                "id": "828",
+                "title": "Alaska (1996)",
+                "releaseDate": "21-Aug-1996"
+            },
+            {
+                "id": "829",
+                "title": "Fled (1996)",
+                "releaseDate": "19-Jul-1996"
+            },
+            {
+                "id": "830",
+                "title": "Power 98 (1995)",
+                "releaseDate": "17-May-1996"
+            },
+            {
+                "id": "831",
+                "title": "Escape from L.A. (1996)",
+                "releaseDate": "09-Aug-1996"
+            },
+            {
+                "id": "832",
+                "title": "Bogus (1996)",
+                "releaseDate": "06-Sep-1996"
+            },
+            {
+                "id": "833",
+                "title": "Bulletproof (1996)",
+                "releaseDate": "06-Sep-1996"
+            },
+            {
+                "id": "834",
+                "title": "Halloween: The Curse of Michael Myers (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "835",
+                "title": "Gay Divorcee, The (1934)",
+                "releaseDate": "01-Jan-1934"
+            },
+            {
+                "id": "836",
+                "title": "Ninotchka (1939)",
+                "releaseDate": "01-Jan-1939"
+            },
+            {
+                "id": "837",
+                "title": "Meet John Doe (1941)",
+                "releaseDate": "01-Jan-1941"
+            },
+            {
+                "id": "838",
+                "title": "In the Line of Duty 2 (1987)",
+                "releaseDate": "30-Aug-1996"
+            },
+            {
+                "id": "839",
+                "title": "Loch Ness (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "840",
+                "title": "Last Man Standing (1996)",
+                "releaseDate": "20-Sep-1996"
+            },
+            {
+                "id": "841",
+                "title": "Glimmer Man, The (1996)",
+                "releaseDate": "04-Oct-1996"
+            },
+            {
+                "id": "842",
+                "title": "Pollyanna (1960)",
+                "releaseDate": "01-Jan-1960"
+            },
+            {
+                "id": "843",
+                "title": "Shaggy Dog, The (1959)",
+                "releaseDate": "01-Jan-1959"
+            },
+            {
+                "id": "844",
+                "title": "Freeway (1996)",
+                "releaseDate": "23-Aug-1996"
+            },
+            {
+                "id": "845",
+                "title": "That Thing You Do! (1996)",
+                "releaseDate": "28-Sep-1996"
+            },
+            {
+                "id": "846",
+                "title": "To Gillian on Her 37th Birthday (1996)",
+                "releaseDate": "18-Oct-1996"
+            },
+            {
+                "id": "847",
+                "title": "Looking for Richard (1996)",
+                "releaseDate": "11-Oct-1996"
+            },
+            {
+                "id": "848",
+                "title": "Murder, My Sweet (1944)",
+                "releaseDate": "01-Jan-1944"
+            },
+            {
+                "id": "849",
+                "title": "Days of Thunder (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "850",
+                "title": "Perfect Candidate, A (1996)",
+                "releaseDate": "27-Sep-1996"
+            },
+            {
+                "id": "851",
+                "title": "Two or Three Things I Know About Her (1966)",
+                "releaseDate": "01-Jan-1966"
+            },
+            {
+                "id": "852",
+                "title": "Bloody Child, The (1996)",
+                "releaseDate": "26-Oct-1996"
+            },
+            {
+                "id": "853",
+                "title": "Braindead (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "854",
+                "title": "Bad Taste (1987)",
+                "releaseDate": "01-Jan-1987"
+            },
+            {
+                "id": "855",
+                "title": "Diva (1981)",
+                "releaseDate": "01-Jan-1981"
+            },
+            {
+                "id": "856",
+                "title": "Night on Earth (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "857",
+                "title": "Paris Was a Woman (1995)",
+                "releaseDate": "08-Nov-1996"
+            },
+            {
+                "id": "858",
+                "title": "Amityville: Dollhouse (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "859",
+                "title": "April Fool's Day (1986)",
+                "releaseDate": "01-Jan-1986"
+            },
+            {
+                "id": "860",
+                "title": "Believers, The (1987)",
+                "releaseDate": "01-Jan-1987"
+            },
+            {
+                "id": "861",
+                "title": "Nosferatu a Venezia (1986)",
+                "releaseDate": "01-Jan-1986"
+            },
+            {
+                "id": "862",
+                "title": "Jingle All the Way (1996)",
+                "releaseDate": "22-Nov-1996"
+            },
+            {
+                "id": "863",
+                "title": "Garden of Finzi-Contini, The (Giardino dei Finzi-Contini, Il) (1970)",
+                "releaseDate": "08-Nov-1996"
+            },
+            {
+                "id": "864",
+                "title": "My Fellow Americans (1996)",
+                "releaseDate": "20-Dec-1996"
+            },
+            {
+                "id": "865",
+                "title": "Ice Storm, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "866",
+                "title": "Michael (1996)",
+                "releaseDate": "25-Dec-1996"
+            },
+            {
+                "id": "867",
+                "title": "Whole Wide World, The (1996)",
+                "releaseDate": "25-Dec-1996"
+            },
+            {
+                "id": "868",
+                "title": "Hearts and Minds (1996)",
+                "releaseDate": "10-Jan-1997"
+            },
+            {
+                "id": "869",
+                "title": "Fools Rush In (1997)",
+                "releaseDate": "14-Feb-1997"
+            },
+            {
+                "id": "870",
+                "title": "Touch (1997)",
+                "releaseDate": "14-Feb-1997"
+            },
+            {
+                "id": "871",
+                "title": "Vegas Vacation (1997)",
+                "releaseDate": "14-Feb-1997"
+            },
+            {
+                "id": "872",
+                "title": "Love Jones (1997)",
+                "releaseDate": "14-Mar-1997"
+            },
+            {
+                "id": "873",
+                "title": "Picture Perfect (1997)",
+                "releaseDate": "01-Aug-1997"
+            },
+            {
+                "id": "874",
+                "title": "Career Girls (1997)",
+                "releaseDate": "08-Aug-1997"
+            },
+            {
+                "id": "875",
+                "title": "She's So Lovely (1997)",
+                "releaseDate": "22-Aug-1997"
+            },
+            {
+                "id": "876",
+                "title": "Money Talks (1997)",
+                "releaseDate": "22-Aug-1997"
+            },
+            {
+                "id": "877",
+                "title": "Excess Baggage (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "878",
+                "title": "That Darn Cat! (1997)",
+                "releaseDate": "14-Feb-1997"
+            },
+            {
+                "id": "879",
+                "title": "Peacemaker, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "880",
+                "title": "Soul Food (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "881",
+                "title": "Money Talks (1997)",
+                "releaseDate": "22-Aug-1997"
+            },
+            {
+                "id": "882",
+                "title": "Washington Square (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "883",
+                "title": "Telling Lies in America (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "884",
+                "title": "Year of the Horse (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "885",
+                "title": "Phantoms (1998)",
+                "releaseDate": "01-Jan-1998"
+            },
+            {
+                "id": "886",
+                "title": "Life Less Ordinary, A (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "887",
+                "title": "Eve's Bayou (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "888",
+                "title": "One Night Stand (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "889",
+                "title": "Tango Lesson, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "890",
+                "title": "Mortal Kombat: Annihilation (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "891",
+                "title": "Bent (1997)",
+                "releaseDate": "18-Dec-1997"
+            },
+            {
+                "id": "892",
+                "title": "Flubber (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "893",
+                "title": "For Richer or Poorer (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "894",
+                "title": "Home Alone 3 (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "895",
+                "title": "Scream 2 (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "896",
+                "title": "Sweet Hereafter, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "897",
+                "title": "Time Tracers (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "898",
+                "title": "Postman, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "899",
+                "title": "Winter Guest, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "900",
+                "title": "Kundun (1997)",
+                "releaseDate": "25-Dec-1997"
+            },
+            {
+                "id": "901",
+                "title": "Mr. Magoo (1997)",
+                "releaseDate": "25-Dec-1997"
+            },
+            {
+                "id": "902",
+                "title": "Big Lebowski, The (1998)",
+                "releaseDate": "26-Dec-1997"
+            },
+            {
+                "id": "903",
+                "title": "Afterglow (1997)",
+                "releaseDate": "26-Dec-1997"
+            },
+            {
+                "id": "904",
+                "title": "Ma vie en rose (My Life in Pink) (1997)",
+                "releaseDate": "26-Dec-1997"
+            },
+            {
+                "id": "905",
+                "title": "Great Expectations (1998)",
+                "releaseDate": "01-Jan-1998"
+            },
+            {
+                "id": "906",
+                "title": "Oscar & Lucinda (1997)",
+                "releaseDate": "31-Dec-1997"
+            },
+            {
+                "id": "907",
+                "title": "Vermin (1998)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "908",
+                "title": "Half Baked (1998)",
+                "releaseDate": "16-Jan-1998"
+            },
+            {
+                "id": "909",
+                "title": "Dangerous Beauty (1998)",
+                "releaseDate": "23-Jan-1998"
+            },
+            {
+                "id": "910",
+                "title": "Nil By Mouth (1997)",
+                "releaseDate": "06-Feb-1998"
+            },
+            {
+                "id": "911",
+                "title": "Twilight (1998)",
+                "releaseDate": "30-Jan-1998"
+            },
+            {
+                "id": "912",
+                "title": "U.S. Marshalls (1998)",
+                "releaseDate": "10-Mar-1998"
+            },
+            {
+                "id": "913",
+                "title": "Love and Death on Long Island (1997)",
+                "releaseDate": "10-Mar-1998"
+            },
+            {
+                "id": "914",
+                "title": "Wild Things (1998)",
+                "releaseDate": "14-Mar-1998"
+            },
+            {
+                "id": "915",
+                "title": "Primary Colors (1998)",
+                "releaseDate": "20-Mar-1998"
+            },
+            {
+                "id": "916",
+                "title": "Lost in Space (1998)",
+                "releaseDate": "27-Mar-1998"
+            },
+            {
+                "id": "917",
+                "title": "Mercury Rising (1998)",
+                "releaseDate": "27-Mar-1998"
+            },
+            {
+                "id": "918",
+                "title": "City of Angels (1998)",
+                "releaseDate": "03-Apr-1998"
+            },
+            {
+                "id": "919",
+                "title": "City of Lost Children, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "920",
+                "title": "Two Bits (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "921",
+                "title": "Farewell My Concubine (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "922",
+                "title": "Dead Man (1995)",
+                "releaseDate": "10-May-1996"
+            },
+            {
+                "id": "923",
+                "title": "Raise the Red Lantern (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "924",
+                "title": "White Squall (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "925",
+                "title": "Unforgettable (1996)",
+                "releaseDate": "23-Feb-1996"
+            },
+            {
+                "id": "926",
+                "title": "Down Periscope (1996)",
+                "releaseDate": "01-Mar-1996"
+            },
+            {
+                "id": "927",
+                "title": "Flower of My Secret, The (Flor de mi secreto, La) (1995)",
+                "releaseDate": "08-Mar-1996"
+            },
+            {
+                "id": "928",
+                "title": "Craft, The (1996)",
+                "releaseDate": "26-Apr-1996"
+            },
+            {
+                "id": "929",
+                "title": "Harriet the Spy (1996)",
+                "releaseDate": "03-Jul-1996"
+            },
+            {
+                "id": "930",
+                "title": "Chain Reaction (1996)",
+                "releaseDate": "31-Jul-1996"
+            },
+            {
+                "id": "931",
+                "title": "Island of Dr. Moreau, The (1996)",
+                "releaseDate": "23-Aug-1996"
+            },
+            {
+                "id": "932",
+                "title": "First Kid (1996)",
+                "releaseDate": "30-Aug-1996"
+            },
+            {
+                "id": "933",
+                "title": "Funeral, The (1996)",
+                "releaseDate": "25-Oct-1996"
+            },
+            {
+                "id": "934",
+                "title": "Preacher's Wife, The (1996)",
+                "releaseDate": "13-Dec-1996"
+            },
+            {
+                "id": "935",
+                "title": "Paradise Road (1997)",
+                "releaseDate": "18-Apr-1997"
+            },
+            {
+                "id": "936",
+                "title": "Brassed Off (1996)",
+                "releaseDate": "13-Jun-1997"
+            },
+            {
+                "id": "937",
+                "title": "Thousand Acres, A (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "938",
+                "title": "Smile Like Yours, A (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "939",
+                "title": "Murder in the First (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "940",
+                "title": "Airheads (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "941",
+                "title": "With Honors (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "942",
+                "title": "What's Love Got to Do with It (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "943",
+                "title": "Killing Zoe (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "944",
+                "title": "Renaissance Man (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "945",
+                "title": "Charade (1963)",
+                "releaseDate": "01-Jan-1963"
+            },
+            {
+                "id": "946",
+                "title": "Fox and the Hound, The (1981)",
+                "releaseDate": "01-Jan-1981"
+            },
+            {
+                "id": "947",
+                "title": "Big Blue, The (Grand bleu, Le) (1988)",
+                "releaseDate": "01-Jan-1988"
+            },
+            {
+                "id": "948",
+                "title": "Booty Call (1997)",
+                "releaseDate": "28-Feb-1997"
+            },
+            {
+                "id": "949",
+                "title": "How to Make an American Quilt (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "950",
+                "title": "Georgia (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "951",
+                "title": "Indian in the Cupboard, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "952",
+                "title": "Blue in the Face (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "953",
+                "title": "Unstrung Heroes (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "954",
+                "title": "Unzipped (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "955",
+                "title": "Before Sunrise (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "956",
+                "title": "Nobody's Fool (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "957",
+                "title": "Pushing Hands (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "958",
+                "title": "To Live (Huozhe) (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "959",
+                "title": "Dazed and Confused (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "960",
+                "title": "Naked (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "961",
+                "title": "Orlando (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "962",
+                "title": "Ruby in Paradise (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "963",
+                "title": "Some Folks Call It a Sling Blade (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "964",
+                "title": "Month by the Lake, A (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "965",
+                "title": "Funny Face (1957)",
+                "releaseDate": "01-Jan-1957"
+            },
+            {
+                "id": "966",
+                "title": "Affair to Remember, An (1957)",
+                "releaseDate": "01-Jan-1957"
+            },
+            {
+                "id": "967",
+                "title": "Little Lord Fauntleroy (1936)",
+                "releaseDate": "01-Jan-1936"
+            },
+            {
+                "id": "968",
+                "title": "Inspector General, The (1949)",
+                "releaseDate": "01-Jan-1949"
+            },
+            {
+                "id": "969",
+                "title": "Winnie the Pooh and the Blustery Day (1968)",
+                "releaseDate": "01-Jan-1968"
+            },
+            {
+                "id": "970",
+                "title": "Hear My Song (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "971",
+                "title": "Mediterraneo (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "972",
+                "title": "Passion Fish (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "973",
+                "title": "Grateful Dead (1995)",
+                "releaseDate": "18-Oct-1996"
+            },
+            {
+                "id": "974",
+                "title": "Eye for an Eye (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "975",
+                "title": "Fear (1996)",
+                "releaseDate": "12-Apr-1996"
+            },
+            {
+                "id": "976",
+                "title": "Solo (1996)",
+                "releaseDate": "23-Aug-1996"
+            },
+            {
+                "id": "977",
+                "title": "Substitute, The (1996)",
+                "releaseDate": "19-Apr-1996"
+            },
+            {
+                "id": "978",
+                "title": "Heaven's Prisoners (1996)",
+                "releaseDate": "10-May-1996"
+            },
+            {
+                "id": "979",
+                "title": "Trigger Effect, The (1996)",
+                "releaseDate": "30-Aug-1996"
+            },
+            {
+                "id": "980",
+                "title": "Mother Night (1996)",
+                "releaseDate": "01-Nov-1996"
+            },
+            {
+                "id": "981",
+                "title": "Dangerous Ground (1997)",
+                "releaseDate": "04-Sep-1996"
+            },
+            {
+                "id": "982",
+                "title": "Maximum Risk (1996)",
+                "releaseDate": "13-Sep-1996"
+            },
+            {
+                "id": "983",
+                "title": "Rich Man's Wife, The (1996)",
+                "releaseDate": "13-Sep-1996"
+            },
+            {
+                "id": "984",
+                "title": "Shadow Conspiracy (1997)",
+                "releaseDate": "31-Jan-1997"
+            },
+            {
+                "id": "985",
+                "title": "Blood & Wine (1997)",
+                "releaseDate": "15-Nov-1996"
+            },
+            {
+                "id": "986",
+                "title": "Turbulence (1997)",
+                "releaseDate": "10-Jan-1997"
+            },
+            {
+                "id": "987",
+                "title": "Underworld (1997)",
+                "releaseDate": "09-May-1997"
+            },
+            {
+                "id": "988",
+                "title": "Beautician and the Beast, The (1997)",
+                "releaseDate": "07-Feb-1997"
+            },
+            {
+                "id": "989",
+                "title": "Cats Don't Dance (1997)",
+                "releaseDate": "26-Mar-1997"
+            },
+            {
+                "id": "990",
+                "title": "Anna Karenina (1997)",
+                "releaseDate": "04-Apr-1997"
+            },
+            {
+                "id": "991",
+                "title": "Keys to Tulsa (1997)",
+                "releaseDate": "11-Apr-1997"
+            },
+            {
+                "id": "992",
+                "title": "Head Above Water (1996)",
+                "releaseDate": "20-Jun-1997"
+            },
+            {
+                "id": "993",
+                "title": "Hercules (1997)",
+                "releaseDate": "27-Jun-1997"
+            },
+            {
+                "id": "994",
+                "title": "Last Time I Committed Suicide, The (1997)",
+                "releaseDate": "20-Jun-1997"
+            },
+            {
+                "id": "995",
+                "title": "Kiss Me, Guido (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "996",
+                "title": "Big Green, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "997",
+                "title": "Stuart Saves His Family (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "998",
+                "title": "Cabin Boy (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "999",
+                "title": "Clean Slate (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1000",
+                "title": "Lightning Jack (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1001",
+                "title": "Stupids, The (1996)",
+                "releaseDate": "30-Aug-1996"
+            },
+            {
+                "id": "1002",
+                "title": "Pest, The (1997)",
+                "releaseDate": "07-Feb-1997"
+            },
+            {
+                "id": "1003",
+                "title": "That Darn Cat! (1997)",
+                "releaseDate": "14-Feb-1997"
+            },
+            {
+                "id": "1004",
+                "title": "Geronimo: An American Legend (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1005",
+                "title": "Double vie de V�ronique, La (Double Life of Veronique, The) (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "1006",
+                "title": "Until the End of the World (Bis ans Ende der Welt) (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "1007",
+                "title": "Waiting for Guffman (1996)",
+                "releaseDate": "31-Jan-1997"
+            },
+            {
+                "id": "1008",
+                "title": "I Shot Andy Warhol (1996)",
+                "releaseDate": "01-May-1996"
+            },
+            {
+                "id": "1009",
+                "title": "Stealing Beauty (1996)",
+                "releaseDate": "14-Jun-1996"
+            },
+            {
+                "id": "1010",
+                "title": "Basquiat (1996)",
+                "releaseDate": "16-Aug-1996"
+            },
+            {
+                "id": "1011",
+                "title": "2 Days in the Valley (1996)",
+                "releaseDate": "27-Sep-1996"
+            },
+            {
+                "id": "1012",
+                "title": "Private Parts (1997)",
+                "releaseDate": "07-Mar-1997"
+            },
+            {
+                "id": "1013",
+                "title": "Anaconda (1997)",
+                "releaseDate": "11-Apr-1997"
+            },
+            {
+                "id": "1014",
+                "title": "Romy and Michele's High School Reunion (1997)",
+                "releaseDate": "25-Apr-1997"
+            },
+            {
+                "id": "1015",
+                "title": "Shiloh (1997)",
+                "releaseDate": "23-May-1997"
+            },
+            {
+                "id": "1016",
+                "title": "Con Air (1997)",
+                "releaseDate": "06-Jun-1997"
+            },
+            {
+                "id": "1017",
+                "title": "Trees Lounge (1996)",
+                "releaseDate": "11-Oct-1996"
+            },
+            {
+                "id": "1018",
+                "title": "Tie Me Up! Tie Me Down! (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "1019",
+                "title": "Die xue shuang xiong (Killer, The) (1989)",
+                "releaseDate": "01-Jan-1989"
+            },
+            {
+                "id": "1020",
+                "title": "Gaslight (1944)",
+                "releaseDate": "01-Jan-1944"
+            },
+            {
+                "id": "1021",
+                "title": "8 1/2 (1963)",
+                "releaseDate": "01-Jan-1963"
+            },
+            {
+                "id": "1022",
+                "title": "Fast, Cheap & Out of Control (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1023",
+                "title": "Fathers' Day (1997)",
+                "releaseDate": "09-May-1997"
+            },
+            {
+                "id": "1024",
+                "title": "Mrs. Dalloway (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1025",
+                "title": "Fire Down Below (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1026",
+                "title": "Lay of the Land, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1027",
+                "title": "Shooter, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1028",
+                "title": "Grumpier Old Men (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1029",
+                "title": "Jury Duty (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1030",
+                "title": "Beverly Hillbillies, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1031",
+                "title": "Lassie (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1032",
+                "title": "Little Big League (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1033",
+                "title": "Homeward Bound II: Lost in San Francisco (1996)",
+                "releaseDate": "08-Mar-1996"
+            },
+            {
+                "id": "1034",
+                "title": "Quest, The (1996)",
+                "releaseDate": "26-Apr-1996"
+            },
+            {
+                "id": "1035",
+                "title": "Cool Runnings (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1036",
+                "title": "Drop Dead Fred (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "1037",
+                "title": "Grease 2 (1982)",
+                "releaseDate": "01-Jan-1982"
+            },
+            {
+                "id": "1038",
+                "title": "Switchback (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1039",
+                "title": "Hamlet (1996)",
+                "releaseDate": "24-Jan-1997"
+            },
+            {
+                "id": "1040",
+                "title": "Two if by Sea (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "1041",
+                "title": "Forget Paris (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1042",
+                "title": "Just Cause (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1043",
+                "title": "Rent-a-Kid (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1044",
+                "title": "Paper, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1045",
+                "title": "Fearless (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1046",
+                "title": "Malice (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1047",
+                "title": "Multiplicity (1996)",
+                "releaseDate": "12-Jul-1996"
+            },
+            {
+                "id": "1048",
+                "title": "She's the One (1996)",
+                "releaseDate": "23-Aug-1996"
+            },
+            {
+                "id": "1049",
+                "title": "House Arrest (1996)",
+                "releaseDate": "02-Aug-1996"
+            },
+            {
+                "id": "1050",
+                "title": "Ghost and Mrs. Muir, The (1947)",
+                "releaseDate": "01-Jan-1947"
+            },
+            {
+                "id": "1051",
+                "title": "Associate, The (1996)",
+                "releaseDate": "19-Oct-1996"
+            },
+            {
+                "id": "1052",
+                "title": "Dracula: Dead and Loving It (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1053",
+                "title": "Now and Then (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1054",
+                "title": "Mr. Wrong (1996)",
+                "releaseDate": "16-Feb-1996"
+            },
+            {
+                "id": "1055",
+                "title": "Simple Twist of Fate, A (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1056",
+                "title": "Cronos (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "1057",
+                "title": "Pallbearer, The (1996)",
+                "releaseDate": "19-Apr-1996"
+            },
+            {
+                "id": "1058",
+                "title": "War, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1059",
+                "title": "Don't Be a Menace to South Central While Drinking Your Juice in the Hood (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "1060",
+                "title": "Adventures of Pinocchio, The (1996)",
+                "releaseDate": "26-Jul-1996"
+            },
+            {
+                "id": "1061",
+                "title": "Evening Star, The (1996)",
+                "releaseDate": "25-Dec-1996"
+            },
+            {
+                "id": "1062",
+                "title": "Four Days in September (1997)",
+                "releaseDate": "23-Jan-1998"
+            },
+            {
+                "id": "1063",
+                "title": "Little Princess, A (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1064",
+                "title": "Crossfire (1947)",
+                "releaseDate": "01-Jan-1947"
+            },
+            {
+                "id": "1065",
+                "title": "Koyaanisqatsi (1983)",
+                "releaseDate": "01-Jan-1983"
+            },
+            {
+                "id": "1066",
+                "title": "Balto (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1067",
+                "title": "Bottle Rocket (1996)",
+                "releaseDate": "21-Feb-1996"
+            },
+            {
+                "id": "1068",
+                "title": "Star Maker, The (Uomo delle stelle, L') (1995)",
+                "releaseDate": "01-Mar-1996"
+            },
+            {
+                "id": "1069",
+                "title": "Amateur (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1070",
+                "title": "Living in Oblivion (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1071",
+                "title": "Party Girl (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1072",
+                "title": "Pyromaniac's Love Story, A (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1073",
+                "title": "Shallow Grave (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1074",
+                "title": "Reality Bites (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1075",
+                "title": "Man of No Importance, A (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1076",
+                "title": "Pagemaster, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1077",
+                "title": "Love and a .45 (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1078",
+                "title": "Oliver & Company (1988)",
+                "releaseDate": "29-Mar-1988"
+            },
+            {
+                "id": "1079",
+                "title": "Joe's Apartment (1996)",
+                "releaseDate": "26-Jul-1996"
+            },
+            {
+                "id": "1080",
+                "title": "Celestial Clockwork (1994)",
+                "releaseDate": "12-Jul-1996"
+            },
+            {
+                "id": "1081",
+                "title": "Curdled (1996)",
+                "releaseDate": "27-Sep-1996"
+            },
+            {
+                "id": "1082",
+                "title": "Female Perversions (1996)",
+                "releaseDate": "25-Apr-1997"
+            },
+            {
+                "id": "1083",
+                "title": "Albino Alligator (1996)",
+                "releaseDate": "17-Jan-1997"
+            },
+            {
+                "id": "1084",
+                "title": "Anne Frank Remembered (1995)",
+                "releaseDate": "23-Feb-1996"
+            },
+            {
+                "id": "1085",
+                "title": "Carried Away (1996)",
+                "releaseDate": "29-Mar-1996"
+            },
+            {
+                "id": "1086",
+                "title": "It's My Party (1995)",
+                "releaseDate": "22-Mar-1996"
+            },
+            {
+                "id": "1087",
+                "title": "Bloodsport 2 (1995)",
+                "releaseDate": "01-Mar-1996"
+            },
+            {
+                "id": "1088",
+                "title": "Double Team (1997)",
+                "releaseDate": "04-Apr-1997"
+            },
+            {
+                "id": "1089",
+                "title": "Speed 2: Cruise Control (1997)",
+                "releaseDate": "13-Jun-1997"
+            },
+            {
+                "id": "1090",
+                "title": "Sliver (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1091",
+                "title": "Pete's Dragon (1977)",
+                "releaseDate": "01-Jan-1977"
+            },
+            {
+                "id": "1092",
+                "title": "Dear God (1996)",
+                "releaseDate": "01-Nov-1996"
+            },
+            {
+                "id": "1093",
+                "title": "Live Nude Girls (1995)",
+                "releaseDate": "01-Mar-1996"
+            },
+            {
+                "id": "1094",
+                "title": "Thin Line Between Love and Hate, A (1996)",
+                "releaseDate": "03-Apr-1996"
+            },
+            {
+                "id": "1095",
+                "title": "High School High (1996)",
+                "releaseDate": "25-Oct-1996"
+            },
+            {
+                "id": "1096",
+                "title": "Commandments (1997)",
+                "releaseDate": "02-May-1997"
+            },
+            {
+                "id": "1097",
+                "title": "Hate (Haine, La) (1995)",
+                "releaseDate": "09-Feb-1996"
+            },
+            {
+                "id": "1098",
+                "title": "Flirting With Disaster (1996)",
+                "releaseDate": "22-Mar-1996"
+            },
+            {
+                "id": "1099",
+                "title": "Red Firecracker, Green Firecracker (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1100",
+                "title": "What Happened Was... (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1101",
+                "title": "Six Degrees of Separation (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1102",
+                "title": "Two Much (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "1103",
+                "title": "Trust (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "1104",
+                "title": "C'est arriv� pr�s de chez vous (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "1105",
+                "title": "Firestorm (1998)",
+                "releaseDate": "09-Jan-1998"
+            },
+            {
+                "id": "1106",
+                "title": "Newton Boys, The (1998)",
+                "releaseDate": "14-Mar-1998"
+            },
+            {
+                "id": "1107",
+                "title": "Beyond Rangoon (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1108",
+                "title": "Feast of July (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1109",
+                "title": "Death and the Maiden (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1110",
+                "title": "Tank Girl (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1111",
+                "title": "Double Happiness (1994)",
+                "releaseDate": "01-Mar-1996"
+            },
+            {
+                "id": "1112",
+                "title": "Cobb (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1113",
+                "title": "Mrs. Parker and the Vicious Circle (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1114",
+                "title": "Faithful (1996)",
+                "releaseDate": "03-Apr-1996"
+            },
+            {
+                "id": "1115",
+                "title": "Twelfth Night (1996)",
+                "releaseDate": "25-Oct-1996"
+            },
+            {
+                "id": "1116",
+                "title": "Mark of Zorro, The (1940)",
+                "releaseDate": "01-Jan-1940"
+            },
+            {
+                "id": "1117",
+                "title": "Surviving Picasso (1996)",
+                "releaseDate": "20-Sep-1996"
+            },
+            {
+                "id": "1118",
+                "title": "Up in Smoke (1978)",
+                "releaseDate": "01-Jan-1978"
+            },
+            {
+                "id": "1119",
+                "title": "Some Kind of Wonderful (1987)",
+                "releaseDate": "01-Jan-1987"
+            },
+            {
+                "id": "1120",
+                "title": "I'm Not Rappaport (1996)",
+                "releaseDate": "13-Nov-1996"
+            },
+            {
+                "id": "1121",
+                "title": "Umbrellas of Cherbourg, The (Parapluies de Cherbourg, Les) (1964)",
+                "releaseDate": "05-Apr-1996"
+            },
+            {
+                "id": "1122",
+                "title": "They Made Me a Criminal (1939)",
+                "releaseDate": "01-Jan-1939"
+            },
+            {
+                "id": "1123",
+                "title": "Last Time I Saw Paris, The (1954)",
+                "releaseDate": "01-Jan-1954"
+            },
+            {
+                "id": "1124",
+                "title": "Farewell to Arms, A (1932)",
+                "releaseDate": "01-Jan-1932"
+            },
+            {
+                "id": "1125",
+                "title": "Innocents, The (1961)",
+                "releaseDate": "01-Jan-1961"
+            },
+            {
+                "id": "1126",
+                "title": "Old Man and the Sea, The (1958)",
+                "releaseDate": "01-Jan-1958"
+            },
+            {
+                "id": "1127",
+                "title": "Truman Show, The (1998)",
+                "releaseDate": "01-Jan-1998"
+            },
+            {
+                "id": "1128",
+                "title": "Heidi Fleiss: Hollywood Madam (1995)",
+                "releaseDate": "09-Feb-1996"
+            },
+            {
+                "id": "1129",
+                "title": "Chungking Express (1994)",
+                "releaseDate": "16-Feb-1996"
+            },
+            {
+                "id": "1130",
+                "title": "Jupiter's Wife (1994)",
+                "releaseDate": "09-Feb-1996"
+            },
+            {
+                "id": "1131",
+                "title": "Safe (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1132",
+                "title": "Feeling Minnesota (1996)",
+                "releaseDate": "13-Sep-1996"
+            },
+            {
+                "id": "1133",
+                "title": "Escape to Witch Mountain (1975)",
+                "releaseDate": "01-Jan-1975"
+            },
+            {
+                "id": "1134",
+                "title": "Get on the Bus (1996)",
+                "releaseDate": "16-Oct-1996"
+            },
+            {
+                "id": "1135",
+                "title": "Doors, The (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "1136",
+                "title": "Ghosts of Mississippi (1996)",
+                "releaseDate": "20-Dec-1996"
+            },
+            {
+                "id": "1137",
+                "title": "Beautiful Thing (1996)",
+                "releaseDate": "09-Oct-1996"
+            },
+            {
+                "id": "1138",
+                "title": "Best Men (1997)",
+                "releaseDate": "01-Sep-1997"
+            },
+            {
+                "id": "1139",
+                "title": "Hackers (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1140",
+                "title": "Road to Wellville, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1141",
+                "title": "War Room, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1142",
+                "title": "When We Were Kings (1996)",
+                "releaseDate": "14-Feb-1997"
+            },
+            {
+                "id": "1143",
+                "title": "Hard Eight (1996)",
+                "releaseDate": "28-Feb-1997"
+            },
+            {
+                "id": "1144",
+                "title": "Quiet Room, The (1996)",
+                "releaseDate": "02-May-1997"
+            },
+            {
+                "id": "1145",
+                "title": "Blue Chips (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1146",
+                "title": "Calendar Girl (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1147",
+                "title": "My Family (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1148",
+                "title": "Tom & Viv (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1149",
+                "title": "Walkabout (1971)",
+                "releaseDate": "20-Dec-1971"
+            },
+            {
+                "id": "1150",
+                "title": "Last Dance (1996)",
+                "releaseDate": "03-May-1996"
+            },
+            {
+                "id": "1151",
+                "title": "Original Gangstas (1996)",
+                "releaseDate": "10-May-1996"
+            },
+            {
+                "id": "1152",
+                "title": "In Love and War (1996)",
+                "releaseDate": "24-Jan-1997"
+            },
+            {
+                "id": "1153",
+                "title": "Backbeat (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1154",
+                "title": "Alphaville (1965)",
+                "releaseDate": "01-Jan-1965"
+            },
+            {
+                "id": "1155",
+                "title": "Rendezvous in Paris (Rendez-vous de Paris, Les) (1995)",
+                "releaseDate": "28-Jun-1996"
+            },
+            {
+                "id": "1156",
+                "title": "Cyclo (1995)",
+                "releaseDate": "02-Aug-1996"
+            },
+            {
+                "id": "1157",
+                "title": "Relic, The (1997)",
+                "releaseDate": "17-Jan-1997"
+            },
+            {
+                "id": "1158",
+                "title": "Fille seule, La (A Single Girl) (1995)",
+                "releaseDate": "30-Oct-1996"
+            },
+            {
+                "id": "1159",
+                "title": "Stalker (1979)",
+                "releaseDate": "01-Jan-1979"
+            },
+            {
+                "id": "1160",
+                "title": "Love! Valour! Compassion! (1997)",
+                "releaseDate": "16-May-1997"
+            },
+            {
+                "id": "1161",
+                "title": "Palookaville (1996)",
+                "releaseDate": "25-Oct-1996"
+            },
+            {
+                "id": "1162",
+                "title": "Phat Beach (1996)",
+                "releaseDate": "02-Aug-1996"
+            },
+            {
+                "id": "1163",
+                "title": "Portrait of a Lady, The (1996)",
+                "releaseDate": "27-Dec-1996"
+            },
+            {
+                "id": "1164",
+                "title": "Zeus and Roxanne (1997)",
+                "releaseDate": "10-Jan-1997"
+            },
+            {
+                "id": "1165",
+                "title": "Big Bully (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "1166",
+                "title": "Love & Human Remains (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1167",
+                "title": "Sum of Us, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1168",
+                "title": "Little Buddha (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1169",
+                "title": "Fresh (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1170",
+                "title": "Spanking the Monkey (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1171",
+                "title": "Wild Reeds (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1172",
+                "title": "Women, The (1939)",
+                "releaseDate": "01-Jan-1939"
+            },
+            {
+                "id": "1173",
+                "title": "Bliss (1997)",
+                "releaseDate": "06-Jun-1997"
+            },
+            {
+                "id": "1174",
+                "title": "Caught (1996)",
+                "releaseDate": "27-Sep-1996"
+            },
+            {
+                "id": "1175",
+                "title": "Hugo Pool (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1176",
+                "title": "Welcome To Sarajevo (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1177",
+                "title": "Dunston Checks In (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "1178",
+                "title": "Major Payne (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1179",
+                "title": "Man of the House (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1180",
+                "title": "I Love Trouble (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1181",
+                "title": "Low Down Dirty Shame, A (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1182",
+                "title": "Cops and Robbersons (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1183",
+                "title": "Cowboy Way, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1184",
+                "title": "Endless Summer 2, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1185",
+                "title": "In the Army Now (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1186",
+                "title": "Inkwell, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1187",
+                "title": "Switchblade Sisters (1975)",
+                "releaseDate": "17-May-1975"
+            },
+            {
+                "id": "1188",
+                "title": "Young Guns II (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "1189",
+                "title": "Prefontaine (1997)",
+                "releaseDate": "24-Jan-1997"
+            },
+            {
+                "id": "1190",
+                "title": "That Old Feeling (1997)",
+                "releaseDate": "04-Apr-1997"
+            },
+            {
+                "id": "1191",
+                "title": "Letter From Death Row, A (1998)",
+                "releaseDate": "01-Feb-1998"
+            },
+            {
+                "id": "1192",
+                "title": "Boys of St. Vincent, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1193",
+                "title": "Before the Rain (Pred dozhdot) (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1194",
+                "title": "Once Were Warriors (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1195",
+                "title": "Strawberry and Chocolate (Fresa y chocolate) (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1196",
+                "title": "Savage Nights (Nuits fauves, Les) (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "1197",
+                "title": "Family Thing, A (1996)",
+                "releaseDate": "23-Mar-1996"
+            },
+            {
+                "id": "1198",
+                "title": "Purple Noon (1960)",
+                "releaseDate": "28-Jun-1960"
+            },
+            {
+                "id": "1199",
+                "title": "Cemetery Man (Dellamorte Dellamore) (1994)",
+                "releaseDate": "12-Apr-1996"
+            },
+            {
+                "id": "1200",
+                "title": "Kim (1950)",
+                "releaseDate": "01-Jan-1950"
+            },
+            {
+                "id": "1201",
+                "title": "Marlene Dietrich: Shadow and Light (1996)",
+                "releaseDate": "02-Apr-1996"
+            },
+            {
+                "id": "1202",
+                "title": "Maybe, Maybe Not (Bewegte Mann, Der) (1994)",
+                "releaseDate": "19-Jul-1996"
+            },
+            {
+                "id": "1203",
+                "title": "Top Hat (1935)",
+                "releaseDate": "01-Jan-1935"
+            },
+            {
+                "id": "1204",
+                "title": "To Be or Not to Be (1942)",
+                "releaseDate": "01-Jan-1942"
+            },
+            {
+                "id": "1205",
+                "title": "Secret Agent, The (1996)",
+                "releaseDate": "08-Nov-1996"
+            },
+            {
+                "id": "1206",
+                "title": "Amos & Andrew (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1207",
+                "title": "Jade (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1208",
+                "title": "Kiss of Death (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1209",
+                "title": "Mixed Nuts (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1210",
+                "title": "Virtuosity (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1211",
+                "title": "Blue Sky (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1212",
+                "title": "Flesh and Bone (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1213",
+                "title": "Guilty as Sin (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1214",
+                "title": "In the Realm of the Senses (Ai no corrida) (1976)",
+                "releaseDate": "08-Mar-1976"
+            },
+            {
+                "id": "1215",
+                "title": "Barb Wire (1996)",
+                "releaseDate": "03-May-1996"
+            },
+            {
+                "id": "1216",
+                "title": "Kissed (1996)",
+                "releaseDate": "18-Apr-1997"
+            },
+            {
+                "id": "1217",
+                "title": "Assassins (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1218",
+                "title": "Friday (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1219",
+                "title": "Goofy Movie, A (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1220",
+                "title": "Higher Learning (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1221",
+                "title": "When a Man Loves a Woman (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1222",
+                "title": "Judgment Night (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1223",
+                "title": "King of the Hill (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1224",
+                "title": "Scout, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1225",
+                "title": "Angus (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1226",
+                "title": "Night Falls on Manhattan (1997)",
+                "releaseDate": "16-May-1997"
+            },
+            {
+                "id": "1227",
+                "title": "Awfully Big Adventure, An (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1228",
+                "title": "Under Siege 2: Dark Territory (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1229",
+                "title": "Poison Ivy II (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1230",
+                "title": "Ready to Wear (Pret-A-Porter) (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1231",
+                "title": "Marked for Death (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "1232",
+                "title": "Madonna: Truth or Dare (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "1233",
+                "title": "N�nette et Boni (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "1234",
+                "title": "Chairman of the Board (1998)",
+                "releaseDate": "01-Jan-1998"
+            },
+            {
+                "id": "1235",
+                "title": "Big Bang Theory, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1236",
+                "title": "Other Voices, Other Rooms (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1237",
+                "title": "Twisted (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "1238",
+                "title": "Full Speed (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "1239",
+                "title": "Cutthroat Island (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1240",
+                "title": "Ghost in the Shell (Kokaku kidotai) (1995)",
+                "releaseDate": "12-Apr-1996"
+            },
+            {
+                "id": "1241",
+                "title": "Van, The (1996)",
+                "releaseDate": "27-Jun-1997"
+            },
+            {
+                "id": "1242",
+                "title": "Old Lady Who Walked in the Sea, The (Vieille qui marchait dans la mer, La) (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "1243",
+                "title": "Night Flier (1997)",
+                "releaseDate": "06-Feb-1998"
+            },
+            {
+                "id": "1244",
+                "title": "Metro (1997)",
+                "releaseDate": "17-Jan-1997"
+            },
+            {
+                "id": "1245",
+                "title": "Gridlock'd (1997)",
+                "releaseDate": "29-Jan-1997"
+            },
+            {
+                "id": "1246",
+                "title": "Bushwhacked (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1247",
+                "title": "Bad Girls (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1248",
+                "title": "Blink (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1249",
+                "title": "For Love or Money (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1250",
+                "title": "Best of the Best 3: No Turning Back (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1251",
+                "title": "A Chef in Love (1996)",
+                "releaseDate": "25-Apr-1997"
+            },
+            {
+                "id": "1252",
+                "title": "Contempt (M�pris, Le) (1963)",
+                "releaseDate": "27-Jun-1997"
+            },
+            {
+                "id": "1253",
+                "title": "Tie That Binds, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1254",
+                "title": "Gone Fishin' (1997)",
+                "releaseDate": "30-May-1997"
+            },
+            {
+                "id": "1255",
+                "title": "Broken English (1996)",
+                "releaseDate": "02-May-1997"
+            },
+            {
+                "id": "1256",
+                "title": "Designated Mourner, The (1997)",
+                "releaseDate": "23-May-1997"
+            },
+            {
+                "id": "1257",
+                "title": "Designated Mourner, The (1997)",
+                "releaseDate": "23-May-1997"
+            },
+            {
+                "id": "1258",
+                "title": "Trial and Error (1997)",
+                "releaseDate": "30-May-1997"
+            },
+            {
+                "id": "1259",
+                "title": "Pie in the Sky (1995)",
+                "releaseDate": "09-Feb-1996"
+            },
+            {
+                "id": "1260",
+                "title": "Total Eclipse (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1261",
+                "title": "Run of the Country, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1262",
+                "title": "Walking and Talking (1996)",
+                "releaseDate": "12-Jul-1996"
+            },
+            {
+                "id": "1263",
+                "title": "Foxfire (1996)",
+                "releaseDate": "23-Aug-1996"
+            },
+            {
+                "id": "1264",
+                "title": "Nothing to Lose (1994)",
+                "releaseDate": "16-Aug-1996"
+            },
+            {
+                "id": "1265",
+                "title": "Star Maps (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1266",
+                "title": "Bread and Chocolate (Pane e cioccolata) (1973)",
+                "releaseDate": "01-Jan-1973"
+            },
+            {
+                "id": "1267",
+                "title": "Clockers (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1268",
+                "title": "Bitter Moon (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "1269",
+                "title": "Love in the Afternoon (1957)",
+                "releaseDate": "01-Jan-1957"
+            },
+            {
+                "id": "1270",
+                "title": "Life with Mikey (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1271",
+                "title": "North (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1272",
+                "title": "Talking About Sex (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1273",
+                "title": "Color of Night (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1274",
+                "title": "Robocop 3 (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1275",
+                "title": "Killer (Bulletproof Heart) (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1276",
+                "title": "Sunset Park (1996)",
+                "releaseDate": "26-Apr-1996"
+            },
+            {
+                "id": "1277",
+                "title": "Set It Off (1996)",
+                "releaseDate": "25-Sep-1996"
+            },
+            {
+                "id": "1278",
+                "title": "Selena (1997)",
+                "releaseDate": "21-Mar-1997"
+            },
+            {
+                "id": "1279",
+                "title": "Wild America (1997)",
+                "releaseDate": "04-Jul-1997"
+            },
+            {
+                "id": "1280",
+                "title": "Gang Related (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1281",
+                "title": "Manny & Lo (1996)",
+                "releaseDate": "26-Jul-1996"
+            },
+            {
+                "id": "1282",
+                "title": "Grass Harp, The (1995)",
+                "releaseDate": "11-Oct-1996"
+            },
+            {
+                "id": "1283",
+                "title": "Out to Sea (1997)",
+                "releaseDate": "04-Jul-1997"
+            },
+            {
+                "id": "1284",
+                "title": "Before and After (1996)",
+                "releaseDate": "23-Feb-1996"
+            },
+            {
+                "id": "1285",
+                "title": "Princess Caraboo (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1286",
+                "title": "Shall We Dance? (1937)",
+                "releaseDate": "01-Jan-1937"
+            },
+            {
+                "id": "1287",
+                "title": "Ed (1996)",
+                "releaseDate": "08-Mar-1996"
+            },
+            {
+                "id": "1288",
+                "title": "Denise Calls Up (1995)",
+                "releaseDate": "29-Mar-1996"
+            },
+            {
+                "id": "1289",
+                "title": "Jack and Sarah (1995)",
+                "releaseDate": "22-Mar-1996"
+            },
+            {
+                "id": "1290",
+                "title": "Country Life (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1291",
+                "title": "Celtic Pride (1996)",
+                "releaseDate": "19-Apr-1996"
+            },
+            {
+                "id": "1292",
+                "title": "Simple Wish, A (1997)",
+                "releaseDate": "11-Jul-1997"
+            },
+            {
+                "id": "1293",
+                "title": "Star Kid (1997)",
+                "releaseDate": "16-Jan-1998"
+            },
+            {
+                "id": "1294",
+                "title": "Ayn Rand: A Sense of Life (1997)",
+                "releaseDate": "13-Feb-1998"
+            },
+            {
+                "id": "1295",
+                "title": "Kicked in the Head (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1296",
+                "title": "Indian Summer (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "1297",
+                "title": "Love Affair (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1298",
+                "title": "Band Wagon, The (1953)",
+                "releaseDate": "01-Jan-1953"
+            },
+            {
+                "id": "1299",
+                "title": "Penny Serenade (1941)",
+                "releaseDate": "01-Jan-1941"
+            },
+            {
+                "id": "1300",
+                "title": "'Til There Was You (1997)",
+                "releaseDate": "30-May-1997"
+            },
+            {
+                "id": "1301",
+                "title": "Stripes (1981)",
+                "releaseDate": "01-Jan-1981"
+            },
+            {
+                "id": "1302",
+                "title": "Late Bloomers (1996)",
+                "releaseDate": "06-Jun-1997"
+            },
+            {
+                "id": "1303",
+                "title": "Getaway, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1304",
+                "title": "New York Cop (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "1305",
+                "title": "National Lampoon's Senior Trip (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1306",
+                "title": "Delta of Venus (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1307",
+                "title": "Carmen Miranda: Bananas Is My Business (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1308",
+                "title": "Babyfever (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1309",
+                "title": "Very Natural Thing, A (1974)",
+                "releaseDate": "01-Jan-1974"
+            },
+            {
+                "id": "1310",
+                "title": "Walk in the Sun, A (1945)",
+                "releaseDate": "01-Jan-1945"
+            },
+            {
+                "id": "1311",
+                "title": "Waiting to Exhale (1995)",
+                "releaseDate": "15-Jan-1996"
+            },
+            {
+                "id": "1312",
+                "title": "Pompatus of Love, The (1996)",
+                "releaseDate": "26-Jul-1996"
+            },
+            {
+                "id": "1313",
+                "title": "Palmetto (1998)",
+                "releaseDate": "20-Feb-1998"
+            },
+            {
+                "id": "1314",
+                "title": "Surviving the Game (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1315",
+                "title": "Inventing the Abbotts (1997)",
+                "releaseDate": "04-Apr-1997"
+            },
+            {
+                "id": "1316",
+                "title": "Horse Whisperer, The (1998)",
+                "releaseDate": "25-Dec-1997"
+            },
+            {
+                "id": "1317",
+                "title": "Journey of August King, The (1995)",
+                "releaseDate": "22-Mar-1996"
+            },
+            {
+                "id": "1318",
+                "title": "Catwalk (1995)",
+                "releaseDate": "07-Jun-1996"
+            },
+            {
+                "id": "1319",
+                "title": "Neon Bible, The (1995)",
+                "releaseDate": "01-Mar-1996"
+            },
+            {
+                "id": "1320",
+                "title": "Homage (1995)",
+                "releaseDate": "03-May-1996"
+            },
+            {
+                "id": "1321",
+                "title": "Open Season (1996)",
+                "releaseDate": "10-May-1996"
+            },
+            {
+                "id": "1322",
+                "title": "Metisse (Caf� au Lait) (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1323",
+                "title": "Wooden Man's Bride, The (Wu Kui) (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1324",
+                "title": "Loaded (1994)",
+                "releaseDate": "12-Apr-1996"
+            },
+            {
+                "id": "1325",
+                "title": "August (1996)",
+                "releaseDate": "12-Apr-1996"
+            },
+            {
+                "id": "1326",
+                "title": "Boys (1996)",
+                "releaseDate": "10-May-1996"
+            },
+            {
+                "id": "1327",
+                "title": "Captives (1994)",
+                "releaseDate": "16-Sep-1994"
+            },
+            {
+                "id": "1328",
+                "title": "Of Love and Shadows (1994)",
+                "releaseDate": "10-May-1996"
+            },
+            {
+                "id": "1329",
+                "title": "Low Life, The (1994)",
+                "releaseDate": "10-May-1996"
+            },
+            {
+                "id": "1330",
+                "title": "An Unforgettable Summer (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1331",
+                "title": "Last Klezmer: Leopold Kozlowski, His Life and Music, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1332",
+                "title": "My Life and Times With Antonin Artaud (En compagnie d'Antonin Artaud) (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1333",
+                "title": "Midnight Dancers (Sibak) (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1334",
+                "title": "Somebody to Love (1994)",
+                "releaseDate": "14-Jun-1996"
+            },
+            {
+                "id": "1335",
+                "title": "American Buffalo (1996)",
+                "releaseDate": "13-Sep-1996"
+            },
+            {
+                "id": "1336",
+                "title": "Kazaam (1996)",
+                "releaseDate": "17-Jul-1996"
+            },
+            {
+                "id": "1337",
+                "title": "Larger Than Life (1996)",
+                "releaseDate": "01-Nov-1996"
+            },
+            {
+                "id": "1338",
+                "title": "Two Deaths (1995)",
+                "releaseDate": "09-Aug-1996"
+            },
+            {
+                "id": "1339",
+                "title": "Stefano Quantestorie (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1340",
+                "title": "Crude Oasis, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1341",
+                "title": "Hedd Wyn (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "1342",
+                "title": "Convent, The (Convento, O) (1995)",
+                "releaseDate": "14-Jun-1996"
+            },
+            {
+                "id": "1343",
+                "title": "Lotto Land (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1344",
+                "title": "Story of Xinghua, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1345",
+                "title": "Day the Sun Turned Cold, The (Tianguo niezi) (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1346",
+                "title": "Dingo (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "1347",
+                "title": "Ballad of Narayama, The (Narayama Bushiko) (1958)",
+                "releaseDate": "01-Jan-1958"
+            },
+            {
+                "id": "1348",
+                "title": "Every Other Weekend (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "1349",
+                "title": "Mille bolle blu (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1350",
+                "title": "Crows and Sparrows (1949)",
+                "releaseDate": "01-Jan-1949"
+            },
+            {
+                "id": "1351",
+                "title": "Lover's Knot (1996)",
+                "releaseDate": "12-Jul-1996"
+            },
+            {
+                "id": "1352",
+                "title": "Shadow of Angels (Schatten der Engel) (1976)",
+                "releaseDate": "01-Jan-1976"
+            },
+            {
+                "id": "1353",
+                "title": "1-900 (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1354",
+                "title": "Venice/Venice (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "1355",
+                "title": "Infinity (1996)",
+                "releaseDate": "04-Oct-1996"
+            },
+            {
+                "id": "1356",
+                "title": "Ed's Next Move (1996)",
+                "releaseDate": "04-Oct-1996"
+            },
+            {
+                "id": "1357",
+                "title": "For the Moment (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1358",
+                "title": "The Deadly Cure (1996)",
+                "releaseDate": "16-Sep-1996"
+            },
+            {
+                "id": "1359",
+                "title": "Boys in Venice (1996)",
+                "releaseDate": "24-Sep-1996"
+            },
+            {
+                "id": "1360",
+                "title": "Sexual Life of the Belgians, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1361",
+                "title": "Search for One-eye Jimmy, The (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "1362",
+                "title": "American Strays (1996)",
+                "releaseDate": "13-Sep-1996"
+            },
+            {
+                "id": "1363",
+                "title": "Leopard Son, The (1996)",
+                "releaseDate": "27-Sep-1996"
+            },
+            {
+                "id": "1364",
+                "title": "Bird of Prey (1996)",
+                "releaseDate": "04-Oct-1996"
+            },
+            {
+                "id": "1365",
+                "title": "Johnny 100 Pesos (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1366",
+                "title": "JLG/JLG - autoportrait de d�cembre (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1367",
+                "title": "Faust (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1368",
+                "title": "Mina Tannenbaum (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1369",
+                "title": "Forbidden Christ, The (Cristo proibito, Il) (1950)",
+                "releaseDate": "01-Jan-1950"
+            },
+            {
+                "id": "1370",
+                "title": "I Can't Sleep (J'ai pas sommeil) (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1371",
+                "title": "Machine, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1372",
+                "title": "Stranger, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1373",
+                "title": "Good Morning (1971)",
+                "releaseDate": "4-Feb-1971"
+            },
+            {
+                "id": "1374",
+                "title": "Falling in Love Again (1980)",
+                "releaseDate": "01-Jan-1980"
+            },
+            {
+                "id": "1375",
+                "title": "Cement Garden, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1376",
+                "title": "Meet Wally Sparks (1997)",
+                "releaseDate": "31-Jan-1997"
+            },
+            {
+                "id": "1377",
+                "title": "Hotel de Love (1996)",
+                "releaseDate": "07-Feb-1997"
+            },
+            {
+                "id": "1378",
+                "title": "Rhyme & Reason (1997)",
+                "releaseDate": "05-Mar-1997"
+            },
+            {
+                "id": "1379",
+                "title": "Love and Other Catastrophes (1996)",
+                "releaseDate": "28-Mar-1997"
+            },
+            {
+                "id": "1380",
+                "title": "Hollow Reed (1996)",
+                "releaseDate": "02-May-1997"
+            },
+            {
+                "id": "1381",
+                "title": "Losing Chase (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "1382",
+                "title": "Bonheur, Le (1965)",
+                "releaseDate": "16-May-1997"
+            },
+            {
+                "id": "1383",
+                "title": "Second Jungle Book: Mowgli & Baloo, The (1997)",
+                "releaseDate": "16-May-1997"
+            },
+            {
+                "id": "1384",
+                "title": "Squeeze (1996)",
+                "releaseDate": "13-Jun-1997"
+            },
+            {
+                "id": "1385",
+                "title": "Roseanna's Grave (For Roseanna) (1997)",
+                "releaseDate": "20-Jun-1997"
+            },
+            {
+                "id": "1386",
+                "title": "Tetsuo II: Body Hammer (1992)",
+                "releaseDate": "20-Jun-1997"
+            },
+            {
+                "id": "1387",
+                "title": "Fall (1997)",
+                "releaseDate": "27-Jun-1997"
+            },
+            {
+                "id": "1388",
+                "title": "Gabbeh (1996)",
+                "releaseDate": "27-Jun-1997"
+            },
+            {
+                "id": "1389",
+                "title": "Mondo (1996)",
+                "releaseDate": "27-Jun-1997"
+            },
+            {
+                "id": "1390",
+                "title": "Innocent Sleep, The (1995)",
+                "releaseDate": "27-Jun-1997"
+            },
+            {
+                "id": "1391",
+                "title": "For Ever Mozart (1996)",
+                "releaseDate": "04-Jul-1997"
+            },
+            {
+                "id": "1392",
+                "title": "Locusts, The (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1393",
+                "title": "Stag (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1394",
+                "title": "Swept from the Sea (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1395",
+                "title": "Hurricane Streets (1998)",
+                "releaseDate": "01-Jan-1998"
+            },
+            {
+                "id": "1396",
+                "title": "Stonewall (1995)",
+                "releaseDate": "26-Jul-1996"
+            },
+            {
+                "id": "1397",
+                "title": "Of Human Bondage (1934)",
+                "releaseDate": "01-Jan-1934"
+            },
+            {
+                "id": "1398",
+                "title": "Anna (1996)",
+                "releaseDate": "13-Nov-1996"
+            },
+            {
+                "id": "1399",
+                "title": "Stranger in the House (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1400",
+                "title": "Picture Bride (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1401",
+                "title": "M. Butterfly (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1402",
+                "title": "Ciao, Professore! (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1403",
+                "title": "Caro Diario (Dear Diary) (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1404",
+                "title": "Withnail and I (1987)",
+                "releaseDate": "01-Jan-1987"
+            },
+            {
+                "id": "1405",
+                "title": "Boy's Life 2 (1997)",
+                "releaseDate": "07-Mar-1997"
+            },
+            {
+                "id": "1406",
+                "title": "When Night Is Falling (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1407",
+                "title": "Specialist, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1408",
+                "title": "Gordy (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1409",
+                "title": "Swan Princess, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1410",
+                "title": "Harlem (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1411",
+                "title": "Barbarella (1968)",
+                "releaseDate": "01-Jan-1968"
+            },
+            {
+                "id": "1412",
+                "title": "Land Before Time III: The Time of the Great Giving (1995) (V)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1413",
+                "title": "Street Fighter (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1414",
+                "title": "Coldblooded (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1415",
+                "title": "Next Karate Kid, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1416",
+                "title": "No Escape (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1417",
+                "title": "Turning, The (1992)",
+                "releaseDate": "02-May-1997"
+            },
+            {
+                "id": "1418",
+                "title": "Joy Luck Club, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1419",
+                "title": "Highlander III: The Sorcerer (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1420",
+                "title": "Gilligan's Island: The Movie (1998)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1421",
+                "title": "My Crazy Life (Mi vida loca) (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1422",
+                "title": "Suture (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1423",
+                "title": "Walking Dead, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1424",
+                "title": "I Like It Like That (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1425",
+                "title": "I'll Do Anything (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1426",
+                "title": "Grace of My Heart (1996)",
+                "releaseDate": "13-Sep-1996"
+            },
+            {
+                "id": "1427",
+                "title": "Drunks (1995)",
+                "releaseDate": "01-Nov-1996"
+            },
+            {
+                "id": "1428",
+                "title": "SubUrbia (1997)",
+                "releaseDate": "07-Feb-1997"
+            },
+            {
+                "id": "1429",
+                "title": "Sliding Doors (1998)",
+                "releaseDate": "01-Jan-1998"
+            },
+            {
+                "id": "1430",
+                "title": "Ill Gotten Gains (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1431",
+                "title": "Legal Deceit (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1432",
+                "title": "Mighty, The (1998)",
+                "releaseDate": "09-Oct-1998"
+            },
+            {
+                "id": "1433",
+                "title": "Men of Means (1998)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1434",
+                "title": "Shooting Fish (1997)",
+                "releaseDate": "16-Jan-1998"
+            },
+            {
+                "id": "1435",
+                "title": "Steal Big, Steal Little (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1436",
+                "title": "Mr. Jones (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1437",
+                "title": "House Party 3 (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1438",
+                "title": "Panther (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1439",
+                "title": "Jason's Lyric (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1440",
+                "title": "Above the Rim (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1441",
+                "title": "Moonlight and Valentino (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1442",
+                "title": "Scarlet Letter, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1443",
+                "title": "8 Seconds (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1444",
+                "title": "That Darn Cat! (1965)",
+                "releaseDate": "01-Jan-1965"
+            },
+            {
+                "id": "1445",
+                "title": "Ladybird Ladybird (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1446",
+                "title": "Bye Bye, Love (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1447",
+                "title": "Century (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1448",
+                "title": "My Favorite Season (1993)",
+                "releaseDate": "19-Apr-1996"
+            },
+            {
+                "id": "1449",
+                "title": "Pather Panchali (1955)",
+                "releaseDate": "22-Mar-1996"
+            },
+            {
+                "id": "1450",
+                "title": "Golden Earrings (1947)",
+                "releaseDate": "01-Jan-1947"
+            },
+            {
+                "id": "1451",
+                "title": "Foreign Correspondent (1940)",
+                "releaseDate": "01-Jan-1940"
+            },
+            {
+                "id": "1452",
+                "title": "Lady of Burlesque (1943)",
+                "releaseDate": "01-Jan-1943"
+            },
+            {
+                "id": "1453",
+                "title": "Angel on My Shoulder (1946)",
+                "releaseDate": "01-Jan-1946"
+            },
+            {
+                "id": "1454",
+                "title": "Angel and the Badman (1947)",
+                "releaseDate": "01-Jan-1947"
+            },
+            {
+                "id": "1455",
+                "title": "Outlaw, The (1943)",
+                "releaseDate": "01-Jan-1943"
+            },
+            {
+                "id": "1456",
+                "title": "Beat the Devil (1954)",
+                "releaseDate": "01-Jan-1954"
+            },
+            {
+                "id": "1457",
+                "title": "Love Is All There Is (1996)",
+                "releaseDate": "11-Oct-1996"
+            },
+            {
+                "id": "1458",
+                "title": "Damsel in Distress, A (1937)",
+                "releaseDate": "01-Jan-1937"
+            },
+            {
+                "id": "1459",
+                "title": "Madame Butterfly (1995)",
+                "releaseDate": "20-Sep-1996"
+            },
+            {
+                "id": "1460",
+                "title": "Sleepover (1995)",
+                "releaseDate": "25-Oct-1996"
+            },
+            {
+                "id": "1461",
+                "title": "Here Comes Cookie (1935)",
+                "releaseDate": "01-Jan-1935"
+            },
+            {
+                "id": "1462",
+                "title": "Thieves (Voleurs, Les) (1996)",
+                "releaseDate": "25-Dec-1996"
+            },
+            {
+                "id": "1463",
+                "title": "Boys, Les (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1464",
+                "title": "Stars Fell on Henrietta, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1465",
+                "title": "Last Summer in the Hamptons (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1466",
+                "title": "Margaret's Museum (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1467",
+                "title": "Saint of Fort Washington, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1468",
+                "title": "Cure, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1469",
+                "title": "Tom and Huck (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1470",
+                "title": "Gumby: The Movie (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1471",
+                "title": "Hideaway (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1472",
+                "title": "Visitors, The (Visiteurs, Les) (1993)",
+                "releaseDate": "19-Jul-1996"
+            },
+            {
+                "id": "1473",
+                "title": "Little Princess, The (1939)",
+                "releaseDate": "01-Jan-1939"
+            },
+            {
+                "id": "1474",
+                "title": "Nina Takes a Lover (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1475",
+                "title": "Bhaji on the Beach (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1476",
+                "title": "Raw Deal (1948)",
+                "releaseDate": "01-Jan-1948"
+            },
+            {
+                "id": "1477",
+                "title": "Nightwatch (1997)",
+                "releaseDate": "22-Apr-1997"
+            },
+            {
+                "id": "1478",
+                "title": "Dead Presidents (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1479",
+                "title": "Reckless (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1480",
+                "title": "Herbie Rides Again (1974)",
+                "releaseDate": "01-Jan-1974"
+            },
+            {
+                "id": "1481",
+                "title": "S.F.W. (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1482",
+                "title": "Gate of Heavenly Peace, The (1995)",
+                "releaseDate": "10-May-1996"
+            },
+            {
+                "id": "1483",
+                "title": "Man in the Iron Mask, The (1998)",
+                "releaseDate": "17-Mar-1998"
+            },
+            {
+                "id": "1484",
+                "title": "Jerky Boys, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1485",
+                "title": "Colonel Chabert, Le (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1486",
+                "title": "Girl in the Cadillac (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1487",
+                "title": "Even Cowgirls Get the Blues (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1488",
+                "title": "Germinal (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1489",
+                "title": "Chasers (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1490",
+                "title": "Fausto (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1491",
+                "title": "Tough and Deadly (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1492",
+                "title": "Window to Paris (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1493",
+                "title": "Modern Affair, A (1995)",
+                "releaseDate": "06-Sep-1996"
+            },
+            {
+                "id": "1494",
+                "title": "Mostro, Il (1994)",
+                "releaseDate": "19-Apr-1996"
+            },
+            {
+                "id": "1495",
+                "title": "Flirt (1995)",
+                "releaseDate": "07-Aug-1996"
+            },
+            {
+                "id": "1496",
+                "title": "Carpool (1996)",
+                "releaseDate": "23-Aug-1996"
+            },
+            {
+                "id": "1497",
+                "title": "Line King: Al Hirschfeld, The (1996)",
+                "releaseDate": "11-Oct-1996"
+            },
+            {
+                "id": "1498",
+                "title": "Farmer & Chase (1995)",
+                "releaseDate": "10-Jan-1997"
+            },
+            {
+                "id": "1499",
+                "title": "Grosse Fatigue (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1500",
+                "title": "Santa with Muscles (1996)",
+                "releaseDate": "08-Nov-1996"
+            },
+            {
+                "id": "1501",
+                "title": "Prisoner of the Mountains (Kavkazsky Plennik) (1996)",
+                "releaseDate": "31-Jan-1997"
+            },
+            {
+                "id": "1502",
+                "title": "Naked in New York (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1503",
+                "title": "Gold Diggers: The Secret of Bear Mountain (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1504",
+                "title": "Bewegte Mann, Der (1994)",
+                "releaseDate": "12-Jul-1996"
+            },
+            {
+                "id": "1505",
+                "title": "Killer: A Journal of Murder (1995)",
+                "releaseDate": "06-Sep-1996"
+            },
+            {
+                "id": "1506",
+                "title": "Nelly & Monsieur Arnaud (1995)",
+                "releaseDate": "12-Apr-1996"
+            },
+            {
+                "id": "1507",
+                "title": "Three Lives and Only One Death (1996)",
+                "releaseDate": "11-Oct-1996"
+            },
+            {
+                "id": "1508",
+                "title": "Babysitter, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1509",
+                "title": "Getting Even with Dad (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1510",
+                "title": "Mad Dog Time (1996)",
+                "releaseDate": "08-Nov-1996"
+            },
+            {
+                "id": "1511",
+                "title": "Children of the Revolution (1996)",
+                "releaseDate": "01-May-1997"
+            },
+            {
+                "id": "1512",
+                "title": "World of Apu, The (Apur Sansar) (1959)",
+                "releaseDate": "05-Apr-1996"
+            },
+            {
+                "id": "1513",
+                "title": "Sprung (1997)",
+                "releaseDate": "14-May-1997"
+            },
+            {
+                "id": "1514",
+                "title": "Dream With the Fishes (1997)",
+                "releaseDate": "20-Jun-1997"
+            },
+            {
+                "id": "1515",
+                "title": "Wings of Courage (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1516",
+                "title": "Wedding Gift, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1517",
+                "title": "Race the Sun (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "1518",
+                "title": "Losing Isaiah (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1519",
+                "title": "New Jersey Drive (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1520",
+                "title": "Fear, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1521",
+                "title": "Mr. Wonderful (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1522",
+                "title": "Trial by Jury (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1523",
+                "title": "Good Man in Africa, A (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1524",
+                "title": "Kaspar Hauser (1993)",
+                "releaseDate": "07-Jun-1996"
+            },
+            {
+                "id": "1525",
+                "title": "Object of My Affection, The (1998)",
+                "releaseDate": "20-Mar-1998"
+            },
+            {
+                "id": "1526",
+                "title": "Witness (1985)",
+                "releaseDate": "01-Jan-1985"
+            },
+            {
+                "id": "1527",
+                "title": "Senseless (1998)",
+                "releaseDate": "09-Jan-1998"
+            },
+            {
+                "id": "1528",
+                "title": "Nowhere (1997)",
+                "releaseDate": "09-May-1997"
+            },
+            {
+                "id": "1529",
+                "title": "Underground (1995)",
+                "releaseDate": "29-Mar-1996"
+            },
+            {
+                "id": "1530",
+                "title": "Jefferson in Paris (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1531",
+                "title": "Far From Home: The Adventures of Yellow Dog (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1532",
+                "title": "Foreign Student (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1533",
+                "title": "I Don't Want to Talk About It (De eso no se habla) (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1534",
+                "title": "Twin Town (1997)",
+                "releaseDate": "30-May-1997"
+            },
+            {
+                "id": "1535",
+                "title": "Enfer, L' (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1536",
+                "title": "Aiqing wansui (1994)",
+                "releaseDate": "22-Jul-1996"
+            },
+            {
+                "id": "1537",
+                "title": "Cosi (1996)",
+                "releaseDate": "11-Apr-1997"
+            },
+            {
+                "id": "1538",
+                "title": "All Over Me (1997)",
+                "releaseDate": "25-Apr-1997"
+            },
+            {
+                "id": "1539",
+                "title": "Being Human (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1540",
+                "title": "Amazing Panda Adventure, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1541",
+                "title": "Beans of Egypt, Maine, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1542",
+                "title": "Scarlet Letter, The (1926)",
+                "releaseDate": "01-Jan-1926"
+            },
+            {
+                "id": "1543",
+                "title": "Johns (1996)",
+                "releaseDate": "18-Oct-1996"
+            },
+            {
+                "id": "1544",
+                "title": "It Takes Two (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1545",
+                "title": "Frankie Starlight (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1546",
+                "title": "Shadows (Cienie) (1988)",
+                "releaseDate": "01-Jan-1988"
+            },
+            {
+                "id": "1547",
+                "title": "Show, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1548",
+                "title": "The Courtyard (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1549",
+                "title": "Dream Man (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1550",
+                "title": "Destiny Turns on the Radio (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1551",
+                "title": "Glass Shield, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1552",
+                "title": "Hunted, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1553",
+                "title": "Underneath, The (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1554",
+                "title": "Safe Passage (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1555",
+                "title": "Secret Adventures of Tom Thumb, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1556",
+                "title": "Condition Red (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1557",
+                "title": "Yankee Zulu (1994)",
+                "releaseDate": "16-Feb-1996"
+            },
+            {
+                "id": "1558",
+                "title": "Aparajito (1956)",
+                "releaseDate": "29-Mar-1996"
+            },
+            {
+                "id": "1559",
+                "title": "Hostile Intentions (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1560",
+                "title": "Clean Slate (Coup de Torchon) (1981)",
+                "releaseDate": "01-Jan-1981"
+            },
+            {
+                "id": "1561",
+                "title": "Tigrero: A Film That Was Never Made (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1562",
+                "title": "Eye of Vichy, The (Oeil de Vichy, L') (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1563",
+                "title": "Promise, The (Versprechen, Das) (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1564",
+                "title": "To Cross the Rubicon (1991)",
+                "releaseDate": "01-Jan-1991"
+            },
+            {
+                "id": "1565",
+                "title": "Daens (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "1566",
+                "title": "Man from Down Under, The (1943)",
+                "releaseDate": "01-Jan-1943"
+            },
+            {
+                "id": "1567",
+                "title": "Careful (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "1568",
+                "title": "Vermont Is For Lovers (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "1569",
+                "title": "Vie est belle, La (Life is Rosey) (1987)",
+                "releaseDate": "01-Jan-1987"
+            },
+            {
+                "id": "1570",
+                "title": "Quartier Mozart (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "1571",
+                "title": "Touki Bouki (Journey of the Hyena) (1973)",
+                "releaseDate": "01-Jan-1973"
+            },
+            {
+                "id": "1572",
+                "title": "Wend Kuuni (God's Gift) (1982)",
+                "releaseDate": "01-Jan-1982"
+            },
+            {
+                "id": "1573",
+                "title": "Spirits of the Dead (Tre passi nel delirio) (1968)",
+                "releaseDate": "01-Jan-1968"
+            },
+            {
+                "id": "1574",
+                "title": "Pharaoh's Army (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1575",
+                "title": "I, Worst of All (Yo, la peor de todas) (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "1576",
+                "title": "Hungarian Fairy Tale, A (1987)",
+                "releaseDate": "01-Jan-1987"
+            },
+            {
+                "id": "1577",
+                "title": "Death in the Garden (Mort en ce jardin, La) (1956)",
+                "releaseDate": "01-Jan-1956"
+            },
+            {
+                "id": "1578",
+                "title": "Collectionneuse, La (1967)",
+                "releaseDate": "01-Jan-1967"
+            },
+            {
+                "id": "1579",
+                "title": "Baton Rouge (1988)",
+                "releaseDate": "01-Jan-1988"
+            },
+            {
+                "id": "1580",
+                "title": "Liebelei (1933)",
+                "releaseDate": "01-Jan-1933"
+            },
+            {
+                "id": "1581",
+                "title": "Woman in Question, The (1950)",
+                "releaseDate": "01-Jan-1950"
+            },
+            {
+                "id": "1582",
+                "title": "T-Men (1947)",
+                "releaseDate": "01-Jan-1947"
+            },
+            {
+                "id": "1583",
+                "title": "Invitation, The (Zaproszenie) (1986)",
+                "releaseDate": "01-Jan-1986"
+            },
+            {
+                "id": "1584",
+                "title": "Symphonie pastorale, La (1946)",
+                "releaseDate": "01-Jan-1946"
+            },
+            {
+                "id": "1585",
+                "title": "American Dream (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "1586",
+                "title": "Lashou shentan (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "1587",
+                "title": "Terror in a Texas Town (1958)",
+                "releaseDate": "01-Jan-1958"
+            },
+            {
+                "id": "1588",
+                "title": "Salut cousin! (1996)",
+                "releaseDate": "21-Feb-1997"
+            },
+            {
+                "id": "1589",
+                "title": "Schizopolis (1996)",
+                "releaseDate": "23-May-1997"
+            },
+            {
+                "id": "1590",
+                "title": "To Have, or Not (1995)",
+                "releaseDate": "06-Jun-1997"
+            },
+            {
+                "id": "1591",
+                "title": "Duoluo tianshi (1995)",
+                "releaseDate": "21-Jan-1998"
+            },
+            {
+                "id": "1592",
+                "title": "Magic Hour, The (1998)",
+                "releaseDate": "30-Jan-1998"
+            },
+            {
+                "id": "1593",
+                "title": "Death in Brunswick (1991)",
+                "releaseDate": "16-Aug-1996"
+            },
+            {
+                "id": "1594",
+                "title": "Everest (1998)",
+                "releaseDate": "10-Mar-1998"
+            },
+            {
+                "id": "1595",
+                "title": "Shopping (1994)",
+                "releaseDate": "09-Feb-1996"
+            },
+            {
+                "id": "1596",
+                "title": "Nemesis 2: Nebula (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1597",
+                "title": "Romper Stomper (1992)",
+                "releaseDate": "01-Jan-1992"
+            },
+            {
+                "id": "1598",
+                "title": "City of Industry (1997)",
+                "releaseDate": "14-Mar-1997"
+            },
+            {
+                "id": "1599",
+                "title": "Someone Else's America (1995)",
+                "releaseDate": "10-May-1996"
+            },
+            {
+                "id": "1600",
+                "title": "Guantanamera (1994)",
+                "releaseDate": "16-May-1997"
+            },
+            {
+                "id": "1601",
+                "title": "Office Killer (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1602",
+                "title": "Price Above Rubies, A (1998)",
+                "releaseDate": "20-Mar-1998"
+            },
+            {
+                "id": "1603",
+                "title": "Angela (1995)",
+                "releaseDate": "16-Feb-1996"
+            },
+            {
+                "id": "1604",
+                "title": "He Walked by Night (1948)",
+                "releaseDate": "01-Jan-1948"
+            },
+            {
+                "id": "1605",
+                "title": "Love Serenade (1996)",
+                "releaseDate": "11-Jul-1997"
+            },
+            {
+                "id": "1606",
+                "title": "Deceiver (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1607",
+                "title": "Hurricane Streets (1998)",
+                "releaseDate": "01-Jan-1998"
+            },
+            {
+                "id": "1608",
+                "title": "Buddy (1997)",
+                "releaseDate": "06-Jun-1997"
+            },
+            {
+                "id": "1609",
+                "title": "B*A*P*S (1997)",
+                "releaseDate": "28-Mar-1997"
+            },
+            {
+                "id": "1610",
+                "title": "Truth or Consequences, N.M. (1997)",
+                "releaseDate": "02-May-1997"
+            },
+            {
+                "id": "1611",
+                "title": "Intimate Relations (1996)",
+                "releaseDate": "09-May-1997"
+            },
+            {
+                "id": "1612",
+                "title": "Leading Man, The (1996)",
+                "releaseDate": "16-Jan-1998"
+            },
+            {
+                "id": "1613",
+                "title": "Tokyo Fist (1995)",
+                "releaseDate": "11-Feb-1998"
+            },
+            {
+                "id": "1614",
+                "title": "Reluctant Debutante, The (1958)",
+                "releaseDate": "01-Jan-1958"
+            },
+            {
+                "id": "1615",
+                "title": "Warriors of Virtue (1997)",
+                "releaseDate": "02-May-1997"
+            },
+            {
+                "id": "1616",
+                "title": "Desert Winds (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1617",
+                "title": "Hugo Pool (1997)",
+                "releaseDate": "01-Jan-1997"
+            },
+            {
+                "id": "1618",
+                "title": "King of New York (1990)",
+                "releaseDate": "01-Jan-1990"
+            },
+            {
+                "id": "1619",
+                "title": "All Things Fair (1996)",
+                "releaseDate": "08-Mar-1996"
+            },
+            {
+                "id": "1620",
+                "title": "Sixth Man, The (1997)",
+                "releaseDate": "28-Mar-1997"
+            },
+            {
+                "id": "1621",
+                "title": "Butterfly Kiss (1995)",
+                "releaseDate": "26-Apr-1996"
+            },
+            {
+                "id": "1622",
+                "title": "Paris, France (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1623",
+                "title": "C�r�monie, La (1995)",
+                "releaseDate": "20-Dec-1996"
+            },
+            {
+                "id": "1624",
+                "title": "Hush (1998)",
+                "releaseDate": "10-Mar-1998"
+            },
+            {
+                "id": "1625",
+                "title": "Nightwatch (1997)",
+                "releaseDate": "22-Apr-1997"
+            },
+            {
+                "id": "1626",
+                "title": "Nobody Loves Me (Keiner liebt mich) (1994)",
+                "releaseDate": "09-Feb-1996"
+            },
+            {
+                "id": "1627",
+                "title": "Wife, The (1995)",
+                "releaseDate": "26-Jul-1996"
+            },
+            {
+                "id": "1628",
+                "title": "Lamerica (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1629",
+                "title": "Nico Icon (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1630",
+                "title": "Silence of the Palace, The (Saimt el Qusur) (1994)",
+                "releaseDate": "02-Feb-1996"
+            },
+            {
+                "id": "1631",
+                "title": "Slingshot, The (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1632",
+                "title": "Land and Freedom (Tierra y libertad) (1995)",
+                "releaseDate": "29-Mar-1996"
+            },
+            {
+                "id": "1633",
+                "title": "� k�ldum klaka (Cold Fever) (1994)",
+                "releaseDate": "08-Mar-1996"
+            },
+            {
+                "id": "1634",
+                "title": "Etz Hadomim Tafus (Under the Domin Tree) (1994)",
+                "releaseDate": "19-Apr-1996"
+            },
+            {
+                "id": "1635",
+                "title": "Two Friends (1986)",
+                "releaseDate": "26-Apr-1986"
+            },
+            {
+                "id": "1636",
+                "title": "Brothers in Trouble (1995)",
+                "releaseDate": "26-Apr-1996"
+            },
+            {
+                "id": "1637",
+                "title": "Girls Town (1996)",
+                "releaseDate": "23-Aug-1996"
+            },
+            {
+                "id": "1638",
+                "title": "Normal Life (1996)",
+                "releaseDate": "25-Oct-1996"
+            },
+            {
+                "id": "1639",
+                "title": "Bitter Sugar (Azucar Amargo) (1996)",
+                "releaseDate": "22-Nov-1996"
+            },
+            {
+                "id": "1640",
+                "title": "Eighth Day, The (1996)",
+                "releaseDate": "01-Nov-1996"
+            },
+            {
+                "id": "1641",
+                "title": "Dadetown (1995)",
+                "releaseDate": "18-Sep-1996"
+            },
+            {
+                "id": "1642",
+                "title": "Some Mother's Son (1996)",
+                "releaseDate": "27-Dec-1996"
+            },
+            {
+                "id": "1643",
+                "title": "Angel Baby (1995)",
+                "releaseDate": "10-Jan-1997"
+            },
+            {
+                "id": "1644",
+                "title": "Sudden Manhattan (1996)",
+                "releaseDate": "13-Jun-1997"
+            },
+            {
+                "id": "1645",
+                "title": "Butcher Boy, The (1998)",
+                "releaseDate": "01-Jan-1998"
+            },
+            {
+                "id": "1646",
+                "title": "Men With Guns (1997)",
+                "releaseDate": "06-Mar-1998"
+            },
+            {
+                "id": "1647",
+                "title": "Hana-bi (1997)",
+                "releaseDate": "20-Mar-1998"
+            },
+            {
+                "id": "1648",
+                "title": "Niagara, Niagara (1997)",
+                "releaseDate": "20-Mar-1998"
+            },
+            {
+                "id": "1649",
+                "title": "Big One, The (1997)",
+                "releaseDate": "27-Mar-1998"
+            },
+            {
+                "id": "1650",
+                "title": "Butcher Boy, The (1998)",
+                "releaseDate": "01-Jan-1998"
+            },
+            {
+                "id": "1651",
+                "title": "Spanish Prisoner, The (1997)",
+                "releaseDate": "27-Mar-1998"
+            },
+            {
+                "id": "1652",
+                "title": "Temptress Moon (Feng Yue) (1996)",
+                "releaseDate": "13-Jun-1997"
+            },
+            {
+                "id": "1653",
+                "title": "Entertaining Angels: The Dorothy Day Story (1996)",
+                "releaseDate": "27-Sep-1996"
+            },
+            {
+                "id": "1654",
+                "title": "Chairman of the Board (1998)",
+                "releaseDate": "01-Jan-1998"
+            },
+            {
+                "id": "1655",
+                "title": "Favor, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1656",
+                "title": "Little City (1998)",
+                "releaseDate": "20-Feb-1998"
+            },
+            {
+                "id": "1657",
+                "title": "Target (1995)",
+                "releaseDate": "28-Feb-1996"
+            },
+            {
+                "id": "1658",
+                "title": "Substance of Fire, The (1996)",
+                "releaseDate": "06-Dec-1996"
+            },
+            {
+                "id": "1659",
+                "title": "Getting Away With Murder (1996)",
+                "releaseDate": "12-Apr-1996"
+            },
+            {
+                "id": "1660",
+                "title": "Small Faces (1995)",
+                "releaseDate": "09-Aug-1996"
+            },
+            {
+                "id": "1661",
+                "title": "New Age, The (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1662",
+                "title": "Rough Magic (1995)",
+                "releaseDate": "30-May-1997"
+            },
+            {
+                "id": "1663",
+                "title": "Nothing Personal (1995)",
+                "releaseDate": "30-Apr-1997"
+            },
+            {
+                "id": "1664",
+                "title": "8 Heads in a Duffel Bag (1997)",
+                "releaseDate": "18-Apr-1997"
+            },
+            {
+                "id": "1665",
+                "title": "Brother's Kiss, A (1997)",
+                "releaseDate": "25-Apr-1997"
+            },
+            {
+                "id": "1666",
+                "title": "Ripe (1996)",
+                "releaseDate": "02-May-1997"
+            },
+            {
+                "id": "1667",
+                "title": "Next Step, The (1995)",
+                "releaseDate": "13-Jun-1997"
+            },
+            {
+                "id": "1668",
+                "title": "Wedding Bell Blues (1996)",
+                "releaseDate": "13-Jun-1997"
+            },
+            {
+                "id": "1669",
+                "title": "MURDER and murder (1996)",
+                "releaseDate": "20-Jun-1997"
+            },
+            {
+                "id": "1670",
+                "title": "Tainted (1998)",
+                "releaseDate": "01-Feb-1998"
+            },
+            {
+                "id": "1671",
+                "title": "Further Gesture, A (1996)",
+                "releaseDate": "20-Feb-1998"
+            },
+            {
+                "id": "1672",
+                "title": "Kika (1993)",
+                "releaseDate": "01-Jan-1993"
+            },
+            {
+                "id": "1673",
+                "title": "Mirage (1995)",
+                "releaseDate": "01-Jan-1995"
+            },
+            {
+                "id": "1674",
+                "title": "Mamma Roma (1962)",
+                "releaseDate": "01-Jan-1962"
+            },
+            {
+                "id": "1675",
+                "title": "Sunchaser, The (1996)",
+                "releaseDate": "25-Oct-1996"
+            },
+            {
+                "id": "1676",
+                "title": "War at Home, The (1996)",
+                "releaseDate": "01-Jan-1996"
+            },
+            {
+                "id": "1677",
+                "title": "Sweet Nothing (1995)",
+                "releaseDate": "20-Sep-1996"
+            },
+            {
+                "id": "1678",
+                "title": "Mat' i syn (1997)",
+                "releaseDate": "06-Feb-1998"
+            },
+            {
+                "id": "1679",
+                "title": "B. Monkey (1998)",
+                "releaseDate": "06-Feb-1998"
+            },
+            {
+                "id": "1680",
+                "title": "Sliding Doors (1998)",
+                "releaseDate": "01-Jan-1998"
+            },
+            {
+                "id": "1681",
+                "title": "You So Crazy (1994)",
+                "releaseDate": "01-Jan-1994"
+            },
+            {
+                "id": "1682",
+                "title": "Scream of Stone (Schrei aus Stein) (1991)",
+                "releaseDate": "08-Mar-1996"
+            }
+            ];
+        
+        // 创建电影信息映射表，方便通过id查找
+        const movieMap = {};
+        examples.forEach(movie => {
+            movieMap[movie.id] = movie;
+        });
+        
+        // DOM元素
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const btnText = document.getElementById('btnText');
+        const loading = document.getElementById('loading');
+        const errorMessage = document.getElementById('errorMessage');
+        const resultsSection = document.getElementById('resultsSection');
+        const resultsTitle = document.getElementById('resultsTitle');
+        const resultsStats = document.getElementById('resultsStats');
+        const movieGrid = document.getElementById('movieGrid');
+        
+        // 设置示例
+        function setExample(text) {
+            searchInput.value = text;
+            getRecommendations();
+        }
+        
+        // 从电影标题中提取数字ID
+        function extractMovieId(movieTitle) {
+            if (!movieTitle) return null;
+            
+            // 匹配 "Movie X" 格式中的数字
+            const match = movieTitle.match(/Movie\s+(\d+)/i);
+            if (match && match[1]) {
+                return match[1];
+            }
+            
+            // 尝试提取任何数字
+            const numMatch = movieTitle.match(/(\d+)/);
+            if (numMatch && numMatch[1]) {
+                return numMatch[1];
+            }
+            
+            return null;
+        }
+        
+        // 获取推荐
+        async function getRecommendations() {
+            const userDemand = searchInput.value.trim();
+            if (!userDemand) {
+                showError('请输入您的电影需求');
+                return;
+            }
+            
+            // 取消之前的请求
+            if (currentRequest) {
+                currentRequest.cancel('取消前一个请求');
+            }
+            
+            // 创建取消令牌
+            const CancelToken = axios.CancelToken;
+            const source = CancelToken.source();
+            currentRequest = source;
+            
+            try {
+                // 更新UI状态
+                searchBtn.disabled = true;
+                btnText.textContent = '推荐中...';
+                loading.style.display = 'block';
+                errorMessage.style.display = 'none';
+                resultsSection.style.display = 'none';
+                movieGrid.innerHTML = '';
+                
+                const response = await axios({
+                    url: `${API_BASE}/recommend`,
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    data: {
+                        user_demand: userDemand,
+                        user_id: 1,
+                        top_k: 100
+                    },
+                    cancelToken: source.token,
+                    timeout: 30000 // 30秒超时
+                });
+                
+                if (response.data.success) {
+                    displayRecommendations(response.data.data);
+                } else {
+                    showError('推荐失败: ' + response.data.message);
+                }
+                
+            } catch (error) {
+                if (axios.isCancel(error)) {
+                    console.log('请求被取消:', error.message);
+                } else if (error.code === 'ECONNABORTED') {
+                    showError('请求超时，请稍后重试');
+                } else if (error.response) {
+                    // 服务器返回错误状态码
+                    showError(`服务器错误: ${error.response.status} - ${error.response.data.message || '未知错误'}`);
+                } else if (error.request) {
+                    // 请求已发出但没有收到响应
+                    showError('网络错误，请检查API服务是否启动');
+                } else {
+                    // 其他错误
+                    showError('发生未知错误: ' + error.message);
+                }
+            } finally {
+                // 恢复UI状态
+                searchBtn.disabled = false;
+                btnText.textContent = '推荐电影';
+                loading.style.display = 'none';
+                currentRequest = null;
+            }
+        }
+        
+        // 显示错误信息
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+        
+        // 显示推荐结果
+        function displayRecommendations(data) {
+            const recommendations = data.recommendations || [];
+            
+            if (recommendations.length === 0) {
+                resultsTitle.textContent = '暂无推荐结果';
+                resultsStats.textContent = '';
+                movieGrid.innerHTML = '<p style="text-align: center; padding: 40px;">暂无推荐结果，请尝试其他需求描述</p>';
+                resultsSection.style.display = 'block';
+                return;
+            }
+            
+            // 更新标题和统计信息
+            resultsTitle.textContent = `推荐结果 (${recommendations.length}部电影)`;
+            resultsStats.textContent = `处理时间: ${data.processing_time || 0}s | 请求ID: ${data.request_id || 'N/A'}`;
+            
+            // 生成电影卡片
+            let html = '';
+            recommendations.forEach(movie => {
+                // 从电影标题中提取ID
+                const movieId = extractMovieId(movie.title);
+                
+                // 获取实际的电影信息
+                let actualMovieTitle = movie.title;
+                let actualYear = movie.release_year || '未知年份';
+                
+                if (movieId && movieMap[movieId]) {
+                    // 使用examples中的电影信息
+                    const movieInfo = movieMap[movieId];
+                    actualMovieTitle = movieInfo.title;
+                    
+                    // 从releaseDate中提取年份
+                    const yearMatch = movieInfo.releaseDate.match(/(\d{4})/);
+                    if (yearMatch && yearMatch[1]) {
+                        actualYear = yearMatch[1];
+                    }
+                }
+                
+                // 生成评分星星
+                const rating = movie.predicted_rating || 0;
+                const fullStars = Math.floor(rating);
+                const halfStar = rating % 1 >= 0.5;
+                const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+                
+                let starsHtml = '';
+                for (let i = 0; i < fullStars; i++) starsHtml += '⭐';
+                if (halfStar) starsHtml += '🌟';
+                for (let i = 0; i < emptyStars; i++) starsHtml += '☆';
+                
+                // 生成推荐理由
+                let reasonsHtml = '';
+                if (movie.reasons && movie.reasons.key_points) {
+                    reasonsHtml = movie.reasons.key_points.map(point => 
+                        `<div class="reason-point">${point}</div>`
+                    ).join('');
+                }
+                
+                html += `
+                    <div class="movie-card">
+                        <a href="https://v.qq.com/x/search/?q=${encodeURIComponent(actualMovieTitle)}" target="_blank">
+                        <div class="movie-rank">${movie.rank}</div>
+                        <div class="movie-title">${actualMovieTitle}</div>
+                        
+                        <div class="movie-meta">
+                            <div class="movie-year">${actualYear}</div>
+                            <div class="movie-rating">评分: ${rating.toFixed(1)} ${starsHtml}</div>
+                            <div class="movie-match">匹配度: ${((movie.match_score || 0) * 100).toFixed(1)}%</div>
+                        </div>
+                        
+                        <div class="movie-genres">
+                            ${(movie.genres || []).map(genre => 
+                                `<span class="genre-tag">${genre}</span>`
+                            ).join('')}
+                        </div>
+                        
+                        <div class="movie-summary">
+                            <strong>简介:</strong> ${movie.detailed_summary || movie.quick_summary || '暂无简介'}
+                        </div>
+                        
+                        <div class="movie-tags">
+                            ${(movie.tags || []).map(tag => 
+                                `<span class="tag">${tag}</span>`
+                            ).join('')}
+                        </div>
+                        
+                        ${reasonsHtml ? `
+                        <div class="reasons-section">
+                            <div class="reasons-title">推荐理由:</div>
+                            ${reasonsHtml}
+                        </div>
+                        ` : ''}
+                        </a>
+                    </div>
+                `;
+            });
+            
+            movieGrid.innerHTML = html;
+            resultsSection.style.display = 'block';
+            
+            // 滚动到结果区域
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        // 回车键搜索
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                getRecommendations();
+            }
+        });
+        
+        // 页面加载时检查API状态
+        window.addEventListener('load', async () => {
+            try {
+                const response = await axios.get(`${API_BASE}/health`);
+                if (response.data.status !== 'healthy') {
+                    showError('API服务状态异常');
+                } else {
+                    console.log('API服务连接正常');
+                }
+            } catch (error) {
+                showError('无法连接到API服务，请确保服务已启动');
+            }
+        });
+        
+        // 初始加载演示数据
+        window.addEventListener('load', () => {
+            // 延迟一点时间再加载演示数据，让页面先渲染完成
+            setTimeout(() => {
+                getRecommendations();
+            }, 500);
+        });

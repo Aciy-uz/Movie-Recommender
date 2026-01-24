@@ -1,0 +1,328 @@
+<!-- 修改后的页面1 (index.html) -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>芯影推荐 - 优质电影精选</title>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+  <!-- 顶部视频开场区 -->
+  <div class="hero-video-wrap">
+    <video src="img/Drifing 2022 (hor).mp4" muted loop autoplay playsinline preload="metadata"></video>
+  </div>
+
+  <!-- 导航栏 -->
+  <header class="site-header">
+    <div class="container header-content">
+      <a href="#" class="logo">
+        <i class="fa fa-film"></i>
+        <span>芯影推荐</span>
+      </a>
+      <nav class="desktop-nav">
+        <ul class="nav-links">
+          <li><a href="./index.html" class="nav-item active">首页</a></li>
+          <li><a href="./pages/popular-charts.html" class="nav-item">热门</a></li>
+          <li><a href="./pages/category-filter.html" class="nav-item">推荐</a></li>
+          <li><a href="./pages/ranking-list.html" class="nav-item">排行榜</a></li>
+        </ul>
+      </nav>
+      <div class="search-box desktop-search">
+        <input type="text" placeholder="搜索电影/演员/导演..." class="search-input">
+        <i class="fa fa-search search-icon"></i>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+    <div class="mobile-menu hidden" id="mobileMenu">
+      <div class="container">
+        <a href="#" class="mobile-nav-item active">首页</a>
+        <a href="#" class="mobile-nav-item">热门榜单</a>
+        <a href="#" class="mobile-nav-item">分类筛选</a>
+        <a href="#" class="mobile-nav-item">最新上映</a>
+        <a href="#" class="mobile-nav-item">关于我们</a>
+        <div class="mobile-search-container">
+          <div class="search-box">
+            <input type="text" placeholder="搜索电影..." class="search-input">
+            <i class="fa fa-search search-icon"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主内容区 -->
+  <div class="main-content">
+    <section class="hero-section">
+      <div class="carousel-container">
+        <div class="carousel-item carousel-item-active" style="background-image: url('https://ts3.tc.mm.bing.net/th/id/OIP-C.pfRwre_CoCSFmW4Tjh9jXgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3')">
+          <div class="hero-overlay"></div>
+          <div class="hero-content">
+            <span class="badge">豆瓣9.4分</span>
+            <h2 class="hero-title">肖申克的救赎</h2>
+            <p class="hero-desc">一场谋杀案使银行家安迪蒙冤入狱，谋杀妻子及其情人的指控将他囚禁在肖申克监狱。在这座暗无天日的监狱里，安迪用自己的智慧和坚韧，书写了一段传奇的救赎故事。</p>
+            <div class="btn-group">
+              <button class="btn btn-primary"><i class="fa fa-play"></i><a href="https://v.qq.com/x/search/?q=肖申克的救赎"  target="_blank">立即观看</a> </button>
+              <button class="btn btn-secondary"><i class="fa fa-info-circle"></i> 查看详情</button>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item" style="background-image: url('https://ts1.tc.mm.bing.net/th/id/R-C.a924ed5e21023520f6cda192b690ab82?rik=MUS2sSwLtL0Keg&riu=http%3a%2f%2fimg.doooor.com%2fimg%2fforum%2f201706%2f19%2f221444pjvwjvvsjmjwi0b0.jpg&ehk=6QsTOBINcKyFAwWnWDuv2IidD0NfgXwfhZdjDXP%2f%2fJ8%3d&risl=&pid=ImgRaw&r=0')">
+          <div class="hero-overlay"></div>
+          <div class="hero-content">
+            <span class="badge">豆瓣9.3分</span>
+            <h2 class="hero-title">霸王别姬</h2>
+            <p class="hero-desc">段小楼与程蝶衣是一对从小一起长大的师兄弟，两人一个演生、一个演旦，因合演《霸王别姬》而结缘深厚。历经半个世纪的风雨飘摇，他们的命运与京剧艺术紧密相连。</p>
+            <div class="btn-group">
+              <button class="btn btn-primary"><i class="fa fa-play"></i> <a href="https://v.qq.com/x/search/?q=霸王别姬"  target="_blank">立即观看</a></button>
+              <button class="btn btn-secondary"><i class="fa fa-info-circle"></i> 查看详情</button>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item" style="background-image: url('https://ts2.tc.mm.bing.net/th/id/OIP-C.ySN1G-9Gbng43GdtA1PKqAHaEJ?rs=1&pid=ImgDetMain&o=7&rm=3')">
+          <div class="hero-overlay"></div>
+          <div class="hero-content">
+            <span class="badge">豆瓣9.2分</span>
+            <h2 class="hero-title">霸王别姬</h2>
+            <p class="hero-desc">阿甘是个智商只有75的低能儿,但他的母亲始终鼓励他要像正常人一样生活。凭着上帝赐予的"飞毛腿"，阿甘开始了一生不停的奔跑，见证了美国半个世纪的重要历史时刻。</p>
+            <div class="btn-group">
+              <button class="btn btn-primary"><i class="fa fa-play"></i> <a href="https://v.qq.com/x/search/?q=霸王别姬"  target="_blank">立即观看</a></button>
+              <button class="btn btn-secondary"><i class="fa fa-info-circle"></i> 查看详情</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control prev-btn" id="carouselPrev"><i class="fa fa-angle-left"></i></button>
+      <button class="carousel-control next-btn" id="carouselNext"><i class="fa fa-angle-right"></i></button>
+      <div class="indicators">
+        <button class="indicator active" data-index="0"></button>
+        <button class="indicator" data-index="1"></button>
+        <button class="indicator" data-index="2"></button>
+      </div>
+    </section>
+
+    <section class="container section-padding">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fa fa-fire"></i>热门电影推荐</h2>
+        <a href="./pages/popular-charts.html" class="view-more"><span>查看更多</span> <i class="fa fa-angle-right"></i></a>
+      </div>
+      <div class="movie-grid">
+          <div class="movie-card">
+            <div class="card-poster-wrap">
+              <a href="https://v.qq.com/x/search/?q=肖申克的救赎"  target="_blank">
+              <img src="https://p0.pipi.cn/mmdb/54ecde3311ef2abe12f0ee281b37b5fc0bc2b.jpg?imageView2/1/w/464/h/644" alt="肖申克的救赎" class="card-poster" loading="lazy">
+              <span class="card-rating">9.4</span>
+            </div>
+            <div class="card-info">
+              <h3 class="card-title">肖申克的救赎</h3>
+              <div class="card-meta">
+                <span>1994</span>
+                <span>剧情 / 犯罪</span>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="movie-card">
+          <div class="card-poster-wrap">
+            <a href="https://v.qq.com/x/search/?q=霸王别姬"  target="_blank">
+            <img src="https://p0.pipi.cn/mediaplus/bigdata_crawler_media/0fa3346e3e777eea40bf8856ec7688d082594.jpg?imageView2/1/w/464/h/644" alt="霸王别姬" class="card-poster" loading="lazy">
+            <span class="card-rating">9.3</span>
+          </div>
+          <div class="card-info">
+            <h3 class="card-title">霸王别姬</h3>
+            <div class="card-meta">
+              <span>1993</span>
+              <span>剧情 / 音乐</span>
+            </div>
+          </div>
+          </a>
+        </div>
+        <div class="movie-card">
+          <div class="card-poster-wrap">
+            <a href="https://v.qq.com/x/search/?q=阿甘正传"  target="_blank">
+            <img src="https://p0.pipi.cn/mmdb/d2dad592c7e7e1cbaeb53576d1b09602884b4.jpg?imageView2/1/w/464/h/644" alt="阿甘正传" class="card-poster" loading="lazy">
+            <span class="card-rating">9.2</span>
+          </div>
+          <div class="card-info">
+            <h3 class="card-title">阿甘正传</h3>
+            <div class="card-meta">
+              <span>1994</span>
+              <span>剧情 / 爱情</span>
+            </div>
+          </div>
+          </a>
+        </div>
+        <div class="movie-card">
+          <div class="card-poster-wrap">
+            <a href="https://v.qq.com/x/search/?q=泰坦尼克号"  target="_blank">
+            <img src="https://p0.pipi.cn/mmdb/fb73869af2a51b339e537c802afb40db7a7fe.jpg?imageView2/1/w/464/h/644" alt="泰坦尼克号" class="card-poster" loading="lazy">
+            <span class="card-rating">9.5</span>
+          </div>
+          <div class="card-info">
+            <h3 class="card-title">泰坦尼克号</h3>
+            <div class="card-meta">
+              <span>1997</span>
+              <span>剧情 / 爱情</span>
+            </div>
+          </div>
+          </a>
+        </div>
+        <div class="movie-card">
+          <div class="card-poster-wrap">
+            <a href="https://v.qq.com/x/search/?q=星际穿越"  target="_blank">
+            <img src="https://p0.pipi.cn/mmdb/d2dad592b125bfc9fd300b8a46169f8008efb.jpg?imageView2/1/w/464/h/644" alt="星际穿越" class="card-poster" loading="lazy">
+            <span class="card-rating">9.4</span>
+          </div>
+          <div class="card-info">
+            <h3 class="card-title">星际穿越</h3>
+            <div class="card-meta">
+              <span>2014</span>
+              <span>科幻 / 冒险</span>
+            </div>
+          </div>
+          </a>
+        </div>
+     
+      
+      </div>
+    </section>
+
+    <section class="container filter-section section-padding">
+      <h2 class="section-title mb-8"><i class="fa fa-th-list"></i>电影分类筛选</h2>
+      <div class="filter-tags">
+        <button class="tag active" data-type="all">全部</button>
+        <button class="tag" data-type="剧情">剧情</button>
+        <button class="tag" data-type="喜剧">喜剧</button>
+        <button class="tag" data-type="动作">动作</button>
+        <button class="tag" data-type="科幻">科幻</button>
+        <button class="tag" data-type="悬疑">悬疑</button>
+        <button class="tag" data-type="爱情">爱情</button>
+        <button class="tag" data-type="恐怖">恐怖</button>
+        <button class="tag" data-type="动画">动画</button>
+      </div>
+      <div class="movie-grid Rendering1" style="height:auto;"></div>
+    </section>
+  </div>
+
+  <footer class="site-footer">
+    <div class="site-footer-btn">
+      <button class="Rendering1-btn collapse-btn1">加载更多</button>
+      <button class="Rendering1-btn collapse-btn2">收回更多</button>
+    </div>
+    <!-- 只保留这一个加载更多按钮，删除原来的 collapse-btn 收起按钮 -->
+    
+    <div class="container">
+      <div class="footer-top">
+        <a href="#" class="logo">
+          <i class="fa fa-film"></i>
+          <span>芯影推荐</span>
+        </a>
+      </div>
+      <div class="footer-divider">
+        <div class="footer-grid"></div>
+      </div>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="./js/index.js"></script>
+<script src="./js/Navigation bar.js"></script>
+<script src="./js/Filter.js"></script>
+<script>
+  // 等待页面DOM元素全部加载完成后执行代码
+document.addEventListener('DOMContentLoaded', function() {
+//   // 1. 获取页面中 桌面端+移动端 所有搜索相关元素
+  const searchInputs = document.querySelectorAll('.search-input'); // 所有搜索输入框
+  const searchIcons = document.querySelectorAll('.search-icon');   // 所有搜索图标
+
+  // 【核心】统一的搜索请求函数 - 封装发送请求的逻辑，复用性强
+  function sendSearchRequest(keywords) {
+    // 前端校验（和后端逻辑完全一致）
+    if (!keywords) keywords = '';
+    const searchKey = keywords.trim();
+    // alert(searchKey);
+    if (searchKey === '') {
+      alert('请输入电影/演员/导演关键词进行搜索');
+      return;
+    }
+    // 发送GET请求到后端原搜索接口，获取【电影列表】
+    const baseUrl = 'http://localhost:3000'; 
+    fetch(`${baseUrl}/search?keywords=${encodeURIComponent(searchKey)}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+      }
+    })
+    .then(response => {
+      if (!response.ok) throw new Error(`请求失败，状态码：${response.status}`);
+      return response.json();
+    })
+    .then(res => {
+      console.log('✅ 搜索接口返回数据：', res);
+      if (res.code === 200) {
+        // alert(res.msg);
+        const searchResultList = res.data; // ✅ 这个就是【需要渲染的电影列表】
+        const searchKey = res.searchKeyword; // ✅ 搜索关键词
+        
+        // ✅ 先把【电影列表+关键词】传给后端 /search-result 路由，再渲染页面
+        sendMovieListToServer(searchKey, searchResultList);
+
+        // ✅ 修改：不再在页面1渲染结果，而是重定向到页面2，并携带搜索关键词
+        window.location.href = './第二个页面.html?query=' + encodeURIComponent(searchKey);
+      }
+    })
+    .catch(err => {
+      console.error('❌ 搜索请求异常：', err);
+      alert('搜索失败，请稍后重试！');
+    });
+  }
+
+  //【搜索关键词 + 完整电影列表】传给后端 /search-result 路由
+  async function sendMovieListToServer(searchKey, movieList) {
+    const baseUrl = 'http://localhost:3000';
+    try {
+      const response = await fetch(`${baseUrl}/search-result`, {
+        method: 'POST', // 必须是POST，匹配后端路由
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8' // 告诉后端传递的是JSON格式
+        },
+        body: JSON.stringify({ // ✅ 核心：把关键词+电影列表序列化成JSON传递
+          searchKey: searchKey,
+          movieList: movieList
+        })
+      });
+      const res = await response.json();
+      console.log('前端 → 后端 电影列表传递结果：', res);
+    } catch (err) {
+      console.error('电影列表传递给后端失败：', err);
+    }
+  }
+  // 2. 为所有搜索框绑定【回车触发搜索】事件
+  searchInputs.forEach(input => {
+    input.addEventListener('keydown', function(e) {
+      if (e.keyCode === 13) sendSearchRequest(this.value);
+    });
+  });
+  // 3. 为所有搜索图标绑定【点击触发搜索】事件
+  searchIcons.forEach(icon => {
+    icon.addEventListener('click', function() {
+      const input = this.previousElementSibling;
+      if (input && input.classList.contains('search-input')) {
+        sendSearchRequest(input.value);
+      }
+    });
+  });
+});
+
+searchInputs[0].addEventListener('keydown', function(e) {
+    console.log(this.value);
+});
+
+
+
+</script>
+</body>
+</html>

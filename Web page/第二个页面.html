@@ -1,0 +1,825 @@
+<!-- 修改后的页面2 (假设文件名: search-result.html) -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>光影推荐 - 高品质电影推荐平台</title>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./第二个页面.css">
+  <style>
+    /* 🔥 临时补充核心样式（防止CSS缺失导致渲染看不见） */
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 10px 0;
+    }
+    .movie-card {
+      text-decoration: none;
+      color: #333;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .movie-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .movie-poster img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+    }
+    .movie-info {
+      padding: 10px;
+    }
+    .movie-title {
+      font-size: 16px;
+      margin: 0 0 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .movie-type, .movie-score, .movie-box, .movie-time, .movie-area {
+      font-size: 12px;
+      color: #666;
+      margin: 3px 0;
+    }
+    .movie-score span {
+      color: #ff4400;
+      font-weight: bold;
+    }
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 0;
+      color: #999;
+    }
+    .loading-spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #eee;
+      border-top: 2px solid #ff4400;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 10px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* 热搜列表样式 - 根据图片样式调整 */
+    .hot-search {
+      background-color: #1a1a1a;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .section-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #ff4400;
+      position: relative;
+    }
+    
+    .section-title:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 60px;
+      height: 2px;
+      background-color: #ff4400;
+    }
+    
+    .hot-search-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .hot-search-item {
+      display: flex;
+      align-items: center;
+      padding: 15px 10px;
+      border-bottom: 1px solid #f0f0f0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .hot-search-item:last-child {
+      border-bottom: none;
+    }
+    
+    .hot-search-item:hover {
+      background-color: #f8f9fa;
+      transform: translateX(5px);
+    }
+    
+    .hot-search-rank {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      font-size: 14px;
+      font-weight: bold;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    
+    /* 前3名特殊样式 */
+    .hot-search-item:nth-child(1) .hot-search-rank {
+      background-color: #ff2e2e;
+      color: white;
+      border-radius: 50%;
+    }
+    
+    .hot-search-item:nth-child(2) .hot-search-rank {
+      background-color: #ff6b35;
+      color: white;
+      border-radius: 50%;
+    }
+    
+    .hot-search-item:nth-child(3) .hot-search-rank {
+      background-color: #ff9933;
+      color: white;
+      border-radius: 50%;
+    }
+    
+    /* 4-10名样式 */
+    .hot-search-item:nth-child(n+4) .hot-search-rank {
+      background-color: #f0f0f0;
+      color: #999;
+      border-radius: 4px;
+    }
+    
+    .hot-search-content {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .hot-search-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #333;
+      flex: 1;
+      max-width: 180px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .hot-search-item:hover .hot-search-title {
+      color: #ff4400;
+    }
+    
+    .hot-search-box-office {
+      font-size: 14px;
+      color: #888;
+      margin-left: 15px;
+      white-space: nowrap;
+    }
+    
+    /* 票房数字样式 */
+    .hot-search-box-office strong {
+      color: #ff4400;
+      font-weight: bold;
+    }
+    
+    /* 票房过亿标签 */
+    .billion-tag {
+      display: inline-block;
+      background-color: #ff4400;
+      color: white;
+      font-size: 10px;
+      padding: 1px 4px;
+      border-radius: 2px;
+      margin-left: 5px;
+      vertical-align: middle;
+    }
+    
+    /* 响应式调整 */
+    @media (max-width: 768px) {
+      .hot-search-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .hot-search-box-office {
+        margin-left: 0;
+        margin-top: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-logo"><i class="fa fa-film"></i><span style="color: #000;">   光影推荐</span></div>
+    <div class="navbar-nav">
+      <a href="index.html">首页</a>
+      <a href="./pages/popular-charts.html">热门筛选</a>
+      <div class="search-box">
+        <input type="text" class="search-input" placeholder="搜索电影/演员/导演">
+        <span class="search-icon">🔍</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-container">
+    <div class="left-content">
+      <div class="section-card">
+        <h2 class="section-title">为你推荐的电影</h2>
+        <div class="movie-grid" id="searchResultsContainer">
+          <div class="loading">
+            <div class="loading-spinner"></div>
+            正在加载电影数据...
+          </div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2 class="section-title">与其相似的电影</h2>
+        <div class="movie-grid" id="similarMoviesContainer">
+          <div class="loading">
+            <div class="loading-spinner"></div>
+            正在加载相似电影...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hot-search">
+      <h2 class="section-title">票房过亿电影<span style="font-size: 14px; color: #666; margin-left: 10px;">(随机展示)</span></h2>
+      <ul class="hot-search-list" id="hotSearchContainer">
+        <li class="loading">
+          <div class="loading-spinner"></div>
+          正在加载票房过亿电影...
+        </li>
+      </ul>
+    </div>
+  </div>
+
+<!-- 引入axios库 -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // ========== 强制校验DOM元素是否存在 ==========
+  const searchInputs = document.querySelectorAll('.search-input');
+  const searchIcons = document.querySelectorAll('.search-icon');
+  const searchContainer = document.getElementById('searchResultsContainer');
+  const similarContainer = document.getElementById('similarMoviesContainer');
+  const hotSearchContainer = document.getElementById('hotSearchContainer');
+  
+  // 打印DOM获取结果，方便排查
+  console.log('DOM元素获取结果：', {
+    searchInputs: searchInputs.length,
+    searchIcons: searchIcons.length,
+    searchContainer: !!searchContainer,
+    similarContainer: !!similarContainer,
+    hotSearchContainer: !!hotSearchContainer
+  });
+
+  // 如果核心容器不存在，直接报错提示
+  if (!searchContainer || !similarContainer || !hotSearchContainer) {
+    console.error('致命错误：搜索结果容器或相似电影容器或热搜容器不存在！');
+    alert('页面渲染失败：未找到必要容器，请检查HTML结构');
+    return;
+  }
+
+  const baseUrl = 'http://localhost:3000';
+
+  // ========== 新增：加载票房过亿电影数据 ==========
+  async function loadHotSearchData() {
+    try {
+      // 显示加载状态
+      hotSearchContainer.innerHTML = `
+        <li class="loading">
+          <div class="loading-spinner"></div>
+          正在筛选票房过亿电影...
+        </li>
+      `;
+
+      // 请求全部电影数据
+      const response = await axios({
+        url: `${baseUrl}/movieData`,
+        method: 'GET',
+        params: {
+          tag: '全部'
+        }
+      });
+
+      console.log('票房过亿电影数据请求响应：', response);
+      
+      // 处理返回的数据
+      let allMovies = [];
+      
+      if (Array.isArray(response.data)) {
+        // 如果返回的是数组，直接使用
+        allMovies = response.data;
+      } else if (response.data && response.data.data && Array.isArray(response.data.data)) {
+        // 如果返回的是对象，且有data数组字段
+        allMovies = response.data.data;
+      } else if (response.data && response.data.code === 200 && Array.isArray(response.data.data)) {
+        // 如果是标准响应格式
+        allMovies = response.data.data;
+      } else {
+        console.warn('票房过亿电影数据格式不符合预期：', response.data);
+        throw new Error('票房过亿电影数据格式异常');
+      }
+
+      // 筛选票房过亿的电影
+      const billionMovies = filterBillionBoxOfficeMovies(allMovies);
+      console.log(`筛选出票房过亿电影：${billionMovies.length}部`);
+      
+      if (billionMovies.length === 0) {
+        hotSearchContainer.innerHTML = `
+          <li style="text-align:center;padding:20px 0;color:#f55;">
+            未找到票房过亿电影，请检查数据
+          </li>
+        `;
+        return;
+      }
+      
+      // 随机选择最多10部电影
+      const randomMovies = getRandomMovies(billionMovies, 10);
+      
+      // 按票房从高到低排序
+      randomMovies.sort((a, b) => {
+        const boxOfficeA = parseBoxOfficeValue(a.票房);
+        const boxOfficeB = parseBoxOfficeValue(b.票房);
+        return boxOfficeB - boxOfficeA;
+      });
+      
+      // 渲染票房过亿电影列表
+      renderHotSearchList(randomMovies);
+      
+    } catch (error) {
+      console.error('加载票房过亿电影数据失败：', error);
+      hotSearchContainer.innerHTML = `
+        <li style="text-align:center;padding:20px 0;color:#f55;">
+          加载票房过亿电影数据失败：${error.message || '网络错误'}
+        </li>
+      `;
+    }
+  }
+
+  // ========== 新增：筛选票房过亿的电影 ==========
+  function filterBillionBoxOfficeMovies(movies) {
+    return movies.filter(movie => {
+      // 获取票房字段
+      const boxOffice = movie.票房 || movie.box_office;
+      
+      if (!boxOffice) return false;
+      
+      // 解析票房值
+      const boxOfficeValue = parseBoxOfficeValue(boxOffice);
+      
+      // 判断是否过亿（>= 1亿）
+      return boxOfficeValue >= 1;
+    });
+  }
+
+  // ========== 新增：解析票房值为数字（单位：亿） ==========
+  function parseBoxOfficeValue(boxOfficeStr) {
+    if (!boxOfficeStr) return 0;
+    
+    // 转换为字符串处理
+    const str = String(boxOfficeStr).trim();
+    
+    // 匹配数字和单位
+    const match = str.match(/(\d+(\.\d+)?)(万|亿|千万|百万)?/);
+    if (!match) return 0;
+    
+    const number = parseFloat(match[1]);
+    const unit = match[3] || '';
+    
+    // 根据单位转换为亿
+    switch (unit) {
+      case '亿':
+        return number;
+      case '千万':
+        return number / 10;
+      case '百万':
+        return number / 100;
+      case '万':
+        return number / 10000;
+      default:
+        // 没有单位，假设是万
+        return number / 10000;
+    }
+  }
+
+  // ========== 新增：从数组中随机选择指定数量的电影 ==========
+  function getRandomMovies(movies, count) {
+    // 如果电影数量不足，返回全部
+    if (movies.length <= count) {
+      return [...movies];
+    }
+    
+    // 使用洗牌算法随机选择
+    const shuffled = [...movies].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  }
+
+  // ========== 新增：格式化票房显示 ==========
+  function formatBoxOfficeDisplay(boxOfficeStr) {
+    if (!boxOfficeStr) return '票房未知';
+    
+    const str = String(boxOfficeStr).trim();
+    
+    // 如果已经是标准格式，直接返回
+    if (str.includes('亿') || str.includes('千万') || str.includes('万')) {
+      return str;
+    }
+    
+    // 尝试解析并格式化
+    const value = parseBoxOfficeValue(str);
+    if (value >= 1) {
+      return `${value.toFixed(1)}亿`;
+    } else if (value >= 0.1) {
+      return `${(value * 10).toFixed(1)}千万`;
+    } else {
+      return `${(value * 10000).toFixed(0)}万`;
+    }
+  }
+
+  // ========== 新增：渲染票房过亿电影列表 ==========
+  function renderHotSearchList(movies) {
+    console.log('✅ 开始渲染票房过亿电影列表，数据长度：', movies.length);
+    
+    // 无数据情况
+    if (!Array.isArray(movies) || movies.length === 0) {
+      hotSearchContainer.innerHTML = `
+        <li style="text-align:center;padding:20px 0;color:#999;">
+          暂无票房过亿电影数据
+        </li>
+      `;
+      return;
+    }
+    
+    // 有数据情况：生成票房过亿电影列表
+    let html = '';
+    movies.forEach((movie, index) => {
+      // 获取电影标题
+      const title = movie.title || movie.电影名 || movie.name || '未知电影';
+      
+      // 获取并格式化票房
+      const boxOffice = movie.票房 || movie.box_office;
+      const formattedBoxOffice = formatBoxOfficeDisplay(boxOffice);
+      
+      html += `
+        <li class="hot-search-item" data-title="${title}">
+          <span class="hot-search-rank">${index + 1}</span>
+          <div class="hot-search-content">
+            <span class="hot-search-title" title="${title}">
+              ${title}
+              <span class="billion-tag">过亿</span>
+            </span>
+            <span class="hot-search-box-office"><strong>${formattedBoxOffice}</strong> 票房</span>
+          </div>
+        </li>
+      `;
+    });
+    
+    // 最终渲染到页面
+    hotSearchContainer.innerHTML = html;
+    
+    // 绑定点击事件：点击热搜项自动搜索
+    const hotSearchItems = hotSearchContainer.querySelectorAll('.hot-search-item');
+    hotSearchItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const title = this.getAttribute('data-title');
+        if (title) {
+          // 设置搜索框值
+          searchInputs.forEach(input => input.value = title);
+          // 触发搜索
+          sendSearchRequest(title);
+          // 滚动到顶部
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    });
+  }
+
+  // ========== 修复点2：强化搜索请求的错误处理 ==========
+  async function sendSearchRequest(keywords) {
+    let searchKey = keywords?.trim() || '';
+    if (!searchKey) {
+      alert('请输入电影/演员/导演关键词进行搜索');
+      return;
+    }
+
+    // 显示搜索中状态
+    searchContainer.innerHTML = `
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        正在搜索【${searchKey}】相关电影...
+      </div>
+    `;
+    
+    // 清空相似电影区域，显示加载状态
+    similarContainer.innerHTML = `
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        等待搜索结果...
+      </div>
+    `;
+
+    try {
+      // 1. 请求搜索接口获取电影数据
+      const searchRes = await fetch(`${baseUrl}/search?keywords=${encodeURIComponent(searchKey)}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
+      });
+
+      console.log('/search 接口响应状态：', searchRes.status);
+      
+      if (!searchRes.ok) throw new Error(`接口请求失败：${searchRes.status}`);
+      const searchData = await searchRes.json();
+      console.log('/search 接口返回数据：', searchData);
+
+      if (searchData.code !== 200) throw new Error(searchData.msg || '搜索接口返回异常');
+      const movieList = searchData.data || [];
+
+      // 2. 把电影列表传给 /search-result 路由
+      await sendMovieListToServer(searchKey, movieList);
+
+      // 3. 渲染搜索结果
+      renderMovieList(movieList);
+      
+      // 4. 加载相似电影（根据搜索结果中的随机电影类型）
+      if (movieList.length > 0) {
+        loadSimilarMovies(movieList);
+      } else {
+        // 没有搜索结果时，清空相似电影区域
+        similarContainer.innerHTML = `
+          <div style="text-align:center;padding:50px 0;color:#999;">
+            暂无相关电影数据，无法推荐相似电影
+          </div>
+        `;
+      }
+
+    } catch (err) {
+      console.error('搜索请求整体失败：', err);
+      // 显示失败提示
+      searchContainer.innerHTML = `
+        <div style="text-align:center;padding:50px 0;color:#f55;">
+          搜索失败：${err.message}<br>
+          请检查后端服务是否启动，或关键词是否正确
+        </div>
+      `;
+      similarContainer.innerHTML = `
+        <div style="text-align:center;padding:50px 0;color:#f55;">
+          无法加载相似电影
+        </div>
+      `;
+    }
+  }
+
+  // ========== 新增：加载相似电影 ==========
+  async function loadSimilarMovies(movieList) {
+    try {
+      // 1. 从搜索结果中随机选择一部电影
+      const randomIndex = Math.floor(Math.random() * movieList.length);
+      const randomMovie = movieList[randomIndex];
+      console.log('随机选择的电影：', randomMovie);
+      
+      // 2. 获取电影类型（优先使用content字段，如果没有则用类型字段）
+      const movieType = randomMovie.content || randomMovie.类型;
+      
+      if (!movieType) {
+        console.warn('随机电影没有类型信息，无法获取相似电影');
+        similarContainer.innerHTML = `
+          <div style="text-align:center;padding:50px 0;color:#999;">
+            随机电影缺少类型信息，无法推荐相似电影
+          </div>
+        `;
+        return;
+      }
+      
+      console.log(`随机电影类型：${movieType}，正在请求相似电影...`);
+      
+      // 3. 显示加载状态
+      similarContainer.innerHTML = `
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          正在加载"${movieType}"类型的相似电影...
+        </div>
+      `;
+      
+      // 4. 使用axios请求相同类型的电影数据
+      const response = await axios({
+        url: `${baseUrl}/movieData`,
+        method: 'GET',
+        params: {
+          tag: movieType
+        }
+      });
+      
+      console.log('相似电影请求响应：', response);
+      
+      // 5. 处理返回的数据
+      let similarMovies = [];
+      
+      if (Array.isArray(response.data)) {
+        // 如果返回的是数组，直接使用
+        similarMovies = response.data;
+      } else if (response.data && response.data.data && Array.isArray(response.data.data)) {
+        // 如果返回的是对象，且有data数组字段
+        similarMovies = response.data.data;
+      } else if (response.data && response.data.code === 200 && Array.isArray(response.data.data)) {
+        // 如果是标准响应格式
+        similarMovies = response.data.data;
+      } else {
+        console.warn('相似电影数据格式不符合预期：', response.data);
+      }
+      
+      // 6. 过滤掉当前的随机电影（避免重复）
+      similarMovies = similarMovies.filter(movie => {
+        const currentTitle = randomMovie.title || randomMovie.电影名;
+        const movieTitle = movie.title || movie.电影名;
+        return currentTitle !== movieTitle;
+      });
+      
+      // 7. 限制显示数量（最多显示6部）
+      similarMovies = similarMovies.slice(0, 6);
+      
+      // 8. 渲染相似电影
+      renderSimilarMovies(similarMovies, movieType);
+      
+    } catch (error) {
+      console.error('加载相似电影失败：', error);
+      similarContainer.innerHTML = `
+        <div style="text-align:center;padding:50px 0;color:#f55;">
+          加载相似电影失败：${error.message || '网络错误'}
+        </div>
+      `;
+    }
+  }
+
+  // ========== 新增：渲染相似电影 ==========
+  function renderSimilarMovies(movies, movieType) {
+    console.log('✅ 开始渲染相似电影，数据长度：', movies.length);
+    
+    // 无数据情况
+    if (!Array.isArray(movies) || movies.length === 0) {
+      similarContainer.innerHTML = `
+        <div style="text-align:center;padding:50px 0;color:#999;">
+          暂无"${movieType}"类型的其他电影
+        </div>
+      `;
+      return;
+    }
+    
+    // 有数据情况：循环生成卡片
+    let html = '';
+    movies.forEach((movie, index) => {
+      // 兼容字段缺失：防止某个字段为空导致渲染出错
+      const title = movie.title || movie.电影名 || movie.name || '未知电影';
+      const poster = movie.poster_url || 'https://via.placeholder.com/200x280?text=暂无海报';
+      const type = movie.content || movie.类型 || '未知类型';
+      const score = movie.score || movie.评分 || '暂无评分';
+      const box = movie.票房 || '暂无票房';
+      const time = movie.showtime || movie.上映时间 || '未知时间';
+      const area = movie.area || movie.地区 || '未知地区';
+      const link = movie.href || 'javascript:void(0)';
+
+      html += `
+        <a href="https://v.qq.com/x/search/?q=${encodeURIComponent(title)}" class="movie-card" target="_blank">
+          <div class="movie-poster">
+            <img src="${poster}" alt="${title}" loading="lazy" onerror="this.src='https://via.placeholder.com/200x280?text=海报加载失败'">
+          </div>
+          <div class="movie-info">
+            <h3 class="movie-title">${index + 1}. ${title}</h3>
+            <p class="movie-type">类型：${type}</p>
+            <p class="movie-score">评分：<span>${score}</span></p>
+            <p class="movie-box">票房：${box}</p>
+            <p class="movie-time">上映：${time}</p>
+            <p class="movie-area">地区：${area}</p>
+          </div>
+        </a>
+      `;
+    });
+    
+    // 添加一个标题说明
+    const headerHtml = `
+      <div style="grid-column: 1 / -1; margin-bottom: 10px; color: #666; font-size: 14px;">
+        基于搜索结果中的随机电影类型"${movieType}"推荐：
+      </div>
+    `;
+    
+    // 最终渲染到页面
+    similarContainer.innerHTML = headerHtml + html;
+  }
+
+  // ========== 强化POST请求的错误处理 ==========
+  async function sendMovieListToServer(searchKey, movieList) {
+    try {
+      const res = await fetch(`${baseUrl}/search-result`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json;charset=utf-8' },
+        body: JSON.stringify({ searchKey, movieList })
+      });
+      const data = await res.json();
+      console.log('✅ /search-result 路由接收结果：', data);
+    } catch (err) {
+      console.error('电影列表传递失败（不影响前端渲染）：', err);
+      // 这里失败不影响前端渲染，只打印日志
+    }
+  }
+
+  // ========== 修复点4：优化渲染逻辑，兼容数据缺失 ==========
+  function renderMovieList(movieList) {
+    console.log('✅ 开始渲染电影列表，数据长度：', movieList.length);
+    
+    // 无数据情况
+    if (!Array.isArray(movieList) || movieList.length === 0) {
+      searchContainer.innerHTML = `
+        <div style="text-align:center;padding:50px 0;color:#999;">
+          暂无相关电影数据
+        </div>
+      `;
+      return;
+    }
+
+    // 有数据情况：循环生成卡片
+    let html = '';
+    movieList.forEach((movie, index) => {
+      // 兼容字段缺失：防止某个字段为空导致渲染出错
+      const title = movie.title || movie.电影名 || movie.name || '未知电影';
+      const poster = movie.poster_url || 'https://via.placeholder.com/200x280?text=暂无海报';
+      const type = movie.content || movie.类型 || '未知类型';
+      const score = movie.score || movie.评分 || '暂无评分';
+      const box = movie.票房 || '暂无票房';
+      const time = movie.showtime || movie.上映时间 || '未知时间';
+      const area = movie.area || movie.地区 || '未知地区';
+      const link = movie.href || 'javascript:void(0)';
+
+      html += `
+        <a href="https://v.qq.com/x/search/?q=${encodeURIComponent(title)}" class="movie-card" target="_blank">
+          <div class="movie-poster">
+            <img src="${poster}" alt="${title}" loading="lazy" onerror="this.src='https://via.placeholder.com/200x280?text=海报加载失败'">
+          </div>
+          <div class="movie-info">
+            <h3 class="movie-title">${index + 1}. ${title}</h3>
+            <p class="movie-type">类型：${type}</p>
+            <p class="movie-score">评分：<span>${score}</span></p>
+            <p class="movie-box">票房：${box}</p>
+            <p class="movie-time">上映：${time}</p>
+            <p class="movie-area">地区：${area}</p>
+          </div>
+        </a>
+      `;
+    });
+
+    // 最终渲染到页面
+    searchContainer.innerHTML = html;
+  }
+
+  // ========== 绑定事件 ==========
+  searchInputs.forEach(input => {
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') sendSearchRequest(input.value);
+    });
+  });
+
+  searchIcons.forEach(icon => {
+    icon.addEventListener('click', () => {
+      const input = icon.previousElementSibling;
+      if (input?.classList.contains('search-input')) {
+        sendSearchRequest(input.value);
+      }
+    });
+  });
+
+  // ========== 初始化页面时加载票房过亿电影数据 ==========
+  // 页面加载完成后立即加载票房过亿电影数据
+  loadHotSearchData();
+
+  // ========== 新增：从页面1跳转过来时，自动触发搜索 ==========
+  // 解析URL参数，如果有query参数，则自动搜索并渲染结果
+  const urlParams = new URLSearchParams(window.location.search);
+  const query = urlParams.get('query');
+  if (query) {
+    // 自动填充搜索框（可选）
+    searchInputs.forEach(input => input.value = query);
+    // 触发搜索
+    sendSearchRequest(query);
+  }
+});
+</script>
+</body>
+</html>
